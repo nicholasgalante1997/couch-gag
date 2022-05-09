@@ -4,6 +4,7 @@ import { Home } from './pages/home';
 import { AnthologyPage } from './pages/anthology';
 import { StoryPage } from './pages/story.dyn';
 import './App.css';
+import { ErrorPage } from './pages/error';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="story">
           <Route path="season-one" element={<StoryPage />} />
         </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

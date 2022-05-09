@@ -1,14 +1,22 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { Button, Container, Page, Typography, _heller_base } from '@nickgdev/hellerui';
+import {
+  Button,
+  Container,
+  Page,
+  Typography,
+  _heller_base
+} from '@nickgdev/hellerui';
 import {
   pageStyles,
   recursiveQueryParamConversion,
   parseUrlString,
-  parseContent
+  parseContent,
+  resiliantTryCatch
 } from '../utils';
 import { getStoryByStoryKey } from '../service';
 import { Story } from '../types';
+import { Spinner } from '../components/Spinner';
 
 const { Heading, Paragraph } = Typography;
 
@@ -19,19 +27,24 @@ export function StoryPage() {
 
   React.useEffect(() => {
     (async () => {
-      const queryParam = recursiveQueryParamConversion(
-        {},
-        parseUrlString(search)
-      );
-      const story = await getStoryByStoryKey({
-        seasonKey: queryParam.seasonKey,
-        episodeKey: queryParam.episodeKey
-      });
-      const parsedContent = parseContent(story.content);
-      console.log(parsedContent);
-      setData({ ...story, content: parsedContent.body });
+      const result = await resiliantTryCatch(async () => {
+        const queryParam = recursiveQueryParamConversion(
+          {},
+          parseUrlString(search)
+        );
+        const story = await getStoryByStoryKey({
+          seasonKey: queryParam.seasonKey,
+          episodeKey: queryParam.episodeKey
+        });
+        const parsedContent = parseContent(story.content);
+        setData({ ...story, content: parsedContent.body });
+      }, 3);
+
+      if (result.isError) {
+        navigate('/not-found');
+      }
     })();
-  }, []);
+  }, [search]);
 
   return (
     <Container
@@ -39,7 +52,7 @@ export function StoryPage() {
       width={'100%'}
       padding="0px"
       margin="0px"
-      customStyles={{ ...pageStyles, justifyContent: 'flex-start' }}
+      customStyles={pageStyles}
     >
       {!!data ? (
         <Page
@@ -51,8 +64,8 @@ export function StoryPage() {
           padding="1rem"
           withDividers
           dividerProps={{
-              fadeColor: 'white',
-              focusColor: 'white'
+            fadeColor: 'white',
+            focusColor: 'white'
           }}
           withActionBar={{
             actionTitle: (
@@ -87,11 +100,30 @@ export function StoryPage() {
             )
           }}
           customComponentMap={{
-              h4: ({ node, ...props }: any) => <Heading {...props} color="deeppink" as='h5' />,
-              a: ({ node, ...props }: any) => <Paragraph {...props} color={_heller_base.colors.dunbar.lightCyan} thin fontSize={16} />
+            h4: ({ node, ...props }: any) => (
+              <Heading {...props} color="deeppink" as="h5" />
+            ),
+            a: ({ node, ...props }: any) => (
+              <Paragraph
+                {...props}
+                color={_heller_base.colors.dunbar.lightCyan}
+                thin
+                fontSize={16}
+              />
+            )
+          }}
+          dangerouslyOverrideInnerContentStyles={{
+            styles: {
+              maxWidth: '800px',
+              width: 'auto',
+              justifySelf: 'center',
+              alignSelf: 'center'
+            }
           }}
         />
-      ) : null}
+      ) : (
+        <Spinner />
+      )}
     </Container>
   );
 }

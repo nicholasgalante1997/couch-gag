@@ -6,9 +6,10 @@ import {
   Typography,
   _heller_base
 } from '@nickgdev/hellerui';
-import { pageStyles } from '../utils';
+import { pageStyles, resiliantTryCatch } from '../utils';
 import { getStories } from '../service';
 import { StoryRow } from '../components/StoryRow.widget';
+import { Spinner } from '../components/Spinner';
 
 const { Paragraph } = Typography;
 
@@ -18,19 +19,22 @@ export function AnthologyPage() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    setIsLoading(true);
     (async () => {
-      try {
+      const result = await resiliantTryCatch(async () => {
         const stories = await getStories();
         console.log(stories);
         setData(stories);
         setIsLoading(false);
-      } catch (e) {
-        console.log(e);
+      }, 3);
+
+      if (result && result.isError) {
+        setIsLoading(false);
+        navigate('/not-found');
       }
     })();
   }, []);
-  return (
+
+  return !isLoading && data && data.collection ? (
     <Container
       radius="none"
       width={'100%'}
@@ -69,8 +73,7 @@ export function AnthologyPage() {
           Season One
         </Paragraph>
       </Container>
-      {!isLoading &&
-        data &&
+      {
         Object.keys(data.collection).map((s: any, i: number) => (
           <Container width={'100%'}>
             <StoryRow
@@ -84,6 +87,10 @@ export function AnthologyPage() {
             />
           </Container>
         ))}
+    </Container>
+  ) : (
+    <Container customStyles={pageStyles}>
+      <Spinner />
     </Container>
   );
 }

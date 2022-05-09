@@ -10,11 +10,11 @@ import ArrowRight from './ArrowRight.svg';
 const { Heading, Paragraph } = Typography;
 
 export function StoryRow(props: StoryRowProps) {
-  const { title, subtitle, index, episodeKey, seasonKey } = props;
+  const { title, subtitle, index, episodeKey } = props;
   const navigate = useNavigate();
   return (
     <Container asGridParent padding="0.25rem">
-      <Container asGridChild colSpan={4}>
+      <Container asGridChild colSpan={12}>
         <Heading color="#fff" as="h6">
           {index + 1}. {title}
         </Heading>
