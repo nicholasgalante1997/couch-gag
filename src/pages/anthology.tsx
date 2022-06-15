@@ -73,20 +73,19 @@ export function AnthologyPage() {
           Season One
         </Paragraph>
       </Container>
-      {
-        Object.keys(data.collection).map((s: any, i: number) => (
-          <Container width={'100%'}>
-            <StoryRow
-              index={i}
-              imgSrc={data.collection[s].img}
-              title={data.collection[s].title}
-              subtitle={data.collection[s].subtitle}
-              genres={data.collection[s].genres}
-              episodeKey={data.collection[s].episodeKey}
-              seasonKey={data.collection[s].seasonKey}
-            />
-          </Container>
-        ))}
+      {Object.keys(data.collection).map((s: any, i: number) => (
+        <Container width={'100%'}>
+          <StoryRow
+            index={i}
+            imgSrc={data.collection[s].img}
+            title={data.collection[s].title}
+            subtitle={data.collection[s].subtitle}
+            genres={data.collection[s].genres}
+            episodeKey={data.collection[s].episodeKey}
+            seasonKey={data.collection[s].seasonKey}
+          />
+        </Container>
+      ))}
     </Container>
   ) : (
     <Container customStyles={pageStyles}>

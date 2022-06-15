@@ -6,11 +6,15 @@ import {
   Container,
   _heller_base
 } from '@nickgdev/hellerui';
+import { useThemeContext } from '../App';
 import { pageStyles } from '../utils';
+import { getThemedTextColor } from '../utils/theme';
 
 const { Heading, Paragraph } = Typography;
 
 export function Home() {
+  const { darkMode } = useThemeContext();
+
   const navigate = useNavigate();
   const navigateToAnthologyPage = () => navigate('/anthology');
   const navigateToBookMarkPage = () => navigate('/bookmarks');
@@ -23,10 +27,15 @@ export function Home() {
       margin="0px"
       customStyles={pageStyles}
     >
-      <Heading as="h5" color="rgba(270,270,270,0.85)">
+      <Heading as="h5" color={getThemedTextColor(darkMode)}>
         ulysses
       </Heading>
-      <hr style={{ width: '20%', border: '1px solid white' }} />
+      <hr
+        style={{
+          width: '20%',
+          border: darkMode ? '1px solid white' : '1px solid navy'
+        }}
+      />
       <Container
         padding="1rem"
         customStyles={{
@@ -39,7 +48,7 @@ export function Home() {
         <Paragraph
           customStyles={{ textAlign: 'center' }}
           thin
-          color="rgba(270,270,270,0.85)"
+          color={getThemedTextColor(darkMode)}
         >
           this is a story about a lot of stories.
           <br />
