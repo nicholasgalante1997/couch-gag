@@ -1,5 +1,5 @@
-import { Story } from '../types';
-import { devApiTargets, prodApiTargets, isDev } from '../utils';
+import { Story, StoryCollection } from '../../types';
+import { devApiTargets, prodApiTargets, isDev } from '../../utils';
 
 export async function getStoryByStoryKey(storyKey: {
   seasonKey: string;
@@ -20,7 +20,7 @@ export async function getStoryByStoryKey(storyKey: {
     .catch((e: any) => console.error(e));
 }
 
-export async function getStories(): Promise<{ collections: any }> {
+export async function getStories(): Promise<StoryCollection> {
   const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
   const url = base + 'all';
   return fetch(url, {

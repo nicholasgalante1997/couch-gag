@@ -1,1 +1,1 @@
-export * from './story.service';
+export * from './markdown';

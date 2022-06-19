@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/home';
 import { AnthologyPage } from './pages/anthology';
@@ -7,8 +8,9 @@ import { ErrorPage } from './pages/error';
 import './App.css';
 
 const ThemeContext = createContext({ darkMode: true });
-
 export const useThemeContext = () => useContext(ThemeContext);
+
+const appQueryClient = new QueryClient();
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -22,18 +24,20 @@ function App() {
   }, [darkMode]);
 
   return (
-    <ThemeContext.Provider value={{ darkMode }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="anthology" element={<AnthologyPage />} />
-          <Route path="story">
-            <Route path="season-one" element={<StoryPage />} />
-          </Route>
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeContext.Provider>
+    <QueryClientProvider client={appQueryClient}>
+      <ThemeContext.Provider value={{ darkMode }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="anthology" element={<AnthologyPage />} />
+            <Route path="story">
+              <Route path="season-one" element={<StoryPage />} />
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeContext.Provider>
+    </QueryClientProvider>
   );
 }
 

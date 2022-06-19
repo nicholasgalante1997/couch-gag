@@ -6,33 +6,19 @@ import {
   Typography,
   _heller_base
 } from '@nickgdev/hellerui';
-import { pageStyles, resiliantTryCatch } from '../utils';
-import { getStories } from '../service';
+import { pageStyles } from '../utils';
+import { useQueryAllMarkdownStories } from '../queries';
 import { StoryRow } from '../components/StoryRow.widget';
 import { Spinner } from '../components/Spinner';
 
 const { Paragraph } = Typography;
 
 export function AnthologyPage() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [data, setData] = React.useState<any>();
+
   const navigate = useNavigate();
+  const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
-  React.useEffect(() => {
-    (async () => {
-      const result = await resiliantTryCatch(async () => {
-        const stories = await getStories();
-        console.log(stories);
-        setData(stories);
-        setIsLoading(false);
-      }, 3);
-
-      if (result && result.isError) {
-        setIsLoading(false);
-        navigate('/not-found');
-      }
-    })();
-  }, []);
+  React.useEffect(() => {}, [isError, error])
 
   return !isLoading && data && data.collection ? (
     <Container
@@ -80,7 +66,7 @@ export function AnthologyPage() {
             imgSrc={data.collection[s].img}
             title={data.collection[s].title}
             subtitle={data.collection[s].subtitle}
-            genres={data.collection[s].genres}
+            genres={data.collection[s].genres ?? []}
             episodeKey={data.collection[s].episodeKey}
             seasonKey={data.collection[s].seasonKey}
           />
