@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { StoryKey } from 'couch-gag-common-lib';
+import { StoryKey } from '@nickgdev/couch-gag-common-lib';
 import { getStories, getStoryByStoryKey } from '../../service';
 
 export const useQueryAllMarkdownStories = () => {

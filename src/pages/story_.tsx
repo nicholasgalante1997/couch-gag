@@ -15,7 +15,7 @@ import {
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
 import { Spinner } from '../components/Spinner';
-import { log } from 'couch-gag-common-lib';
+import { log } from '@nickgdev/couch-gag-common-lib';
 
 const { Heading, Paragraph } = Typography;
 

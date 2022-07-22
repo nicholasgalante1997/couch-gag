@@ -10,7 +10,7 @@ import { pageStyles } from '../utils';
 import { useQueryAllMarkdownStories } from '../queries';
 import { StoryRow } from '../components/StoryRow.widget';
 import { Spinner } from '../components/Spinner';
-import { log } from 'couch-gag-common-lib';
+import { log } from '@nickgdev/couch-gag-common-lib';;
 
 const { Paragraph } = Typography;
 
