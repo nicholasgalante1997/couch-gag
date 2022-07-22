@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nickgdev/hellerui": "^0.0.32",
+    "@nickgdev/hellerui": "^0.0.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -11,7 +11,7 @@
     "@types/node": "^16.11.31",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.0",
-    "couch-gag-common-lib": "../artifacts/couch-gag-common-lib-v1.0.0.tgz",
+    "couch-gag-common-lib": "../artifacts/couch-gag-common-lib-1.0.0.tgz",
     "front-matter": "^4.0.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

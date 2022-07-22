@@ -7,7 +7,8 @@ export const useQueryAllMarkdownStories = () => {
 };
 
 export const useQuerySingleMarkdownStory = (storyKey: StoryKey) => {
-  return useQuery(['markdown', storyKey.seasonKey, storyKey.episodeKey], () =>
-    getStoryByStoryKey(storyKey)
+  return useQuery(
+    ['markdown', storyKey.seasonKey, storyKey.episodeKey], 
+    () => getStoryByStoryKey(storyKey)
   );
 };

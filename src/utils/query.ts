@@ -1,7 +1,7 @@
 export function recursiveQueryParamConversion(
   source: any,
   arr: any[] | Set<any>
-) {
+): Record<string, any> {
   let safeSet: Set<any>;
   try {
     safeSet = new Set(arr);

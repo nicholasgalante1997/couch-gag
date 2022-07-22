@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import {
   Button,
@@ -12,41 +12,41 @@ import {
   recursiveQueryParamConversion,
   parseUrlString,
   parseContent,
-  resiliantTryCatch
 } from '../utils';
-import { getStoryByStoryKey } from '../service';
-import { Story } from '../types';
+import { useQuerySingleMarkdownStory } from '../queries';
 import { Spinner } from '../components/Spinner';
+import { log } from 'couch-gag-common-lib';
 
 const { Heading, Paragraph } = Typography;
 
 export function StoryPage() {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const [data, setData] = React.useState<Story>();
+
+  const queryParam = recursiveQueryParamConversion(
+    {},
+    parseUrlString(search)
+  );
+
+  const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({ 
+    seasonKey: queryParam?.seasonKey, 
+    episodeKey: queryParam?.episodeKey 
+  })
+
+  const parsedContent = useMemo(() => parseContent(data?.content), [data]);
 
   React.useEffect(() => {
-    (async () => {
-      const result = await resiliantTryCatch(async () => {
-        const queryParam = recursiveQueryParamConversion(
-          {},
-          parseUrlString(search)
-        );
-        const story = await getStoryByStoryKey({
-          seasonKey: queryParam.seasonKey,
-          episodeKey: queryParam.episodeKey
-        });
-        const parsedContent = parseContent(story.content);
-        setData({ ...story, content: parsedContent.body });
-      }, 3);
-
-      if (result.isError) {
+      if (isError) {
+        log('error', JSON.stringify(error)); 
         navigate('/not-found');
       }
-    })();
-  }, [search]);
+  }, [search, data]);
 
-  return (
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  return (data && parsedContent && parsedContent.body) ? (
     <Container
       radius="none"
       width={'100%'}
@@ -54,13 +54,12 @@ export function StoryPage() {
       margin="0px"
       customStyles={pageStyles}
     >
-      {!!data ? (
         <Page
           contentEngine="markdown"
           title={data.meta.title}
-          titleColor="deeppink"
+          titleColor="white"
           subtitle={data.meta.subtitle}
-          content={data.content}
+          content={parsedContent.body}
           padding="1rem"
           withDividers
           dividerProps={{
@@ -103,6 +102,9 @@ export function StoryPage() {
             h4: ({ node, ...props }: any) => (
               <Heading {...props} color="deeppink" as="h5" />
             ),
+            p: ({ node, ...props}: any) => (
+              <Paragraph {...props} color="white" fontSize={20} />
+            ),
             a: ({ node, ...props }: any) => (
               <Paragraph
                 {...props}
@@ -114,16 +116,24 @@ export function StoryPage() {
           }}
           dangerouslyOverrideInnerContentStyles={{
             styles: {
-              maxWidth: '800px',
+              maxWidth: '1000px',
               width: 'auto',
               justifySelf: 'center',
               alignSelf: 'center'
             }
           }}
         />
-      ) : (
-        <Spinner />
-      )}
+      ) 
+    </Container>
+  ) : (
+    <Container
+      radius="none"
+      width={'100%'}
+      padding="0px"
+      margin="0px"
+      customStyles={pageStyles}
+    >
+      <Spinner />
     </Container>
   );
 }

@@ -28,7 +28,7 @@ export function Home() {
       customStyles={pageStyles}
     >
       <Heading as="h5" color={getThemedTextColor(darkMode)}>
-        ulysses
+        the couch gag
       </Heading>
       <hr
         style={{

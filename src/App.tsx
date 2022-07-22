@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/home';
 import { AnthologyPage } from './pages/anthology';
-import { StoryPage } from './pages/story.dyn';
+import { StoryPage } from './pages/story_';
 import { ErrorPage } from './pages/error';
 import './App.css';
 
