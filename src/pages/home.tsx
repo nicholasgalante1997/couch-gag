@@ -16,7 +16,7 @@ export function Home() {
   const { darkMode } = useThemeContext();
 
   const navigate = useNavigate();
-  const navigateToAnthologyPage = () => navigate('/anthology');
+  const navigateToAnthologyPage = () => navigate('/story/season-one/?seasonKey=01&episodeKey=01');
   const navigateToBookMarkPage = () => navigate('/bookmarks');
 
   return (
@@ -71,7 +71,7 @@ export function Home() {
           backgroundColor={_heller_base.colors.dunbar.lightCyan}
           className="btn"
         >
-          browse anthology
+          to the origin
         </Button>
         <Button
           onClick={navigateToBookMarkPage}

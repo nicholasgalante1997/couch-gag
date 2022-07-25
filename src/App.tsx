@@ -6,6 +6,7 @@ import { AnthologyPage } from './pages/anthology';
 import { StoryPage } from './pages/story_';
 import { ErrorPage } from './pages/error';
 import './App.css';
+import { Nav } from './components/nav';
 
 const ThemeContext = createContext({ darkMode: true });
 export const useThemeContext = () => useContext(ThemeContext);
@@ -27,6 +28,7 @@ function App() {
     <QueryClientProvider client={appQueryClient}>
       <ThemeContext.Provider value={{ darkMode }}>
         <BrowserRouter>
+          <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="anthology" element={<AnthologyPage />} />

@@ -10,22 +10,24 @@ import { pageStyles } from '../utils';
 import { useQueryAllMarkdownStories } from '../queries';
 import { StoryRow } from '../components/StoryRow.widget';
 import { Spinner } from '../components/Spinner';
-import { log } from '@nickgdev/couch-gag-common-lib';;
+import { log } from '@nickgdev/couch-gag-common-lib';
 
 const { Paragraph } = Typography;
 
 export function AnthologyPage() {
-
   const navigate = useNavigate();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
   React.useEffect(() => {
     const failureCase = isError || (data && !data.collection);
     if (failureCase) {
-      log('error', JSON.stringify(error ?? '[anthology] collection fetching error.'));
+      log(
+        'error',
+        JSON.stringify(error ?? '[anthology] collection fetching error.')
+      );
       navigate('/not-found');
     }
-  }, [isError, error])
+  }, [isError, error]);
 
   return !isLoading && data && data.collection ? (
     <Container

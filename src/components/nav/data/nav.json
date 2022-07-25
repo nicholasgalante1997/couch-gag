@@ -1,0 +1,32 @@
+{
+  "links": [
+    {
+      "localHref": "/whats-all-this-then",
+      "plainText": "about this endeavor",
+      "meta": {
+        "pageClickTag": "about"
+      }
+    },
+    {
+      "localHref": "/anthology",
+      "plainText": "our anthology",
+      "meta": {
+        "pageClickTag": "anthology"
+      }
+    },
+    {
+      "localHref": "/auth-form",
+      "plainText": "sign up / login",
+      "meta": {
+        "pageClickTag": "user_registry"
+      }
+    },
+    {
+      "localHref": "/development",
+      "plainText": "specs",
+      "meta": {
+        "pageClickTag": "dev"
+      }
+    }
+  ]
+}

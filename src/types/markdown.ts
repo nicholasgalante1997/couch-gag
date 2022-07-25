@@ -27,7 +27,6 @@ export type StoryMeta = {
   readonly key: string;
 };
 
-
 export type StoryCollection = {
   collection: { [x: string]: StoryMeta };
 };

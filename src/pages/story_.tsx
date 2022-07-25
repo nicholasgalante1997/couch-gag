@@ -11,7 +11,7 @@ import {
   pageStyles,
   recursiveQueryParamConversion,
   parseUrlString,
-  parseContent,
+  parseContent
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
 import { Spinner } from '../components/Spinner';
@@ -23,30 +23,27 @@ export function StoryPage() {
   const navigate = useNavigate();
   const { search } = useLocation();
 
-  const queryParam = recursiveQueryParamConversion(
-    {},
-    parseUrlString(search)
-  );
+  const queryParam = recursiveQueryParamConversion({}, parseUrlString(search));
 
-  const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({ 
-    seasonKey: queryParam?.seasonKey, 
-    episodeKey: queryParam?.episodeKey 
-  })
+  const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
+    seasonKey: queryParam?.seasonKey,
+    episodeKey: queryParam?.episodeKey
+  });
 
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);
 
   React.useEffect(() => {
-      if (isError) {
-        log('error', JSON.stringify(error)); 
-        navigate('/not-found');
-      }
+    if (isError) {
+      log('error', JSON.stringify(error));
+      navigate('/not-found');
+    }
   }, [search, data]);
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
-  return (data && parsedContent && parsedContent.body) ? (
+  return data && parsedContent && parsedContent.body ? (
     <Container
       radius="none"
       width={'100%'}
@@ -54,76 +51,76 @@ export function StoryPage() {
       margin="0px"
       customStyles={pageStyles}
     >
-        <Page
-          contentEngine="markdown"
-          title={data.meta.title}
-          titleColor="white"
-          subtitle={data.meta.subtitle}
-          content={parsedContent.body}
-          padding="1rem"
-          withDividers
-          dividerProps={{
-            fadeColor: 'white',
-            focusColor: 'white'
-          }}
-          withActionBar={{
-            actionTitle: (
-              <Container
-                margin="0px"
-                padding="0px"
-                width="100%"
-                customStyles={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end'
-                }}
+      <Page
+        contentEngine="markdown"
+        title={data.meta.title}
+        titleColor="white"
+        subtitle={data.meta.subtitle}
+        content={parsedContent.body}
+        padding="1rem"
+        withDividers
+        dividerProps={{
+          fadeColor: 'white',
+          focusColor: 'white'
+        }}
+        withActionBar={{
+          actionTitle: (
+            <Container
+              margin="0px"
+              padding="0px"
+              width="100%"
+              customStyles={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <Button
+                size="md"
+                className="btn-side-margin"
+                onClick={() => navigate('/')}
+                ghost
+                backgroundColor="#ffffff"
               >
-                <Button
-                  size="md"
-                  className="btn-side-margin"
-                  onClick={() => navigate('/')}
-                  ghost
-                  backgroundColor="#ffffff"
-                >
-                  back
-                </Button>
-                <Button
-                  size="md"
-                  className="btn-side-margin"
-                  ghost
-                  backgroundColor={_heller_base.colors.mcwatt.flickrPink}
-                >
-                  bookmark
-                </Button>
-              </Container>
-            )
-          }}
-          customComponentMap={{
-            h4: ({ node, ...props }: any) => (
-              <Heading {...props} color="deeppink" as="h5" />
-            ),
-            p: ({ node, ...props}: any) => (
-              <Paragraph {...props} color="white" fontSize={20} />
-            ),
-            a: ({ node, ...props }: any) => (
-              <Paragraph
-                {...props}
-                color={_heller_base.colors.dunbar.lightCyan}
-                thin
-                fontSize={16}
-              />
-            )
-          }}
-          dangerouslyOverrideInnerContentStyles={{
-            styles: {
-              maxWidth: '1000px',
-              width: 'auto',
-              justifySelf: 'center',
-              alignSelf: 'center'
-            }
-          }}
-        />
-      ) 
+                back
+              </Button>
+              <Button
+                size="md"
+                className="btn-side-margin"
+                ghost
+                backgroundColor={_heller_base.colors.mcwatt.flickrPink}
+              >
+                bookmark
+              </Button>
+            </Container>
+          )
+        }}
+        customComponentMap={{
+          h4: ({ node, ...props }: any) => (
+            <Heading {...props} color="deeppink" as="h5" />
+          ),
+          p: ({ node, ...props }: any) => (
+            <Paragraph {...props} color="white" fontSize={20} />
+          ),
+          a: ({ node, ...props }: any) => (
+            <Paragraph
+              {...props}
+              color={_heller_base.colors.dunbar.lightCyan}
+              thin
+              fontSize={16}
+            />
+          )
+        }}
+        dangerouslyOverrideInnerContentStyles={{
+          styles: {
+            maxWidth: '1000px',
+            width: 'auto',
+            justifySelf: 'center',
+            alignSelf: 'center'
+          }
+        }}
+      />
+      )
     </Container>
   ) : (
     <Container

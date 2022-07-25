@@ -1,6 +1,6 @@
 {
-  "name": "mdx-story-website",
-  "version": "0.1.0",
+  "name": "couch-gag-client",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@nickgdev/couch-gag-common-lib": "^1.0.0",
@@ -54,6 +54,8 @@
     ]
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.25",
+    "csstype": "^3.1.0",
     "prettier": "^2.6.2"
   }
 }
