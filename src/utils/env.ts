@@ -3,9 +3,11 @@ export function isDev() {
 }
 
 export const devApiTargets = {
-  baseUrl: 'http://localhost:80/'
+  baseUrl: 'http://localhost:80/',
+  metricHub: 'http://localhost:7878/metric'
 } as const;
 
 export const prodApiTargets = {
-  baseUrl: ''
+  baseUrl: '',
+  metricHub: ''
 } as const;

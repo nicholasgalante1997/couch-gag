@@ -1,20 +1,22 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { ThemeProvider, defaultTheme } from './contexts';
 import { Home } from './pages/home';
 import { AnthologyPage } from './pages/anthology';
 import { StoryPage } from './pages/story_';
 import { ErrorPage } from './pages/error';
-import './App.css';
 import { Nav } from './components/nav';
 
-const ThemeContext = createContext({ darkMode: true });
-export const useThemeContext = () => useContext(ThemeContext);
+
+import './App.css';
+
 
 const appQueryClient = new QueryClient();
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -26,7 +28,7 @@ function App() {
 
   return (
     <QueryClientProvider client={appQueryClient}>
-      <ThemeContext.Provider value={{ darkMode }}>
+      <ThemeProvider value={defaultTheme}>
         <BrowserRouter>
           <Nav />
           <Routes>
@@ -38,7 +40,7 @@ function App() {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
-      </ThemeContext.Provider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

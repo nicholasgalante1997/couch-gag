@@ -10,13 +10,26 @@ import ArrowRight from './ArrowRight.svg';
 const { Heading, Paragraph } = Typography;
 
 export function StoryRow(props: StoryRowProps) {
-  const { title, subtitle, index, episodeKey } = props;
+  const {
+    title,
+    subtitle,
+    episodeKey,
+    imgSrc = 'https://via.placeholder.com/90x90'
+  } = props;
   const navigate = useNavigate();
   return (
     <Container asGridParent padding="0.25rem">
-      <Container asGridChild colSpan={12}>
+      <Container asGridChild colSpan={1}>
+        <img
+          src={imgSrc}
+          height={'100%'}
+          width={'100%'}
+          style={{ borderRadius: '4px', objectFit: 'scale-down' }}
+        />
+      </Container>
+      <Container asGridChild colSpan={10}>
         <Heading color="#fff" as="h6">
-          {index + 1}. {title}
+          {title}
         </Heading>
         <Paragraph
           customStyles={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
@@ -27,7 +40,7 @@ export function StoryRow(props: StoryRowProps) {
           {subtitle}
         </Paragraph>
         <Button
-          width="100px"
+          width="24px"
           ghost
           size="sm"
           onClick={() =>
@@ -41,7 +54,6 @@ export function StoryRow(props: StoryRowProps) {
             alignItems: 'center'
           }}
         >
-          Read Here
           <ArrowRight height="16px" width="16px" fill="#ffffff" />
         </Button>
       </Container>

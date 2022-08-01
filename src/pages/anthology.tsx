@@ -40,26 +40,7 @@ export function AnthologyPage() {
         justifyContent: 'flex-start'
       }}
     >
-      <Container
-        customStyles={{
-          ...pageStyles,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          minHeight: '5vh'
-        }}
-        width="100%"
-        padding="1rem"
-      >
-        <Button
-          onClick={() => navigate('/')}
-          ghost
-          backgroundColor="#ffffff"
-          size="lg"
-        >
-          back to home
-        </Button>
-      </Container>
-      <Container width="100%">
+      <Container width="90%">
         <Paragraph
           thin
           color={_heller_base.colors.mcwatt.flickrPink}
@@ -69,7 +50,7 @@ export function AnthologyPage() {
         </Paragraph>
       </Container>
       {Object.keys(data.collection).map((s: any, i: number) => (
-        <Container width={'100%'}>
+        <Container width={'90%'}>
           <StoryRow
             index={i}
             imgSrc={data.collection[s].img}

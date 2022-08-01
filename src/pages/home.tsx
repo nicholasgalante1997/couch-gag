@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Button,
@@ -6,9 +6,11 @@ import {
   Container,
   _heller_base
 } from '@nickgdev/hellerui';
-import { useThemeContext } from '../App';
+import { useThemeContext } from '../contexts';
 import { pageStyles } from '../utils';
 import { getThemedTextColor } from '../utils/theme';
+import { emit } from '../service/metric';
+import { MetricType } from '@nickgdev/couch-gag-common-lib';
 
 const { Heading, Paragraph } = Typography;
 
@@ -16,8 +18,13 @@ export function Home() {
   const { darkMode } = useThemeContext();
 
   const navigate = useNavigate();
-  const navigateToAnthologyPage = () => navigate('/story/season-one/?seasonKey=01&episodeKey=01');
+  const navigateToAnthologyPage = () =>
+    navigate('/story/season-one/?seasonKey=01&episodeKey=01');
   const navigateToBookMarkPage = () => navigate('/bookmarks');
+
+  useEffect(() => {
+    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 })
+  }, []);
 
   return (
     <Container
