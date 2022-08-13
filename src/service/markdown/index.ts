@@ -32,5 +32,5 @@ export async function getStories(): Promise<StoryCollection> {
     }
   })
     .then((r: Response) => r.json())
-    .catch((e: any) => console.error(e));
+    .catch((e: any) => console.error(e)); // better error handling
 }

@@ -1,16 +1,24 @@
-import { Theme } from '@nickgdev/couch-gag-common-lib';
+import { Theme, Treatment, User } from '@nickgdev/couch-gag-common-lib';
 import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
-export async function getTreatment(stashedAssoc?: string): Promise<Theme> {
+type ThemeResponseBody = { data: { themeOptions: Treatment<Theme>[] }};
+
+export async function getTreatment(uId?: string, cId?: string): Promise<ThemeResponseBody> {
     const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
-    const url = base + 'theme-treatment' + stashedAssoc ?? '';
+    const url = base + 'theme';
+
+    const data: { uId?: string, cId?: string } = {};
+    if (uId) data.uId = uId;
+    if (cId) data.cId = cId;
+
     return fetch(url, {
-      method: 'GET',
+      method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'x-ulysses-key': process.env.REACT_APP_ULYSSES_HASHED_KEY!
-      }
+      },
+      body: JSON.stringify(data)
     })
       .then((r: Response) => r.json())
       .catch((e: any) => console.error(e));
