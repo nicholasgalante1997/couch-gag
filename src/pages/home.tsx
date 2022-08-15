@@ -23,7 +23,7 @@ export function Home() {
   const navigateToBookMarkPage = () => navigate('/bookmarks');
 
   useEffect(() => {
-    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 })
+    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
   return (
