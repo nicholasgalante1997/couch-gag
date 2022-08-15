@@ -21,15 +21,8 @@ const SmartAction = (props: ActionProps<MetricType>) => {
   };
 
   return (
-    <Button
-      onClick={onClick}
-      ghost
-    >
-      <span
-        data-iconid={_id}
-        id={id}
-        className={'material-symbols-outlined'}
-      >
+    <Button onClick={onClick} ghost>
+      <span data-iconid={_id} id={id} className={'material-symbols-outlined'}>
         {icon}
       </span>
       {text}
