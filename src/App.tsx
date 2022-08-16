@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { log, deriveCssClassname } from '@nickgdev/couch-gag-common-lib';
+import { Container } from '@nickgdev/hellerui';
 
+import { pageStyles } from './utils';
 import { ThemeProvider, _defaultTheme, Theme } from './contexts';
 import { useQueryThemeTreatment } from './queries';
+
 import { Home } from './pages/home';
 import { AnthologyPage } from './pages/anthology';
 import { StoryPage } from './pages/story_';
@@ -10,10 +14,8 @@ import { ErrorPage } from './pages/error';
 import { Nav } from './components/nav';
 import { Spinner } from './components/Spinner';
 
+import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import './App.css';
-import { log, Treatment } from '@nickgdev/couch-gag-common-lib';
-import { Container } from '@nickgdev/hellerui';
-import { pageStyles } from './utils';
 
 function App() {
   const [darkMode] = useState(true);
@@ -27,14 +29,6 @@ function App() {
     cId = window.sessionStorage.getItem('x-ulysses-colloq-user-id-hash');
   }
 
-  useEffect(() => {
-    if (darkMode) {
-      document.querySelector('body')?.setAttribute('class', 'dark');
-    } else {
-      document.querySelector('body')?.setAttribute('class', 'light');
-    }
-  }, [darkMode]);
-
   const { data, error, isError, isLoading } = useQueryThemeTreatment(
     'test-1',
     undefined
@@ -44,11 +38,18 @@ function App() {
     if (data?.data) {
       if (data.data.themeOptions.length > 0) {
         setTheme({
-         darkMode,
-         font: data.data.themeOptions[0].meta!.theme!.font,
-         palette: data.data.themeOptions[0].meta!.theme!.palette,
-         treatmentId: data.data.themeOptions[0].meta!.theme!.treatmentId
+          darkMode,
+          font: data.data.themeOptions[0].meta!.theme!.font,
+          palette: data.data.themeOptions[0].meta!.theme!.palette,
+          treatmentId: data.data.themeOptions[0].meta!.theme!.treatmentId
         });
+        const { body } = document;
+        body.setAttribute(
+          'class',
+          deriveCssClassname(
+            data.data.themeOptions[0].meta!.theme!.palette.backgroundColor
+          )?.css.bg ?? ''
+        );
       }
     }
   }, [data]);

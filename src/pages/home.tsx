@@ -1,21 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import {
-  Button,
-  Typography,
-  Container,
-  _heller_base
-} from '@nickgdev/hellerui';
-import { useThemeContext } from '../contexts';
-import { pageStyles } from '../utils';
-import { getThemedTextColor } from '../utils/theme';
-import { emit } from '../service/metric';
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
+import { Button, Container, _heller_base, Break } from '@nickgdev/hellerui';
 
-const { Heading, Paragraph } = Typography;
+import { useThemeContext } from '../contexts';
+import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
+import { emit } from '../service/metric';
 
 export function Home() {
-  const { darkMode } = useThemeContext();
+  const { darkMode, font, palette } = useThemeContext();
 
   const navigate = useNavigate();
   const navigateToAnthologyPage = () =>
@@ -34,9 +27,12 @@ export function Home() {
       margin="0px"
       customStyles={pageStyles}
     >
-      <Heading as="h5" color={getThemedTextColor(darkMode)}>
-        the couch gag
-      </Heading>
+      {forwardVarText(
+        getSafeFontKey(font.google.family),
+        'the couch gag',
+        'h2',
+        { customStyles: { color: palette.headingPrimaryColor } }
+      )}
       <hr
         style={{
           width: '20%',
@@ -52,17 +48,33 @@ export function Home() {
           justifyContent: 'center'
         }}
       >
-        <Paragraph
-          customStyles={{ textAlign: 'center' }}
-          thin
-          color={getThemedTextColor(darkMode)}
-        >
-          this is a story about a lot of stories.
-          <br />
-          that's what an anthology is, if you're still fuzzy about that.
-          <br />
-        </Paragraph>
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          'this is a story about a lot of stories',
+          'p',
+          {
+            customStyles: {
+              color: palette.headingPrimaryColor,
+              textAlign: 'center',
+              fontWeight: '200'
+            }
+          }
+        )}
+        <Break />
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          "that's what an anthology is, if you're still fuzzy about that.",
+          'p',
+          {
+            customStyles: {
+              color: palette.headingPrimaryColor,
+              textAlign: 'center',
+              fontWeight: '200'
+            }
+          }
+        )}
       </Container>
+      <Break />
       <Container
         padding="1rem"
         customStyles={{
@@ -78,7 +90,11 @@ export function Home() {
           backgroundColor={_heller_base.colors.dunbar.lightCyan}
           className="btn"
         >
-          to the origin
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'to the origin',
+            'p'
+          )}
         </Button>
         <Button
           onClick={navigateToBookMarkPage}
@@ -86,7 +102,11 @@ export function Home() {
           backgroundColor={_heller_base.colors.mcwatt.flickrPink}
           className="btn"
         >
-          i have a bookmark
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'i have a bookmark',
+            'p'
+          )}
         </Button>
       </Container>
     </Container>
