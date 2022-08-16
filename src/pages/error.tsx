@@ -1,29 +1,40 @@
-import {
-  Container,
-  HellerDivider,
-  Typography,
-  Button,
-  Break
-} from '@nickgdev/hellerui';
 import { useNavigate } from 'react-router';
-import { pageStyles } from '../utils';
+import { Container, Button, Break } from '@nickgdev/hellerui';
 
-const { Heading, Paragraph } = Typography;
+import { useThemeContext } from '../contexts';
+import { pageStyles, getSafeFontKey, forwardVarText } from '../utils';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
+  const { font, palette } = useThemeContext();
   return (
     <Container customStyles={pageStyles}>
-      <Heading color="deeppink" as="h2">
-        404: Page Not Found
-      </Heading>
+      {forwardVarText(
+        getSafeFontKey(font.google.family),
+        '404: Page Not Found',
+        'h2',
+        { customStyles: { color: palette.headingPrimaryColor } }
+      )}
       <hr color="white" style={{ width: '50%' }} />
-      <Paragraph color="white" italic>
-        How'd you get here?
-      </Paragraph>
+      {forwardVarText(
+        getSafeFontKey(font.google.family),
+        "How'd you get here?",
+        'p',
+        {
+          customStyles: {
+            color: palette.paragraphTextColor,
+            fontStyle: 'italic'
+          }
+        }
+      )}
       <Break />
       <Button onClick={() => navigate('/')} ghost backgroundColor="#ffffff">
-        back to home
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          'back to home',
+          'p',
+          { customStyles: { color: palette.paragraphTextColor } }
+        )}
       </Button>
     </Container>
   );

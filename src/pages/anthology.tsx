@@ -1,21 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import {
-  Button,
-  Container,
-  Typography,
-  _heller_base
-} from '@nickgdev/hellerui';
-import { pageStyles } from '../utils';
+import { log } from '@nickgdev/couch-gag-common-lib';
+import { Container, _heller_base } from '@nickgdev/hellerui';
+
+import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
+import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
+
 import { StoryRow } from '../components/StoryRow.widget';
 import { Spinner } from '../components/Spinner';
-import { log } from '@nickgdev/couch-gag-common-lib';
-
-const { Paragraph } = Typography;
 
 export function AnthologyPage() {
   const navigate = useNavigate();
+  const { font } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
   React.useEffect(() => {
@@ -41,13 +38,13 @@ export function AnthologyPage() {
       }}
     >
       <Container width="90%">
-        <Paragraph
-          thin
-          color={_heller_base.colors.mcwatt.flickrPink}
-          fontSize={40}
-        >
-          Season One
-        </Paragraph>
+        {forwardVarText(getSafeFontKey(font.google.family), 'Season One', 'p', {
+          customStyles: {
+            fontSize: 40,
+            fontWeight: '200',
+            color: _heller_base.colors.mcwatt.flickrPink
+          }
+        })}
       </Container>
       {Object.keys(data.collection).map((s: any, i: number) => (
         <Container width={'90%'}>

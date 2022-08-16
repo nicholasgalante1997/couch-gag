@@ -14,9 +14,14 @@ export function Title() {
       from={{ fontSize: '1.15rem' }}
       to={{ color: _heller_base.colors.dunbar.lightCyan, fontSize: '1.25rem' }}
     >
-      {forwardVarText(getSafeFontKey(font.google.family), 'couch gag v0', 'h5', {
-        onClick: () => navigate('/')
-      })}
+      {forwardVarText(
+        getSafeFontKey(font.google.family),
+        'couch gag v0',
+        'h5',
+        {
+          onClick: () => navigate('/')
+        }
+      )}
     </Hoverable>
   );
 }

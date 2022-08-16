@@ -1,13 +1,11 @@
-import {
-  Container,
-  Typography,
-  Button,
-  _heller_base
-} from '@nickgdev/hellerui';
 import { useNavigate } from 'react-router-dom';
+import { Container, Button, _heller_base } from '@nickgdev/hellerui';
+
+import { useThemeContext } from '../contexts';
+import { forwardVarText, getSafeFontKey } from '../utils';
 import { StoryRowProps } from '../types';
+
 import ArrowRight from './ArrowRight.svg';
-const { Heading, Paragraph } = Typography;
 
 export function StoryRow(props: StoryRowProps) {
   const {
@@ -16,6 +14,7 @@ export function StoryRow(props: StoryRowProps) {
     episodeKey,
     imgSrc = 'https://via.placeholder.com/90x90'
   } = props;
+  const { font } = useThemeContext();
   const navigate = useNavigate();
   return (
     <Container asGridParent padding="0.25rem">
@@ -28,17 +27,18 @@ export function StoryRow(props: StoryRowProps) {
         />
       </Container>
       <Container asGridChild colSpan={10}>
-        <Heading color="#fff" as="h6">
-          {title}
-        </Heading>
-        <Paragraph
-          customStyles={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
-          bold
-          color={_heller_base.colors.majorMajor.gainsboro}
-          fontSize={14}
-        >
-          {subtitle}
-        </Paragraph>
+        {forwardVarText(getSafeFontKey(font.google.family), title, 'h2', {
+          customStyles: { color: '#fff' }
+        })}
+        {forwardVarText(getSafeFontKey(font.google.family), subtitle, 'p', {
+          customStyles: {
+            color: _heller_base.colors.majorMajor.gainsboro,
+            fontWeight: 'bold',
+            fontSize: 14,
+            marginTop: '0.5rem',
+            marginBottom: '0.5rem'
+          }
+        })}
         <Button
           width="24px"
           ghost
