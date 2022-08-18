@@ -30,7 +30,7 @@ function App() {
   }
 
   const { data, error, isError, isLoading } = useQueryThemeTreatment(
-    'test-3',
+    'test-5',
     undefined
   );
 
