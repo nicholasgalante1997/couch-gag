@@ -14,12 +14,13 @@ export function StoryRow(props: StoryRowProps) {
     episodeKey,
     imgSrc = 'https://via.placeholder.com/90x90'
   } = props;
-  const { font } = useThemeContext();
+  const { font, palette } = useThemeContext();
   const navigate = useNavigate();
   return (
     <Container asGridParent padding="0.25rem">
       <Container asGridChild colSpan={1}>
         <img
+          alt='simpson-couch-gag-img'
           src={imgSrc}
           height={'100%'}
           width={'100%'}
@@ -28,11 +29,11 @@ export function StoryRow(props: StoryRowProps) {
       </Container>
       <Container asGridChild colSpan={10}>
         {forwardVarText(getSafeFontKey(font.google.family), title, 'h2', {
-          customStyles: { color: '#fff' }
+          customStyles: { color: palette.headingSecondaryColor }
         })}
         {forwardVarText(getSafeFontKey(font.google.family), subtitle, 'p', {
           customStyles: {
-            color: _heller_base.colors.majorMajor.gainsboro,
+            color: palette.paragraphTextColor,
             fontWeight: 'bold',
             fontSize: 14,
             marginTop: '0.5rem',
@@ -46,7 +47,7 @@ export function StoryRow(props: StoryRowProps) {
           onClick={() =>
             navigate(`/story/season-one?seasonKey=01&episodeKey=${episodeKey}`)
           }
-          backgroundColor={_heller_base.colors.mcwatt.flickrPink}
+          backgroundColor={palette.buttonColorOptions[1]}
           style={{
             display: 'flex',
             flexDirection: 'row',

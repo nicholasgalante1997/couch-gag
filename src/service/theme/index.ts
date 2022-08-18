@@ -1,4 +1,4 @@
-import { Theme, Treatment, User } from '@nickgdev/couch-gag-common-lib';
+import { Theme, Treatment } from '@nickgdev/couch-gag-common-lib';
 import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
 type ThemeResponseBody = {

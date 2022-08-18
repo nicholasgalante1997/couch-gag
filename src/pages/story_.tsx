@@ -8,9 +8,12 @@ import {
   pageStyles,
   recursiveQueryParamConversion,
   parseUrlString,
-  parseContent
+  parseContent,
+  getSafeFontKey,
+  forwardVarText
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
+import { useThemeContext } from '../contexts';
 import { Spinner } from '../components/Spinner';
 import { StoryInteract } from '../components/story-interact';
 
@@ -19,6 +22,7 @@ const { Heading, Paragraph } = Typography;
 export function StoryPage() {
   const navigate = useNavigate();
   const { search } = useLocation();
+  const { palette, font } = useThemeContext();
 
   const queryParam = recursiveQueryParamConversion({}, parseUrlString(search));
 
@@ -52,6 +56,7 @@ export function StoryPage() {
       >
         {data.meta?.img ? (
           <img
+            alt="story image, a simpson couch gag cut"
             src={data.meta.img}
             style={{
               width: '100%',
@@ -64,7 +69,7 @@ export function StoryPage() {
         <Page
           contentEngine="markdown"
           title={data.meta.title}
-          titleColor="white"
+          titleColor={palette.headingPrimaryColor}
           subtitle={data.meta.subtitle}
           content={parsedContent.body}
           padding="1rem"
@@ -74,12 +79,19 @@ export function StoryPage() {
             focusColor: 'white'
           }}
           customComponentMap={{
-            h4: ({ node, ...props }: any) => (
-              <Heading {...props} color="deeppink" as="h5" />
-            ),
-            p: ({ node, ...props }: any) => (
-              <Paragraph {...props} color="white" fontSize={14} />
-            ),
+            h4: ({ node, ...props }: any) => forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+              ...props,
+              customStyles: {
+                color: palette.headingPrimaryColor
+              }
+            }),
+            p: ({ node, ...props }: any) => forwardVarText(getSafeFontKey(font.google.family), props.children, 'p', {
+              ...props,
+              customStyles: {
+                fontSize: 16,
+                color: palette.paragraphTextColor
+              }
+            }),
             a: ({ node, ...props }: any) => (
               <Paragraph
                 {...props}
@@ -104,7 +116,7 @@ export function StoryPage() {
   ) : (
     <Container
       radius="none"
-      width={'100%'}
+      width="100%'"
       padding="0px"
       margin="0px"
       customStyles={pageStyles}
