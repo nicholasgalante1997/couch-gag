@@ -14,21 +14,17 @@ export function OneCol(props: OneColWidgetProps) {
     key,
     childNode,
     containerProps = {
-        customStyles: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        background: palette.buttonColorOptions[1]
+      customStyles: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      background: palette.buttonColorOptions[1]
     }
   } = props;
   return (
-    <Container
-      asGridParent
-      padding="0px"
-      height="240px"
-    >
+    <Container asGridParent padding="0px" height="240px">
       <Container {...containerProps} asGridChild colSpan={12}>
         {childNode}
       </Container>

@@ -71,7 +71,10 @@ export function Home() {
             width: '50%'
           }}
         >
-          <Button onClick={navigateToAnthologyPage} backgroundColor={palette.buttonColorOptions[2]}>
+          <Button
+            onClick={navigateToAnthologyPage}
+            backgroundColor={palette.buttonColorOptions[2]}
+          >
             {forwardVarText(
               getSafeFontKey(font.google.family),
               'to the origin',
@@ -80,12 +83,15 @@ export function Home() {
                 customStyles: {
                   color: palette.paragraphTextColor,
                   textAlign: 'center',
-                  fontWeight: '200',
+                  fontWeight: '200'
                 }
               }
             )}
           </Button>
-          <Button onClick={navigateToBookMarkPage} backgroundColor={palette.buttonColorOptions[1]}>
+          <Button
+            onClick={navigateToBookMarkPage}
+            backgroundColor={palette.buttonColorOptions[1]}
+          >
             {forwardVarText(
               getSafeFontKey(font.google.family),
               'i have a bookmark',

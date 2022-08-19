@@ -16,6 +16,7 @@ import { Spinner } from './components/animated/Spinner';
 
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import './App.css';
+import { ThemeGui } from './pages/dev/theme-gui';
 
 function App() {
   const [darkMode] = useState(true);
@@ -89,6 +90,9 @@ function App() {
           <Route path="anthology" element={<AnthologyPage />} />
           <Route path="story">
             <Route path="season-one" element={<StoryPage />} />
+          </Route>
+          <Route path="devo">
+            <Route path="theme-gui" element={ <ThemeGui />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
