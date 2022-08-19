@@ -7,8 +7,8 @@ import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
 import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
 
-import { StoryRow } from '../components/StoryRow.widget';
-import { Spinner } from '../components/Spinner';
+import { StoryRow } from '../components/widgets/StoryRow.widget';
+import { Spinner } from '../components/animated/Spinner';
 
 export function AnthologyPage() {
   const navigate = useNavigate();

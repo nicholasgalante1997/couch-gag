@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { log, deriveCssClassname } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 
-import { pageStyles } from './utils';
+import { pageStyles, findThemeInDevEnvOrUndefined } from './utils';
 import { ThemeProvider, _defaultTheme, Theme } from './contexts';
 import { useQueryThemeTreatment } from './queries';
 
@@ -12,14 +12,23 @@ import { AnthologyPage } from './pages/anthology';
 import { StoryPage } from './pages/story_';
 import { ErrorPage } from './pages/error';
 import { Nav } from './components/nav';
-import { Spinner } from './components/Spinner';
+import { Spinner } from './components/animated/Spinner';
 
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import './App.css';
 
 function App() {
   const [darkMode] = useState(true);
-  const [theme, setTheme] = useState<Theme>();
+  const [theme, setTheme] = useState<Theme>(
+    findThemeInDevEnvOrUndefined('dunbar', 6) ?? _defaultTheme
+  );
+
+  document.body.setAttribute(
+    'class',
+    deriveCssClassname(
+      findThemeInDevEnvOrUndefined('dunbar', 6)?.palette.backgroundColor ?? ''
+    )?.css.bg ?? ''
+  );
 
   let uId: string | undefined | null;
   let cId: string | undefined | null;
@@ -30,26 +39,26 @@ function App() {
   }
 
   const { data, error, isError, isLoading } = useQueryThemeTreatment(
-    'test-5',
+    undefined,
     undefined
   );
 
   useEffect(() => {
     if (data?.data) {
       if (data.data.themeOptions.length > 0) {
-        setTheme({
-          darkMode,
-          font: data.data.themeOptions[0].meta!.theme!.font,
-          palette: data.data.themeOptions[0].meta!.theme!.palette,
-          treatmentId: data.data.themeOptions[0].meta!.theme!.treatmentId
-        });
-        const { body } = document;
-        body.setAttribute(
-          'class',
-          deriveCssClassname(
-            data.data.themeOptions[0].meta!.theme!.palette.backgroundColor
-          )?.css.bg ?? ''
-        );
+        // setTheme({
+        //   darkMode,
+        //   font: data.data.themeOptions[0].meta!.theme!.font,
+        //   palette: data.data.themeOptions[0].meta!.theme!.palette,
+        //   treatmentId: data.data.themeOptions[0].meta!.theme!.treatmentId
+        // });
+        // const { body } = document;
+        // body.setAttribute(
+        //   'class',
+        //   deriveCssClassname(
+        //     data.data.themeOptions[0].meta!.theme!.palette.backgroundColor
+        //   )?.css.bg ?? ''
+        // );
       }
     }
   }, [data]);
@@ -69,10 +78,6 @@ function App() {
         <ErrorPage />
       </Container>
     );
-  }
-
-  if (data) {
-    console.log({ data });
   }
 
   return (

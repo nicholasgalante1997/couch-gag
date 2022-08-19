@@ -5,3 +5,4 @@ export * from './markdown';
 export * from './metric';
 export * from './query';
 export * from './style';
+export * from './theme';

@@ -2,7 +2,7 @@ import { _heller_base } from '@nickgdev/hellerui';
 import { useNavigate } from 'react-router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
-import { Hoverable } from '../Hoverable';
+import { Hoverable } from '../animated/Hoverable';
 
 export function Title() {
   const navigate = useNavigate();

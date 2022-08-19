@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, _heller_base } from '@nickgdev/hellerui';
 
-import { useThemeContext } from '../contexts';
-import { forwardVarText, getSafeFontKey } from '../utils';
-import { StoryRowProps } from '../types';
+import { useThemeContext } from '../../contexts';
+import { forwardVarText, getSafeFontKey } from '../../utils';
+import { StoryRowProps } from '../../types';
 
-import ArrowRight from './ArrowRight.svg';
+import ArrowRight from '../svgs/ArrowRight.svg';
 
 export function StoryRow(props: StoryRowProps) {
   const {
@@ -20,7 +20,7 @@ export function StoryRow(props: StoryRowProps) {
     <Container asGridParent padding="0.25rem">
       <Container asGridChild colSpan={1}>
         <img
-          alt='simpson-couch-gag-img'
+          alt="simpson-couch-gag-img"
           src={imgSrc}
           height={'100%'}
           width={'100%'}
