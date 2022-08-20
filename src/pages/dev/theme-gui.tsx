@@ -1,10 +1,10 @@
-import { Container } from '@nickgdev/hellerui';
+import { Button, Container } from '@nickgdev/hellerui';
 import {
   heller_couch_font_treatment_pool,
   heller_couch_palette_treatment_pool,
   heller_couch_view_theme_treatment_pool
 } from '@nickgdev/couch-gag-common-lib';
-import React, { SelectHTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 import { Theme } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
 
@@ -58,8 +58,17 @@ export function ThemeGui() {
               }
           }
         )}
+        <br />
+        <Container customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+          {forwardVarText(getSafeFontKey(localTheme.font.google.family), 'button options', 'span', { customStyles: { color: "white" }})}
+          {localTheme.palette.buttonColorOptions.map(bOpt => bOpt.length === 7 ? <Button color="#000000" backgroundColor={bOpt}>{bOpt}</Button> : <></> )}
+        </Container>
       </>
     );
+  }
+
+  function renderSubsliceOfThemeLayout(){
+
   }
 
   return (

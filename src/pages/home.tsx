@@ -4,15 +4,14 @@ import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import {
   Button,
   Container,
-  HellerDivider,
   _heller_base
 } from '@nickgdev/hellerui';
 
+import { OneCol } from '../components/widgets/OneCol.widget';
 import { TwoColStaggered } from '../components/widgets/TwoColStaggered.widget';
 import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { forwardVarText, getSafeFontKey } from '../utils';
-import { OneCol } from '../components/widgets/OneCol.widget';
 
 export function Home() {
   const { darkMode, font, palette } = useThemeContext();
@@ -42,7 +41,7 @@ export function Home() {
           'h2',
           { customStyles: { color: palette.headingPrimaryColor } }
         )}
-        <hr style={{ width: '70%' }} color={palette.paragraphTextColor} />
+        <hr style={{ width: '70%' }} color={palette.backgroundTertiaryColor} />
         {forwardVarText(
           getSafeFontKey(font.google.family),
           'this is a story about a whole lot of stories',
@@ -81,7 +80,7 @@ export function Home() {
               'span',
               {
                 customStyles: {
-                  color: palette.paragraphTextColor,
+                  color: palette.backgroundColor,
                   textAlign: 'center',
                   fontWeight: '200'
                 }
@@ -98,7 +97,7 @@ export function Home() {
               'span',
               {
                 customStyles: {
-                  color: palette.paragraphTextColor,
+                  color: palette.backgroundColor,
                   textAlign: 'center',
                   fontWeight: '200'
                 }
@@ -110,9 +109,29 @@ export function Home() {
     );
   }
 
+  function renderWidgetKeyOneRightJsx() {
+    return (
+      <Container
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'flex-start'
+        }}
+      >
+        <Container>
+          {forwardVarText(getSafeFontKey(font.google.family), 'See what critics are saying about "The Couch Gag"', 'i', { customStyles: { color: 'white' }})}
+        </Container>
+        <Container>
+          
+        </Container>
+      </Container>
+    );
+  }
+
   return (
     <Container padding="0rem" id="cg-home-page-wrapping-container">
-      <TwoColStaggered key="1" leftNode={renderWidgetKeyOneLeftJsx()} />
+      <TwoColStaggered key="1" leftNode={renderWidgetKeyOneLeftJsx()} rightNode={renderWidgetKeyOneRightJsx()}/>
       <OneCol key="2" />
     </Container>
   );

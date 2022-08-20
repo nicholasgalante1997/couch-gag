@@ -24,7 +24,7 @@ export function OneCol(props: OneColWidgetProps) {
     }
   } = props;
   return (
-    <Container asGridParent padding="0px" height="240px">
+    <Container asGridParent radius="none" padding="0px" height="240px">
       <Container {...containerProps} asGridChild colSpan={12}>
         {childNode}
       </Container>
