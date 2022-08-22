@@ -8,11 +8,10 @@ export function Title() {
   const navigate = useNavigate();
   const { font, palette } = useThemeContext();
 
-  console.log(font);
   return (
     <Hoverable
-      from={{ fontSize: '1.15rem' }}
-      to={{ color: _heller_base.colors.dunbar.lightCyan, fontSize: '1.25rem' }}
+      from={{ color: palette.headingPrimaryColor, fontSize: '1.15rem' }}
+      to={{ color: palette.headingSecondaryColor, fontSize: '1.25rem' }}
     >
       {forwardVarText(
         getSafeFontKey(font.google.family),
@@ -20,9 +19,6 @@ export function Title() {
         'h5',
         {
           onClick: () => navigate('/'),
-          customStyles: {
-            color: palette.headingPrimaryColor
-          }
         }
       )}
     </Hoverable>

@@ -34,13 +34,25 @@ export function TwoColStaggered(props: TwoColStaggeredProps) {
       radius="none"
       asGridParent
       padding="0px"
-      height="400px"
+      height="280px"
       customStyles={{ marginLeft: '1%' }}
     >
-      <Container {...leftContainerProps} asGridChild radius="none" colSpan={leftSpan}>
+      <Container
+        {...leftContainerProps}
+        padding="0px"
+        asGridChild
+        radius="none"
+        colSpan={leftSpan}
+      >
         {leftNode}
       </Container>
-      <Container {...rightContainerProps} asGridChild radius="none" colSpan={rightSpan}>
+      <Container
+        {...rightContainerProps}
+        padding="0px"
+        asGridChild
+        radius="none"
+        colSpan={rightSpan}
+      >
         {rightNode}
       </Container>
     </Container>

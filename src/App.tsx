@@ -18,7 +18,6 @@ import { StoryPage } from './pages/story_';
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import './App.css';
 
-
 function App() {
   const [darkMode] = useState(true);
   const [theme, setTheme] = useState<Theme>(_defaultTheme);
@@ -73,6 +72,10 @@ function App() {
     );
   }
 
+  if (data) {
+    console.log({ location: 'App.tsx Line 76', data })
+  }
+
   return (
     <ThemeProvider value={theme ?? _defaultTheme}>
       <BrowserRouter>
@@ -84,7 +87,7 @@ function App() {
             <Route path="season-one" element={<StoryPage />} />
           </Route>
           <Route path="devo">
-            <Route path="theme-gui" element={ <ThemeGui />} />
+            <Route path="theme-gui" element={<ThemeGui />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

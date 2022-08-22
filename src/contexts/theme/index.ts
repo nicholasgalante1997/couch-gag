@@ -11,7 +11,7 @@ const vts = heller_couch_view_theme_treatment_pool.ViewThemeTreatments;
 export const _defaultTheme: Theme = {
   darkMode: false,
   font: vts[0].meta!.theme!.font,
-  palette: vts[0].meta!.theme!.palette, 
+  palette: vts[0].meta!.theme!.palette,
   treatmentId: vts[0].id
 };
 
