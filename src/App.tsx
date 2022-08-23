@@ -5,7 +5,7 @@ import { Container } from '@nickgdev/hellerui';
 
 import { ThemeProvider, _defaultTheme, Theme } from './contexts';
 import { useQueryThemeTreatment } from './queries';
-import { pageStyles, findThemeInDevEnvOrUndefined } from './utils';
+import { pageStyles } from './utils';
 
 import { Nav } from './components/nav';
 import { Spinner } from './components/animated/Spinner';
@@ -32,7 +32,9 @@ function App() {
 
   const { data, error, isError, isLoading } = useQueryThemeTreatment(
     undefined,
-    undefined
+    undefined,
+    undefined,
+    'dunbar'
   );
 
   useEffect(() => {
@@ -73,7 +75,7 @@ function App() {
   }
 
   if (data) {
-    console.log({ location: 'App.tsx Line 76', data })
+    console.log({ location: 'App.tsx Line 76', data });
   }
 
   return (

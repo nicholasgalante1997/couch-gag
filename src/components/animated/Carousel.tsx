@@ -12,7 +12,7 @@ export default function (props: CarouselProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (current === (props.items.length - 1)) {
+      if (current === props.items.length - 1) {
         setCurrent(0);
       } else {
         setCurrent((c) => c + 1);
@@ -25,7 +25,11 @@ export default function (props: CarouselProps) {
   return (
     <Container
       id="carousel-parent"
-      customStyles={{ minWidth: '100%', display: 'flex', flexDirection: 'column' }}
+      customStyles={{
+        minWidth: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
     >
       <Container
         id="carousel-item-parent"

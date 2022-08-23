@@ -1,194 +1,138 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
-import { Button, Container, _heller_base } from '@nickgdev/hellerui';
+import { Container, _heller_base } from '@nickgdev/hellerui';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { TwoColStaggered } from '../components/widgets/TwoColStaggered.widget';
 import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
-import {
-  forwardVarText,
-  getSafeFontKey,
-  CarouselTextOptions,
-  carouselReviews
-} from '../utils';
-import Carousel from '../components/animated/Carousel';
+import { forwardVarText, getSafeFontKey } from '../utils';
+import SlideIn from '../components/animated/SlideIn';
+
+const blurb =
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
 export function Home() {
-  const { darkMode, font, palette } = useThemeContext();
+  const { font, palette } = useThemeContext();
 
   const navigate = useNavigate();
   const navigateToAnthologyPage = () =>
     navigate('/story/season-one/?seasonKey=01&episodeKey=01');
-  const navigateToBookMarkPage = () => navigate('/bookmarks');
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
-  function renderWidgetKeyOneLeftJsx() {
+  function renderWidgetOne() {
     return (
       <Container
+        padding="1rem"
         customStyles={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          'the couch gag',
-          'h2',
-          { customStyles: { color: palette.headingPrimaryColor } }
-        )}
-        <hr style={{ width: '70%' }} color={palette.backgroundTertiaryColor} />
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          'this is a story about a whole lot of stories',
-          'p',
-          { customStyles: { color: palette.paragraphTextColor } }
-        )}
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          "that's what an anthology is, if you're still fuzzy about that.",
-          'span',
-          {
-            customStyles: {
-              color: palette.paragraphTextColor,
-              textAlign: 'center',
-              fontWeight: '200'
-            }
-          }
-        )}
-        <Container
-          customStyles={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            marginTop: '0.5rem',
-            width: '50%'
-          }}
-        >
-          <Button
-            onClick={navigateToAnthologyPage}
-            backgroundColor={palette.buttonColorOptions[2]}
-          >
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              'to the origin',
-              'span',
-              {
-                customStyles: {
-                  color: palette.backgroundColor,
-                  textAlign: 'center',
-                  fontWeight: '200'
-                }
-              }
-            )}
-          </Button>
-          <Button
-            onClick={navigateToBookMarkPage}
-            backgroundColor={palette.buttonColorOptions[1]}
-          >
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              'i have a bookmark',
-              'span',
-              {
-                customStyles: {
-                  color: palette.backgroundColor,
-                  textAlign: 'center',
-                  fontWeight: '200'
-                }
-              }
-            )}
-          </Button>
-        </Container>
-      </Container>
-    );
-  }
-
-  function renderWidgetKeyOneRightJsx() {
-    return (
-      <Container
-        id="home-page-widget-one-parent-container-right"
-        className="home-page-widget-one-parent-container-right-cl"
-        padding="0px"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           alignItems: 'flex-start'
         }}
       >
-        <Container
-          id="home-page-widget-one-title-container-right"
-          className="home-page-widget-one-title-container-right"
-          padding="0px"
-        >
-          {forwardVarText(
-            getSafeFontKey('Caveat' as CarouselTextOptions),
-            'See what critics are saying about "The Couch Gag"',
-            'h4',
-            { customStyles: { color: palette.paragraphTextColor, fontWeight: '800', marginLeft: '1.25rem' } }
-          )}
-        </Container>
-        <Container
-          id="home-page-widget-one-carousel-container-right"
-          className="home-page-widget-one-carousel-container-right"
-          padding="0px"
-          width="100%"
-        >
-          <Carousel items={renderCarouselItems()} />
+        {forwardVarText(getSafeFontKey(font.google.family), 'the', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            fontSize: '4rem'
+          }
+        })}
+        {forwardVarText(getSafeFontKey(font.google.family), 'couch gag', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            marginBottom: '12px',
+            fontSize: '4rem'
+          }
+        })}
+        <Container width="68%">
+          {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+            customStyles: {
+              color: palette.paragraphTextColor
+            }
+          })}
         </Container>
       </Container>
     );
   }
 
-  function renderCarouselItems(): JSX.Element[] {
-    const cursiveFontFamily: CarouselTextOptions = 'Caveat';
-    return carouselReviews.map((reviewTuple, index) => {
-      return (
+  function renderWidgetTwo() {
+    return (
+      <Container
+        id="home-page-widget-two-parent-container"
+        className="home-page-widget-two-parent-container-cl"
+        padding="0px"
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row'
+        }}
+        height="100%"
+      >
         <Container
-          key={`home-page-review-${index}`}
-          className="carousel-item"
+          height="100%"
+          width="50%"
           padding="0px"
           customStyles={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center'
           }}
         >
-          {forwardVarText(getSafeFontKey(cursiveFontFamily), reviewTuple[1], 'h4', {
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'The Good',
+            'h3',
+            {
               customStyles: {
                 color: palette.backgroundTertiaryColor,
-                fontSize: '2rem'
+                marginTop: '2rem',
+                fontWeight: '800'
               }
-          })}
-          {forwardVarText(getSafeFontKey(font.google.family), `- ${reviewTuple[0]}`, 'code', {
-              customStyles: {
-                color: palette.paragraphTextColor,
-                fontSize: '12px'
-              }
-          })}
+            }
+          )}
+          <hr style={{ width: '90%' }} color={palette.backgroundColor}/>
         </Container>
-      );
-    });
+        <Container height="100%" width="50%" padding="0px">
+          <SlideIn dir='right' customStyles={{ marginTop: '2rem' }}>
+            <div id="placeholder" />
+          </SlideIn>
+        </Container>
+      </Container>
+    );
   }
 
   return (
     <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
-      <TwoColStaggered
-        key="1"
-        leftNode={renderWidgetKeyOneLeftJsx()}
-        rightNode={renderWidgetKeyOneRightJsx()}
-        rightContainerProps={{ background: palette.backgroundComplimentColor }}
+      <OneCol
+        widgetKey="home-page-widget-one"
+        height="60vh"
+        containerProps={{
+          customStyles: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            paddingLeft: '8vw'
+          }
+        }}
+        childNode={renderWidgetOne()}
       />
-      <OneCol key="2" />
+      <OneCol
+        widgetKey="home-page-widget-two"
+        containerProps={{
+          background: palette.backgroundComplimentColor
+        }}
+        childNode={renderWidgetTwo()}
+      />
+      <OneCol
+        widgetKey="home-page-widget-three"
+        containerProps={{
+          background: palette.backgroundTertiaryColor
+        }}
+      />
     </Container>
   );
 }

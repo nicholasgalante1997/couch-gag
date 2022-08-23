@@ -1,0 +1,33 @@
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100vw);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100vw);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.left-slide-in-fast {
+    animation: slideInLeft 1s ease 0s 1;
+}
+
+.left-slide-in {
+    animation: slideInLeft 2s ease 0s 1;
+}
+
+.right-slide-in-fast {
+    animation: slideInRight 1s ease 0s 1;
+}
+
+.right-slide-in {
+    animation: slideInRight 2s ease 0s 1;
+}

@@ -14,6 +14,17 @@ body.light {
   background-color: #ffffff;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block-start: 4px;
+  margin-block-end: 4px;
+  line-height: 1.15;
+}
+
 .btn {
   margin: 0.5rem;
 }
@@ -21,4 +32,11 @@ body.light {
 .btn-side-margin {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}
+
+#placeholder {
+  height: 100px;
+  width: 100px;
+  border-radius: 4px;
+  background: violet;
 }

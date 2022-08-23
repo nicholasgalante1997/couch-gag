@@ -18,7 +18,7 @@ export function Title() {
         'couch gag v0',
         'h5',
         {
-          onClick: () => navigate('/'),
+          onClick: () => navigate('/')
         }
       )}
     </Hoverable>

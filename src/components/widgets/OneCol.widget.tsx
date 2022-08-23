@@ -3,7 +3,8 @@ import { ContainerProps } from '@nickgdev/hellerui/lib/components/Container/type
 import { useThemeContext } from '../../contexts';
 
 export type OneColWidgetProps = {
-  key: string;
+  widgetKey?: string;
+  height?: number | string;
   childNode?: JSX.Element | JSX.Element[];
   containerProps?: ContainerProps;
 };
@@ -11,8 +12,8 @@ export type OneColWidgetProps = {
 export function OneCol(props: OneColWidgetProps) {
   const { palette } = useThemeContext();
   const {
-    key,
     childNode,
+    height = '280px',
     containerProps = {
       customStyles: {
         display: 'flex',
@@ -24,7 +25,13 @@ export function OneCol(props: OneColWidgetProps) {
     }
   } = props;
   return (
-    <Container asGridParent radius="none" padding="0px" margin="0 auto" height="280px">
+    <Container
+      asGridParent
+      radius="none"
+      padding="0px"
+      margin="0 auto"
+      height={height}
+    >
       <Container {...containerProps} asGridChild colSpan={12}>
         {childNode}
       </Container>

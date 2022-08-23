@@ -3,7 +3,7 @@ import { ContainerProps } from '@nickgdev/hellerui/lib/components/Container/type
 import { useThemeContext } from '../../contexts';
 
 export type TwoColStaggeredProps = {
-  key: string;
+  widgetKey?: string;
   leftNode?: JSX.Element | JSX.Element[];
   leftSpan?: number;
   rightNode?: JSX.Element | JSX.Element[];
@@ -19,13 +19,13 @@ export function TwoColStaggered(props: TwoColStaggeredProps) {
     rightNode,
     leftSpan = 5,
     rightSpan = 7,
-    key,
+    widgetKey = 'two-col',
     leftContainerProps = {
-      id: 'cg-staggered-left-widget-' + key,
+      id: 'cg-staggered-left-widget-' + widgetKey,
       background: palette.backgroundColor
     },
     rightContainerProps = {
-      id: 'cg-staggered-right-widget-' + key,
+      id: 'cg-staggered-right-widget-' + widgetKey,
       background: palette.headingPrimaryColor
     }
   } = props;
