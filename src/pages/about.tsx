@@ -36,7 +36,7 @@ const blurb =
               customStyles: {
                 color: palette.headingPrimaryColor,
                 margin: '0px',
-                fontSize: '4rem'
+                fontSize: '2rem'
               }
             })}
           </Container>
