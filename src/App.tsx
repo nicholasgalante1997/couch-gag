@@ -13,6 +13,7 @@ import { ThemeGui } from './pages/dev/theme-gui';
 import { AnthologyPage } from './pages/anthology';
 import { ErrorPage } from './pages/error';
 import { Home } from './pages/home';
+import { About } from './pages/about';
 import { StoryPage } from './pages/story_';
 
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
@@ -84,6 +85,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
           <Route path="anthology" element={<AnthologyPage />} />
           <Route path="story">
             <Route path="season-one" element={<StoryPage />} />
