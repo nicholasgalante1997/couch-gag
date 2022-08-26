@@ -1,114 +1,138 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
-import { Button, Container, _heller_base, Break } from '@nickgdev/hellerui';
+import { Container, _heller_base } from '@nickgdev/hellerui';
 
+import { OneCol } from '../components/widgets/OneCol.widget';
 import { useThemeContext } from '../contexts';
-import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
 import { emit } from '../service/metric';
+import { forwardVarText, getSafeFontKey } from '../utils';
+import SlideIn from '../components/animated/SlideIn';
+
+const blurb =
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
 export function Home() {
-  const { darkMode, font, palette } = useThemeContext();
+  const { font, palette } = useThemeContext();
 
   const navigate = useNavigate();
   const navigateToAnthologyPage = () =>
     navigate('/story/season-one/?seasonKey=01&episodeKey=01');
-  const navigateToBookMarkPage = () => navigate('/bookmarks');
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
+  function renderWidgetOne() {
+    return (
+      <Container
+        padding="1rem"
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start'
+        }}
+      >
+        {forwardVarText(getSafeFontKey(font.google.family), 'the', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            fontSize: '4rem'
+          }
+        })}
+        {forwardVarText(getSafeFontKey(font.google.family), 'couch gag', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            marginBottom: '12px',
+            fontSize: '4rem'
+          }
+        })}
+        <Container width="68%">
+          {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+            customStyles: {
+              color: palette.paragraphTextColor
+            }
+          })}
+        </Container>
+      </Container>
+    );
+  }
+
+  function renderWidgetTwo() {
+    return (
+      <Container
+        id="home-page-widget-two-parent-container"
+        className="home-page-widget-two-parent-container-cl"
+        padding="0px"
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row'
+        }}
+        height="100%"
+      >
+        <Container
+          height="100%"
+          width="50%"
+          padding="0px"
+          customStyles={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignItems: 'center'
+          }}
+        >
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'The Good',
+            'h3',
+            {
+              customStyles: {
+                color: palette.backgroundTertiaryColor,
+                marginTop: '2rem',
+                fontWeight: '800'
+              }
+            }
+          )}
+          <hr style={{ width: '90%' }} color={palette.backgroundColor}/>
+        </Container>
+        <Container height="100%" width="50%" padding="0px">
+          <SlideIn dir='right' customStyles={{ marginTop: '2rem' }}>
+            <div id="placeholder" />
+          </SlideIn>
+        </Container>
+      </Container>
+    );
+  }
+
   return (
-    <Container
-      radius="none"
-      width={'100%'}
-      padding="0px"
-      margin="0px"
-      customStyles={pageStyles}
-    >
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        'the couch gag',
-        'h2',
-        { customStyles: { color: palette.headingPrimaryColor } }
-      )}
-      <hr
-        style={{
-          width: '20%',
-          border: darkMode ? '1px solid white' : '1px solid navy'
+    <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
+      <OneCol
+        widgetKey="home-page-widget-one"
+        height="60vh"
+        containerProps={{
+          customStyles: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            paddingLeft: '8vw'
+          }
+        }}
+        childNode={renderWidgetOne()}
+      />
+      <OneCol
+        widgetKey="home-page-widget-two"
+        containerProps={{
+          background: palette.backgroundComplimentColor
+        }}
+        childNode={renderWidgetTwo()}
+      />
+      <OneCol
+        widgetKey="home-page-widget-three"
+        containerProps={{
+          background: palette.backgroundTertiaryColor
         }}
       />
-      <Container
-        padding="1rem"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          'this is a story about a lot of stories',
-          'p',
-          {
-            customStyles: {
-              color: palette.headingPrimaryColor,
-              textAlign: 'center',
-              fontWeight: '200'
-            }
-          }
-        )}
-        <Break />
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          "that's what an anthology is, if you're still fuzzy about that.",
-          'p',
-          {
-            customStyles: {
-              color: palette.headingPrimaryColor,
-              textAlign: 'center',
-              fontWeight: '200'
-            }
-          }
-        )}
-      </Container>
-      <Break />
-      <Container
-        padding="1rem"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'space-between',
-          justifyContent: 'center'
-        }}
-      >
-        <Button
-          onClick={navigateToAnthologyPage}
-          ghost
-          backgroundColor={_heller_base.colors.dunbar.lightCyan}
-          className="btn"
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'to the origin',
-            'p'
-          )}
-        </Button>
-        <Button
-          onClick={navigateToBookMarkPage}
-          ghost
-          backgroundColor={_heller_base.colors.mcwatt.flickrPink}
-          className="btn"
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'i have a bookmark',
-            'p'
-          )}
-        </Button>
-      </Container>
     </Container>
   );
 }

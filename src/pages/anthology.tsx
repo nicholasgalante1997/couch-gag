@@ -7,12 +7,12 @@ import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
 import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
 
-import { StoryRow } from '../components/StoryRow.widget';
-import { Spinner } from '../components/Spinner';
+import { StoryRow } from '../components/widgets/StoryRow.widget';
+import { Spinner } from '../components/animated/Spinner';
 
 export function AnthologyPage() {
   const navigate = useNavigate();
-  const { font } = useThemeContext();
+  const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
   React.useEffect(() => {
@@ -42,7 +42,7 @@ export function AnthologyPage() {
           customStyles: {
             fontSize: 40,
             fontWeight: '200',
-            color: _heller_base.colors.mcwatt.flickrPink
+            color: palette.headingPrimaryColor
           }
         })}
       </Container>

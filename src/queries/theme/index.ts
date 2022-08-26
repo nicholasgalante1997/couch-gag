@@ -1,6 +1,13 @@
 import { useQuery } from 'react-query';
 import { getViewThemeTreatment } from '../../service';
 
-export const useQueryThemeTreatment = (uId?: string, cId?: string) => {
-  return useQuery(['theme'], () => getViewThemeTreatment(uId, cId));
+export const useQueryThemeTreatment = (
+  uId?: string,
+  cId?: string,
+  cookie?: string,
+  themeSlice?: string
+) => {
+  return useQuery(['theme'], () =>
+    getViewThemeTreatment(uId, cId, cookie, themeSlice)
+  );
 };
