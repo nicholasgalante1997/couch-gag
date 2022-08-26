@@ -40,6 +40,7 @@ function App() {
 
   useEffect(() => {
     if (data?.data) {
+      console.log(data);
       if (data.data.themeOptions.length > 0) {
         setTheme({
           darkMode,

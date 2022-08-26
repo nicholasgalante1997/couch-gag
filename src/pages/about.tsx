@@ -21,24 +21,26 @@ const blurb =
             customStyles={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start'
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
             {forwardVarText(getSafeFontKey(font.google.family), 'about', 'h1', {
               customStyles: {
                 color: palette.headingPrimaryColor,
                 margin: '0px',
-                fontSize: '4rem'
+                fontSize: '4rem',
               }
             })}
-            {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
-              customStyles: {
-                color: palette.headingPrimaryColor,
-                margin: '0px',
-                fontSize: '2rem'
-              }
-            })}
+            <Container>
+                {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+                customStyles: {
+                    color: palette.headingPrimaryColor,
+                    margin: '0px',
+                    fontSize: '2rem'
+                }
+                })}
+            </Container>
           </Container>
         );
       }
