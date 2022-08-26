@@ -14,7 +14,7 @@ import {
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
 import { useThemeContext } from '../contexts';
-import { Spinner } from '../components/Spinner';
+import { Spinner } from '../components/animated/Spinner';
 import { StoryInteract } from '../components/story-interact';
 
 const { Heading, Paragraph } = Typography;
@@ -79,19 +79,31 @@ export function StoryPage() {
             focusColor: 'white'
           }}
           customComponentMap={{
-            h4: ({ node, ...props }: any) => forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
-              ...props,
-              customStyles: {
-                color: palette.headingPrimaryColor
-              }
-            }),
-            p: ({ node, ...props }: any) => forwardVarText(getSafeFontKey(font.google.family), props.children, 'p', {
-              ...props,
-              customStyles: {
-                fontSize: 16,
-                color: palette.paragraphTextColor
-              }
-            }),
+            h4: ({ node, ...props }: any) =>
+              forwardVarText(
+                getSafeFontKey(font.google.family),
+                props.children,
+                'h4',
+                {
+                  ...props,
+                  customStyles: {
+                    color: palette.headingPrimaryColor
+                  }
+                }
+              ),
+            p: ({ node, ...props }: any) =>
+              forwardVarText(
+                getSafeFontKey(font.google.family),
+                props.children,
+                'p',
+                {
+                  ...props,
+                  customStyles: {
+                    fontSize: 16,
+                    color: palette.paragraphTextColor
+                  }
+                }
+              ),
             a: ({ node, ...props }: any) => (
               <Paragraph
                 {...props}

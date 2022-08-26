@@ -6,16 +6,27 @@ type ThemeResponseBody = {
   error?: string;
 };
 
+type ThemeRequestBody = {
+  uId?: string;
+  cId?: string;
+  cookie?: string;
+  devEnvThemeOverride?: string;
+};
+
 export async function getViewThemeTreatment(
   uId?: string,
-  cId?: string
+  cId?: string,
+  cookie?: string,
+  themeSlice?: string
 ): Promise<ThemeResponseBody> {
   const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
   const url = base + 'theme';
 
-  const data: { uId?: string; cId?: string } = {};
+  const data: ThemeRequestBody = {};
   if (uId) data.uId = uId;
   if (cId) data.cId = cId;
+  if (cookie) data.cookie = cookie;
+  if (themeSlice) data.devEnvThemeOverride = themeSlice;
 
   return fetch(url, {
     method: 'POST',

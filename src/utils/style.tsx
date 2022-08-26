@@ -9,7 +9,8 @@ export const pageStyles = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  minHeight: '70vh'
+  minHeight: '100%',
+  minWidth: '100%'
 } as const;
 
 export function forwardVarText(

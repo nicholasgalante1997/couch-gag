@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@nickgdev/couch-gag-common-lib": "^1.x",
-    "@nickgdev/hellerui": "^0.0.41",
+    "@nickgdev/couch-gag-common-lib": "^1.1.9",
+    "@nickgdev/hellerui": "^0.0.42",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
