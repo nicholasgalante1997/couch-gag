@@ -4,6 +4,7 @@ import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
+import { TwoColStaggered } from '../components/widgets/TwoColStaggered.widget';
 import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { forwardVarText, getSafeFontKey } from '../utils';
@@ -32,7 +33,14 @@ const blurb =
                 fontSize: '4rem',
               }
             })}
-            <Container>
+            <Container
+            padding="1rem"
+            customStyles={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
                 {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
                 customStyles: {
                     color: palette.headingPrimaryColor,
@@ -44,10 +52,30 @@ const blurb =
           </Container>
         );
       }
+      function renderLeftAboutCol(){
+        return(
+            <Container
+            padding="1rem"
+            customStyles={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+                {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+                customStyles: {
+                    color: palette.headingPrimaryColor,
+                    margin: '0px',
+                    fontSize: '2rem'
+                }
+                })}
+            </Container>
+        )
+      }
     return(
-        <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
+        <Container width="100%" padding="0rem" id="cg-about-page-wrapping-container">
       <OneCol
-        widgetKey="home-page-widget-one"
+        widgetKey="about-page-widget-one"
         height="60vh"
         containerProps={{
           customStyles: {
@@ -58,6 +86,13 @@ const blurb =
           }
         }}
         childNode={renderAboutWidget()}
+      />
+      <TwoColStaggered 
+        widgetKey="about-page-twocol-widget"
+        leftSpan={6}
+        rightSpan={6}
+        leftNode={renderLeftAboutCol()}
+        rightNode={renderLeftAboutCol()}
       />
     </Container>
     )
