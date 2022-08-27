@@ -48,21 +48,25 @@ export function AnthologyPage() {
         })}
       </Container>
       <Container width="90%" padding="0px">
-      <Container asGridParent padding="0px" customStyles={{ flexWrap: 'wrap' }}>
-        {Object.keys(data.collection).map((s: any, i: number) => (
-          <AnthologyTile
-            key={`${data.collection[s].episodeKey}-${i}`}
-            title={data.collection[s].title}
-            desc={data.collection[s].subtitle}
-            cardKey={`${data.collection[s].seasonKey}-${data.collection[s].episodeKey}`}
-            navigationFn={() => {
-              navigate(
-                `/story/season-one?seasonKey=01&episodeKey=${data.collection[s].episodeKey}`
-              );
-            }}
-          />
-        ))}
-      </Container>
+        <Container
+          asGridParent
+          padding="0px"
+          customStyles={{ flexWrap: 'wrap' }}
+        >
+          {Object.keys(data.collection).map((s: any, i: number) => (
+            <AnthologyTile
+              key={`${data.collection[s].episodeKey}-${i}`}
+              title={data.collection[s].title}
+              desc={data.collection[s].subtitle}
+              cardKey={`${data.collection[s].seasonKey}-${data.collection[s].episodeKey}`}
+              navigationFn={() => {
+                navigate(
+                  `/story/season-one?seasonKey=01&episodeKey=${data.collection[s].episodeKey}`
+                );
+              }}
+            />
+          ))}
+        </Container>
       </Container>
     </Container>
   ) : (

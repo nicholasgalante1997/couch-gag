@@ -1,11 +1,17 @@
+/** External Dependendencies */
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { log, deriveCssClassname } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 
+/** Internal Dependencies (behavioral)  */
+
 import { ThemeProvider, _defaultTheme, Theme } from './contexts';
 import { useQueryThemeTreatment } from './queries';
 import { pageStyles } from './utils';
+
+/** Internal Dependencies (visual) */
 
 import { Nav } from './components/nav';
 import { Spinner } from './components/animated/Spinner';
@@ -14,6 +20,8 @@ import { AnthologyPage } from './pages/anthology';
 import { ErrorPage } from './pages/error';
 import { Home } from './pages/home';
 import { StoryPage } from './pages/story_';
+
+/** Stylesheets */
 
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import './App.css';

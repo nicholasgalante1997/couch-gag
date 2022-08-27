@@ -1,18 +1,24 @@
+
 import { Container, Button } from '@nickgdev/hellerui';
+
 import { useThemeContext } from '../../../contexts';
+import { CouchGagBreakpoints, useInlineMediaQuery } from '../../../hooks';
 import { forwardVarText, getSafeFontKey } from '../../../utils';
+
 import { AnthologyTileProps } from './types';
 
 import './index.css';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
   const { font, palette } = useThemeContext();
+  const media = useInlineMediaQuery();
+
   const { cardKey, desc, title, navigationFn } = props;
   return (
     <Container
       id={'card-parent-div-' + cardKey}
       asGridChild
-      colSpan={4}
+      colSpan={media.breakpoint === CouchGagBreakpoints.DESKTOP ? 4 : 12}
       margin="0px"
       padding="0px"
       height="40vh"
@@ -40,8 +46,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
             maxWidth: '70%',
             width: '70%',
             minWidth: '70%',
-            fontSize: '14px',
-
+            fontSize: '14px'
           }
         })}
       </Container>
@@ -55,8 +60,16 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           alignItems: 'flex-end'
         }}
       >
-        <Button ghost onClick={navigationFn} style={{marginBottom: '20px', marginRight: '20px' }}>
-          {forwardVarText(getSafeFontKey(font.google.family), 'Get Started', 'span')}
+        <Button
+          ghost
+          onClick={navigationFn}
+          style={{ marginBottom: '20px', marginRight: '20px' }}
+        >
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'Get Started',
+            'span'
+          )}
         </Button>
       </Container>
     </Container>
