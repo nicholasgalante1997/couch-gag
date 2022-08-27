@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
@@ -7,16 +7,15 @@ import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
 import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
 
-import { StoryRow } from '../components/widgets/StoryRow.widget';
-import { Spinner } from '../components/animated/Spinner';
 import { AnthologyTile } from '../components/cards/anthology';
+import { Spinner } from '../components/animated/Spinner';
 
 export function AnthologyPage() {
   const navigate = useNavigate();
   const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const failureCase = isError || (data && !data.collection);
     if (failureCase) {
       log(
