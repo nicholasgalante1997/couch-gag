@@ -21,14 +21,14 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       colSpan={media.breakpoint === CouchGagBreakpoints.DESKTOP ? 4 : 12}
       margin="0px"
       padding="0px"
-      height="40vh"
+      height="33vh"
       customStyles={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        minHeight: '40vh',
-        maxHeight: '40vh'
+        minHeight: '33vh',
+        maxHeight: '33vh'
       }}
     >
       <Container padding="0px" width="100%">
@@ -61,14 +61,19 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
         }}
       >
         <Button
-          ghost
+          backgroundColor={palette.backgroundTertiaryColor}
           onClick={navigationFn}
           style={{ marginBottom: '20px', marginRight: '20px' }}
         >
           {forwardVarText(
             getSafeFontKey(font.google.family),
             'Get Started',
-            'span'
+            'span',
+            {
+              customStyles: {
+                color: palette.paragraphTextColor
+              }
+            }
           )}
         </Button>
       </Container>

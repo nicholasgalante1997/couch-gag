@@ -42,7 +42,7 @@ function App() {
     undefined,
     undefined,
     undefined,
-    ['yoss', 'oswald']
+    ['yoss', 'kreon']
   );
 
   useEffect(() => {
