@@ -1,5 +1,3 @@
-import fbjson from '@nickgdev/hellerui/lib/fontBlob.json';
-
 export const carouselReviews = [
   ['Neil Degrasse Tyson', '"I don\'t get it."'],
   ['Matt Groening', '"I will not make any comment on this. Stop emailing me."'],

@@ -1,10 +1,36 @@
+import React from 'react'
 import { heller_couch_view_theme_treatment_pool } from '@nickgdev/couch-gag-common-lib';
+import { OmniText, TextElementKeyType, VarFontProps } from '@nickgdev/hellerui';
+import fontBlob from '@nickgdev/hellerui/lib/fontBlob.json';
 import { Theme } from '../contexts';
 
 const POOL = heller_couch_view_theme_treatment_pool.ViewThemeTreatments;
 
-export function getThemedTextColor(darkMode: boolean) {
-  return darkMode ? 'rgba(270,270,270,0.85)' : 'darkblue';
+export type FontKey = keyof typeof fontBlob;
+
+export const pageStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100%',
+  minWidth: '100%'
+} as const;
+
+export function forwardVarText(
+  family: FontKey,
+  text: string,
+  implementation: TextElementKeyType,
+  props: VarFontProps = {}
+) {
+  let node: string | JSX.Element;
+  if (props.children && text === '')  node = props.children;
+  else node = text;
+  return (
+    <OmniText {...props} fontKey={family} implementation={implementation}>
+      {node}
+    </OmniText>
+  );
 }
 
 export function findThemeInDevEnvOrUndefined(
