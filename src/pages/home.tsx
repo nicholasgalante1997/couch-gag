@@ -8,6 +8,8 @@ import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { forwardVarText, getSafeFontKey } from '../utils';
 import SlideIn from '../components/animated/SlideIn';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCouch } from '@fortawesome/free-solid-svg-icons';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
@@ -96,9 +98,31 @@ export function Home() {
           )}
           <hr style={{ width: '90%' }} color={palette.backgroundColor} />
         </Container>
-        <Container height="100%" width="50%" padding="0px">
-          <SlideIn dir="right" customStyles={{ marginTop: '2rem' }}>
-            <div id="placeholder" />
+        <Container
+          height="100%"
+          width="50%"
+          padding="0px"
+          customStyles={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100%'
+          }}
+        >
+          <SlideIn
+            fast
+            dir="right"
+            height={'100%'}
+            padding="0px"
+            customStyles={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '100%'
+            }}
+            shakeFast
+          >
+            <FontAwesomeIcon icon={faCouch} size="10x" color="#EC7628" />
           </SlideIn>
         </Container>
       </Container>
