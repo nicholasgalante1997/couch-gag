@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
@@ -7,7 +7,7 @@ import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
 import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
 
-import { StoryRow } from '../components/widgets/StoryRow.widget';
+import { AnthologyTile } from '../components/cards/anthology';
 import { Spinner } from '../components/animated/Spinner';
 
 export function AnthologyPage() {
@@ -15,7 +15,7 @@ export function AnthologyPage() {
   const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const failureCase = isError || (data && !data.collection);
     if (failureCase) {
       log(
@@ -46,19 +46,27 @@ export function AnthologyPage() {
           }
         })}
       </Container>
-      {Object.keys(data.collection).map((s: any, i: number) => (
-        <Container width={'90%'}>
-          <StoryRow
-            index={i}
-            imgSrc={data.collection[s].img}
-            title={data.collection[s].title}
-            subtitle={data.collection[s].subtitle}
-            genres={data.collection[s].genres ?? []}
-            episodeKey={data.collection[s].episodeKey}
-            seasonKey={data.collection[s].seasonKey}
-          />
+      <Container width="90%" padding="0px">
+        <Container
+          asGridParent
+          padding="0px"
+          customStyles={{ flexWrap: 'wrap' }}
+        >
+          {Object.keys(data.collection).map((s: any, i: number) => (
+            <AnthologyTile
+              key={`${data.collection[s].episodeKey}-${i}`}
+              title={data.collection[s].title}
+              desc={data.collection[s].subtitle}
+              cardKey={`${data.collection[s].seasonKey}-${data.collection[s].episodeKey}`}
+              navigationFn={() => {
+                navigate(
+                  `/story/season-one?seasonKey=01&episodeKey=${data.collection[s].episodeKey}`
+                );
+              }}
+            />
+          ))}
         </Container>
-      ))}
+      </Container>
     </Container>
   ) : (
     <Container customStyles={pageStyles}>

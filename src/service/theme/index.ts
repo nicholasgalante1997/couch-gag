@@ -10,14 +10,14 @@ type ThemeRequestBody = {
   uId?: string;
   cId?: string;
   cookie?: string;
-  devEnvThemeOverride?: string;
+  devEnvThemeOverride?: string | string[];
 };
 
 export async function getViewThemeTreatment(
   uId?: string,
   cId?: string,
   cookie?: string,
-  themeSlice?: string
+  themeSlice?: string | string[]
 ): Promise<ThemeResponseBody> {
   const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
   const url = base + 'theme';

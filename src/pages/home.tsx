@@ -94,10 +94,10 @@ export function Home() {
               }
             }
           )}
-          <hr style={{ width: '90%' }} color={palette.backgroundColor}/>
+          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
         </Container>
         <Container height="100%" width="50%" padding="0px">
-          <SlideIn dir='right' customStyles={{ marginTop: '2rem' }}>
+          <SlideIn dir="right" customStyles={{ marginTop: '2rem' }}>
             <div id="placeholder" />
           </SlideIn>
         </Container>
