@@ -62,6 +62,14 @@ const blurb =
               justifyContent: 'center',
               alignItems: 'center'
             }}>
+                {forwardVarText(getSafeFontKey(font.google.family), "Our Story", 'h1', {
+                customStyles: {
+                    color: palette.headingPrimaryColor,
+                    margin: '0px',
+                    fontSize: '2rem'
+                }
+                })}
+                <Container>
                 {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
                 customStyles: {
                     color: palette.headingPrimaryColor,
@@ -69,6 +77,7 @@ const blurb =
                     fontSize: '2rem'
                 }
                 })}
+                </Container>
             </Container>
         )
       }
