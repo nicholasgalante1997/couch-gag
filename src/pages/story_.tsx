@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { log } from '@nickgdev/couch-gag-common-lib';
 
-import { Container, Page, Typography, _heller_base } from '@nickgdev/hellerui';
+import { Container, Page, _heller_base } from '@nickgdev/hellerui';
 
 import {
   pageStyles,
@@ -10,14 +10,13 @@ import {
   parseUrlString,
   parseContent,
   getSafeFontKey,
-  forwardVarText
+  forwardVarText,
+  MARKDOWN_COMPONENT_MAPPING_FN
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
 import { useThemeContext } from '../contexts';
 import { Spinner } from '../components/animated/Spinner';
 import { StoryInteract } from '../components/story-interact';
-
-const { Heading, Paragraph } = Typography;
 
 export function StoryPage() {
   const navigate = useNavigate();
@@ -33,6 +32,39 @@ export function StoryPage() {
 
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);
 
+  function renderPageHeading(t: string, s: string){
+    return (
+      <Container width="90%" customStyles={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'flex-start' }}>
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          t,
+          'h1',
+          {
+            customStyles: {
+              color: palette.headingSecondaryColor,
+              lineHeight: 1.15,
+              fontSize: '4rem'
+            }
+          }
+        )}
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          s,
+          'h5',
+          {
+            customStyles: {
+              color: palette.backgroundTertiaryColor,
+              lineHeight: 1.15,
+              fontSize: '1.15rem',
+              marginTop: '0.75rem',
+              textAlign: 'center'
+            }
+          }
+        )}
+      </Container>
+    );
+  }
+  
   React.useEffect(() => {
     if (isError) {
       log('error', JSON.stringify(error));
@@ -44,7 +76,7 @@ export function StoryPage() {
     return <Spinner />;
   }
 
-  return data && parsedContent && parsedContent.body ? (
+  return data && data.meta && parsedContent && parsedContent.body ? (
     <Container width="100%" customStyles={pageStyles}>
       <StoryInteract />
       <Container
@@ -54,73 +86,20 @@ export function StoryPage() {
         margin="0px"
         customStyles={pageStyles}
       >
-        {data.meta?.img ? (
-          <img
-            alt="story image, a simpson couch gag cut"
-            src={data.meta.img}
-            style={{
-              width: '100%',
-              height: '300px',
-              borderRadius: '4px',
-              marginTop: '0.5rem'
-            }}
-          />
-        ) : null}
+        {renderPageHeading(data.meta.title, data.meta.subtitle ?? '')}
         <Page
           contentEngine="markdown"
-          title={data.meta.title}
-          titleColor={palette.headingPrimaryColor}
-          subtitle={data.meta.subtitle}
           content={parsedContent.body}
-          padding="1rem"
-          withDividers
-          dividerProps={{
-            fadeColor: 'white',
-            focusColor: 'white'
-          }}
-          customComponentMap={{
-            h4: ({ node, ...props }: any) =>
-              forwardVarText(
-                getSafeFontKey(font.google.family),
-                props.children,
-                'h4',
-                {
-                  ...props,
-                  customStyles: {
-                    color: palette.headingPrimaryColor
-                  }
-                }
-              ),
-            p: ({ node, ...props }: any) =>
-              forwardVarText(
-                getSafeFontKey(font.google.family),
-                props.children,
-                'p',
-                {
-                  ...props,
-                  customStyles: {
-                    fontSize: 16,
-                    color: palette.paragraphTextColor
-                  }
-                }
-              ),
-            a: ({ node, ...props }: any) => (
-              <Paragraph
-                {...props}
-                color={_heller_base.colors.dunbar.lightCyan}
-                thin
-                fontSize={12}
-              />
-            )
-          }}
+          title=''
           dangerouslyOverrideInnerContentStyles={{
             styles: {
-              maxWidth: '1000px',
+              maxWidth: '80%',
               width: 'auto',
               justifySelf: 'center',
               alignSelf: 'center'
             }
           }}
+          customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
         />
         )
       </Container>

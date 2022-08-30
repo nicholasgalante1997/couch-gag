@@ -1,9 +1,11 @@
 import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 import { useLocation } from 'react-router';
-import Action from './Action';
-import { IconName } from './types';
-import actionJson from './data/story-actions.json';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShareFromSquare, faHeart, faBookmark } from '@fortawesome/free-regular-svg-icons';
+
+import '../css/story-interact.css'
+import { useThemeContext } from '../../contexts';
 
 function getMetricType(s: string) {
   switch (s) {
@@ -22,12 +24,14 @@ function getMetricType(s: string) {
 
 const StoryBar = () => {
   const { search } = useLocation();
+  const { palette } = useThemeContext();
 
   return (
     <Container
       customStyles={{
         zIndex: 1,
         position: 'fixed',
+        border: '1px solid black',
         bottom: '4vh',
         right: '4vw',
         display: 'flex',
@@ -35,24 +39,17 @@ const StoryBar = () => {
         alignItems: 'center',
         justifyContent: 'space-evenly'
       }}
-      width={'10vw'}
-      background="white"
+      gradient={{
+        flow: 'to bottom right',
+        from: palette.backgroundComplimentColor,
+        to: palette.backgroundColor
+      }}
       radius="rounded"
+      padding="8px"
     >
-      {actionJson.actions.map((props) => {
-        const metricType = getMetricType(props.metricType);
-        const safeMetric: Metric<typeof metricType> = {
-          metricName: metricType,
-          subfield: search,
-          value: 1
-        };
-        const actionProps = {
-          ...props,
-          icon: props.icon as IconName,
-          metric: safeMetric
-        };
-        return <Action key={props._id} {...actionProps} />;
-      })}
+      <FontAwesomeIcon icon={faShareFromSquare} className="share couch-gag-icon" />
+      <FontAwesomeIcon icon={faHeart} className="like couch-gag-icon" />
+      <FontAwesomeIcon icon={faBookmark} className="bookmark couch-gag-icon" />
     </Container>
   );
 };
