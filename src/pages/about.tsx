@@ -54,31 +54,39 @@ const blurb =
       }
       function renderLeftAboutCol(){
         return(
-            <Container
-            padding="1rem"
-            customStyles={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-                {forwardVarText(getSafeFontKey(font.google.family), "Our Story", 'h1', {
-                customStyles: {
-                    color: palette.headingPrimaryColor,
-                    margin: '0px',
-                    fontSize: '2rem'
-                }
-                })}
-                <Container>
-                {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
-                customStyles: {
-                    color: palette.headingPrimaryColor,
-                    margin: '0px',
-                    fontSize: '2rem'
-                }
-                })}
-                </Container>
-            </Container>
+          <Container
+          padding="1rem"
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          {forwardVarText(getSafeFontKey(font.google.family), 'our story', 'h1', {
+            customStyles: {
+              color: palette.headingPrimaryColor,
+              margin: '0px',
+              fontSize: '2rem',
+            }
+          })}
+          <Container
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflowWrap: 'break-word'
+          }}>
+              {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+              customStyles: {
+                  color: palette.headingPrimaryColor,
+                  margin: '0px',
+                  fontSize: '1.5rem'
+              }
+              })}
+          </Container>
+        </Container>
         )
       }
     return(
@@ -98,8 +106,8 @@ const blurb =
       />
       <TwoColStaggered 
         widgetKey="about-page-twocol-widget"
-        leftSpan={6}
-        rightSpan={6}
+        leftSpan={7}
+        rightSpan={5}
         leftNode={renderLeftAboutCol()}
         rightNode={renderLeftAboutCol()}
       />
