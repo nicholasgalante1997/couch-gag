@@ -110,6 +110,43 @@ const blurb =
         </Container>
         )
       }
+      function renderLowerAboutWidget() {
+        return (
+          <Container
+            padding="1rem"
+            customStyles={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {forwardVarText(getSafeFontKey(font.google.family), 'second about', 'h1', {
+              customStyles: {
+                color: palette.headingPrimaryColor,
+                margin: '0px',
+                fontSize: '4rem',
+              }
+            })}
+            <Container
+            padding="1rem"
+            customStyles={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+                {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+                customStyles: {
+                    color: palette.headingPrimaryColor,
+                    margin: '0px',
+                    fontSize: '2rem'
+                }
+                })}
+            </Container>
+          </Container>
+        );
+      }
     return(
         <Container width="100%" padding="0rem" id="cg-about-page-wrapping-container">
       <OneCol
@@ -131,6 +168,19 @@ const blurb =
         rightSpan={5}
         leftNode={renderLeftAboutCol()}
         rightNode={renderRightAboutCol()}
+      />
+      <OneCol
+        widgetKey="about-page-widget-one"
+        height="60vh"
+        containerProps={{
+          customStyles: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            paddingLeft: '8vw'
+          }
+        }}
+        childNode={renderLowerAboutWidget()}
       />
     </Container>
     )
