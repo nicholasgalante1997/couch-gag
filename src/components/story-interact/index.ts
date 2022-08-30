@@ -1,1 +1,1 @@
-export { default as StoryInteract } from './StoryBar';
+export { default as StoryInteract } from './action-bar';

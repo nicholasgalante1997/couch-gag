@@ -42,7 +42,7 @@ function App() {
     undefined,
     undefined,
     undefined,
-    ['yoss', 'kreon']
+    ['major', 'oswald']
   );
 
   useEffect(() => {
@@ -80,10 +80,6 @@ function App() {
         <ErrorPage />
       </Container>
     );
-  }
-
-  if (data) {
-    console.log({ location: 'App.tsx Line 76', data });
   }
 
   return (
