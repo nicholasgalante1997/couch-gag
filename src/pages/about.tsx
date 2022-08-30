@@ -89,6 +89,27 @@ const blurb =
         </Container>
         )
       }
+      function renderRightAboutCol(){
+        return(
+          <Container
+          padding="1rem"
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          {forwardVarText(getSafeFontKey(font.google.family), 'image here', 'h1', {
+            customStyles: {
+              color: palette.headingSecondaryColor,
+              margin: '0px',
+              fontSize: '2rem',
+            }
+          })}
+        </Container>
+        )
+      }
     return(
         <Container width="100%" padding="0rem" id="cg-about-page-wrapping-container">
       <OneCol
@@ -109,7 +130,7 @@ const blurb =
         leftSpan={7}
         rightSpan={5}
         leftNode={renderLeftAboutCol()}
-        rightNode={renderLeftAboutCol()}
+        rightNode={renderRightAboutCol()}
       />
     </Container>
     )
