@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useRouter } from 'next/router';
 import { log } from '@nickgdev/couch-gag-common-lib';
 
 import { Container, Page, _heller_base } from '@nickgdev/hellerui';
@@ -19,58 +19,58 @@ import { Spinner } from '../components/animated/Spinner';
 import { StoryInteract } from '../components/story-interact';
 
 export function StoryPage() {
-  const navigate = useNavigate();
-  const { search } = useLocation();
+
+  const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();
 
-  const queryParam = recursiveQueryParamConversion({}, parseUrlString(search));
+  // const queryParam = recursiveQueryParamConversion({}, parseUrlString(query));
 
   const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
-    seasonKey: queryParam?.seasonKey,
-    episodeKey: queryParam?.episodeKey
+    seasonKey: typeof query?.seasonKey === 'string' ? query?.seasonKey : query?.seasonKey ? query.seasonKey[0] : '',
+    episodeKey: typeof query?.episodeKey === 'string' ? query?.episodeKey : query?.episodeKey ? query.episodeKey[0] : ''
   });
 
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);
 
-  function renderPageHeading(t: string, s: string){
+  function renderPageHeading(t: string, s: string) {
     return (
-      <Container width="90%" customStyles={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'flex-start' }}>
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          t,
-          'h1',
-          {
-            customStyles: {
-              color: palette.headingSecondaryColor,
-              lineHeight: 1.15,
-              fontSize: '4rem'
-            }
+      <Container
+        width="90%"
+        customStyles={{
+          marginTop: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'nowrap',
+          alignItems: 'center',
+          justifyContent: 'flex-start'
+        }}
+      >
+        {forwardVarText(getSafeFontKey(font.google.family), t, 'h1', {
+          customStyles: {
+            color: palette.headingSecondaryColor,
+            lineHeight: 1.15,
+            fontSize: '4rem'
           }
-        )}
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          s,
-          'h5',
-          {
-            customStyles: {
-              color: palette.backgroundTertiaryColor,
-              lineHeight: 1.15,
-              fontSize: '1.15rem',
-              marginTop: '0.75rem',
-              textAlign: 'center'
-            }
+        })}
+        {forwardVarText(getSafeFontKey(font.google.family), s, 'h5', {
+          customStyles: {
+            color: palette.backgroundTertiaryColor,
+            lineHeight: 1.15,
+            fontSize: '1.15rem',
+            marginTop: '0.75rem',
+            textAlign: 'center'
           }
-        )}
+        })}
       </Container>
     );
   }
-  
+
   React.useEffect(() => {
     if (isError) {
       log('error', JSON.stringify(error));
-      navigate('/not-found');
+      redirect('/not-found');
     }
-  }, [search, data]);
+  }, [query, data]);
 
   if (isLoading) {
     return <Spinner />;
@@ -90,7 +90,7 @@ export function StoryPage() {
         <Page
           contentEngine="markdown"
           content={parsedContent.body}
-          title=''
+          title=""
           dangerouslyOverrideInnerContentStyles={{
             styles: {
               maxWidth: '80%',

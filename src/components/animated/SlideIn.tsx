@@ -1,7 +1,7 @@
 import { Container } from '@nickgdev/hellerui';
 import { ContainerProps } from '@nickgdev/hellerui/lib/components/Container/types';
 
-import '../css/SlideIn.css';
+import css from '../css/SlideIn.module.css';
 
 type SlideProps = {
   dir: 'left' | 'right';
@@ -13,9 +13,9 @@ type SlideProps = {
 function reduceSlideClassName(dir: 'left' | 'right', fast?: boolean) {
   switch (dir) {
     case 'left':
-      return fast ? 'left-slide-in-fast' : 'left-slide-in';
+      return fast ? css['left-slide-in-fast'] : css['left-slide-in'];
     default:
-      return fast ? 'right-slide-in-fast' : 'right-slide-in';
+      return fast ? css['right-slide-in-fast'] : css['right-slide-in'];
   }
 }
 

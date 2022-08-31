@@ -1,7 +1,7 @@
 import { Container } from '@nickgdev/hellerui';
 import { useEffect, useState } from 'react';
 
-import '../css/Carousel.css';
+import css from '../css/Carousel.module.css';
 
 type CarouselProps = {
   items: JSX.Element[];

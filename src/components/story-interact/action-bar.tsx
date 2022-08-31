@@ -2,9 +2,13 @@ import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 import { useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareFromSquare, faHeart, faBookmark } from '@fortawesome/free-regular-svg-icons';
+import {
+  faShareFromSquare,
+  faHeart,
+  faBookmark
+} from '@fortawesome/free-regular-svg-icons';
 
-import '../css/story-interact.css'
+import css from '../css/story-interact.module.css';
 import { useThemeContext } from '../../contexts';
 
 function getMetricType(s: string) {
@@ -47,9 +51,12 @@ const StoryBar = () => {
       radius="rounded"
       padding="8px"
     >
-      <FontAwesomeIcon icon={faShareFromSquare} className="share couch-gag-icon" />
-      <FontAwesomeIcon icon={faHeart} className="like couch-gag-icon" />
-      <FontAwesomeIcon icon={faBookmark} className="bookmark couch-gag-icon" />
+      <FontAwesomeIcon
+        icon={faShareFromSquare}
+        className={css['couch-gag-icon'] + ' ' + css['share']}
+      />
+      <FontAwesomeIcon icon={faHeart} className={css['couch-gag-icon'] + ' ' + css['like']} />
+      <FontAwesomeIcon icon={faBookmark} className={css['couch-gag-icon'] + ' ' + css['bookmark']} />
     </Container>
   );
 };

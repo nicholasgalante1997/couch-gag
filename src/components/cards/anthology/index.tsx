@@ -1,4 +1,3 @@
-
 import { Container, Button } from '@nickgdev/hellerui';
 
 import { useThemeContext } from '../../../contexts';
@@ -7,7 +6,7 @@ import { forwardVarText, getSafeFontKey } from '../../../utils';
 
 import { AnthologyTileProps } from './types';
 
-import './index.css';
+import css from './index.module.css';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
   const { font, palette } = useThemeContext();
@@ -39,7 +38,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           }
         })}
         {forwardVarText(getSafeFontKey(font.google.family), desc, 'p', {
-          className: 'trunc',
+          className: css['trunc'],
           customStyles: {
             color: palette.paragraphTextColor,
             marginTop: '8px',

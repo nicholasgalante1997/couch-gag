@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { heller_couch_view_theme_treatment_pool } from '@nickgdev/couch-gag-common-lib';
 import { OmniText, TextElementKeyType, VarFontProps } from '@nickgdev/hellerui';
 import fontBlob from '@nickgdev/hellerui/lib/fontBlob.json';
@@ -24,7 +24,7 @@ export function forwardVarText(
   props: VarFontProps = {}
 ) {
   let node: string | JSX.Element;
-  if (props.children && text === '')  node = props.children;
+  if (props.children && text === '') node = props.children;
   else node = text;
   return (
     <OmniText {...props} fontKey={family} implementation={implementation}>

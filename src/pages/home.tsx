@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
 
-import { OneCol } from '../components/widgets/OneCol.widget';
 import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { forwardVarText, getSafeFontKey } from '../utils';
 import SlideIn from '../components/animated/SlideIn';
+import { OneCol } from '../components/widgets/OneCol.widget';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
@@ -15,9 +15,9 @@ const blurb =
 export function Home() {
   const { font, palette } = useThemeContext();
 
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const navigateToAnthologyPage = () =>
-    navigate('/story/season-one/?seasonKey=01&episodeKey=01');
+    redirect('/story/season-one/?seasonKey=01&episodeKey=01');
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });

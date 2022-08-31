@@ -1,14 +1,14 @@
 import { Container, _heller_base } from '@nickgdev/hellerui';
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
 import { Hoverable } from '../animated/Hoverable';
 import navJson from './data/nav.json';
 
 export function LinkBar() {
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
-  const forwardNavEventDest = (d: string) => navigate(d);
+  const forwardNavEventDest = (d: string) => redirect(d);
   return (
     <Container customStyles={{ display: 'flex', flexDirection: 'row' }}>
       {navJson.links.map((l) => (

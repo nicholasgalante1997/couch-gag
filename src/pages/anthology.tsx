@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
 
@@ -11,7 +11,7 @@ import { AnthologyTile } from '../components/cards/anthology';
 import { Spinner } from '../components/animated/Spinner';
 
 export function AnthologyPage() {
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
@@ -22,7 +22,7 @@ export function AnthologyPage() {
         'error',
         JSON.stringify(error ?? '[anthology] collection fetching error.')
       );
-      navigate('/not-found');
+      redirect('/not-found');
     }
   }, [isError, error]);
 
@@ -59,7 +59,7 @@ export function AnthologyPage() {
               desc={data.collection[s].subtitle}
               cardKey={`${data.collection[s].seasonKey}-${data.collection[s].episodeKey}`}
               navigationFn={() => {
-                navigate(
+                redirect(
                   `/story/season-one?seasonKey=01&episodeKey=${data.collection[s].episodeKey}`
                 );
               }}

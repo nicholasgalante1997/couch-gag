@@ -6,6 +6,7 @@ export const emit = async ({
   subfield,
   value
 }: Metric<MetricType>) => {
+  if (process.env.NODE_ENV === 'development') return;
   const res = await fetch(
     formatQueryParams(devApiTargets.metricHub, {
       metric: metricName as string,
