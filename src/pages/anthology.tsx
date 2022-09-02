@@ -8,9 +8,9 @@ import { useThemeContext } from '../contexts';
 import { useQueryAllMarkdownStories } from '../queries';
 
 import { AnthologyTile } from '../components/cards/anthology';
-import { Spinner } from '../components/animated/Spinner';
+import { Spinner } from '../components/animated/spinner';
 
-export function AnthologyPage() {
+export default function AnthologyPage() {
   const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();

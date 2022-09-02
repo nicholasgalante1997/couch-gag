@@ -15,19 +15,28 @@ import {
 } from '../utils';
 import { useQuerySingleMarkdownStory } from '../queries';
 import { useThemeContext } from '../contexts';
-import { Spinner } from '../components/animated/Spinner';
+import { Spinner } from '../components/animated/spinner';
 import { StoryInteract } from '../components/story-interact';
 
 export function StoryPage() {
-
   const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();
 
   // const queryParam = recursiveQueryParamConversion({}, parseUrlString(query));
 
   const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
-    seasonKey: typeof query?.seasonKey === 'string' ? query?.seasonKey : query?.seasonKey ? query.seasonKey[0] : '',
-    episodeKey: typeof query?.episodeKey === 'string' ? query?.episodeKey : query?.episodeKey ? query.episodeKey[0] : ''
+    seasonKey:
+      typeof query?.seasonKey === 'string'
+        ? query?.seasonKey
+        : query?.seasonKey
+        ? query.seasonKey[0]
+        : '',
+    episodeKey:
+      typeof query?.episodeKey === 'string'
+        ? query?.episodeKey
+        : query?.episodeKey
+        ? query.episodeKey[0]
+        : ''
   });
 
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);

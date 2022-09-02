@@ -1,11 +1,9 @@
+import type { HoverableProps } from './types';
+
 import styled from 'styled-components';
-import { Properties } from 'csstype';
 import { _heller_base } from '@nickgdev/hellerui';
 
-export const Hoverable = styled.div<{
-  from?: Properties;
-  to?: Properties;
-}>`
+export const Hoverable = styled.div<HoverableProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;

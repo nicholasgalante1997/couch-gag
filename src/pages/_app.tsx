@@ -1,4 +1,6 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
+import type { AppContext, AppProps } from 'next/app';
+import NextApp from 'next/app';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
 /** Stylesheets */
 import '@nickgdev/hellerui/lib/index.css';
@@ -7,7 +9,7 @@ import '../App.css';
 
 const appQueryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }: any) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={appQueryClient}>
       <Component {...pageProps} />
@@ -15,16 +17,9 @@ function MyApp({ Component, pageProps }: any) {
   );
 }
 
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  return { ...appProps };
+};
 
-export default MyApp;
+export default App;

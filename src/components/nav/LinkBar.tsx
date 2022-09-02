@@ -2,7 +2,7 @@ import { Container, _heller_base } from '@nickgdev/hellerui';
 import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
-import { Hoverable } from '../animated/Hoverable';
+import { Hoverable } from '../animated/hoverable';
 import navJson from './data/nav.json';
 
 export function LinkBar() {

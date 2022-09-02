@@ -1,10 +1,10 @@
+import type { AnthologyTileProps } from './types';
+
 import { Container, Button } from '@nickgdev/hellerui';
 
 import { useThemeContext } from '../../../contexts';
 import { CouchGagBreakpoints, useInlineMediaQuery } from '../../../hooks';
 import { forwardVarText, getSafeFontKey } from '../../../utils';
-
-import { AnthologyTileProps } from './types';
 
 import css from './index.module.css';
 

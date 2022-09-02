@@ -55,8 +55,14 @@ const StoryBar = () => {
         icon={faShareFromSquare}
         className={css['couch-gag-icon'] + ' ' + css['share']}
       />
-      <FontAwesomeIcon icon={faHeart} className={css['couch-gag-icon'] + ' ' + css['like']} />
-      <FontAwesomeIcon icon={faBookmark} className={css['couch-gag-icon'] + ' ' + css['bookmark']} />
+      <FontAwesomeIcon
+        icon={faHeart}
+        className={css['couch-gag-icon'] + ' ' + css['like']}
+      />
+      <FontAwesomeIcon
+        icon={faBookmark}
+        className={css['couch-gag-icon'] + ' ' + css['bookmark']}
+      />
     </Container>
   );
 };

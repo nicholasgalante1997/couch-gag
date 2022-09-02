@@ -1,14 +1,8 @@
+import type { SlideProps } from './types';
+
 import { Container } from '@nickgdev/hellerui';
-import { ContainerProps } from '@nickgdev/hellerui/lib/components/Container/types';
 
-import css from '../css/SlideIn.module.css';
-
-type SlideProps = {
-  dir: 'left' | 'right';
-  fast?: boolean;
-  children: JSX.Element;
-  id?: string;
-} & ContainerProps;
+import css from '../../css/SlideIn.module.css';
 
 function reduceSlideClassName(dir: 'left' | 'right', fast?: boolean) {
   switch (dir) {

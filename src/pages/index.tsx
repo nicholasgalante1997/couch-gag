@@ -1,74 +1,212 @@
-/** External Dependendencies */
-
-import React, { useState, useEffect } from 'react';
-import { log, deriveCssClassname } from '@nickgdev/couch-gag-common-lib';
-import { Container } from '@nickgdev/hellerui';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-/** Internal Dependencies (behavioral)  */
+import {
+  MetricType,
+  Treatment,
+  heller_couch_view_theme_treatment_pool as POOL,
+  Theme,
+  log,
+  deriveCssClassname
+} from '@nickgdev/couch-gag-common-lib';
+import { Container, _heller_base } from '@nickgdev/hellerui';
 
-import { ThemeProvider, _defaultTheme, Theme } from '../contexts';
-import { useQueryThemeTreatment } from '../queries';
-import { pageStyles } from '../utils';
+import { emit } from '../service/metric';
+import {
+  forwardVarText,
+  getSafeFontKey,
+  serverThemeCacheInstance
+} from '../utils';
+import SlideIn from '../components/animated/slide-in';
+import { OneCol } from '../components/widgets/OneCol.widget';
+import { getViewThemeTreatment } from '../service';
+import { Nav } from '../components';
+import { ThemeProvider } from '../contexts';
 
-/** Internal Dependencies (visual) */
+const blurb =
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
-import { Nav } from '../components/nav';
-import { Spinner } from '../components/animated/Spinner';
-import { Home } from './home';
+const defaultTheme = POOL.ViewThemeTreatments.filter(
+  (vt) => vt.id.includes('major') && vt.id.includes('oswald')
+)[0];
 
-function App() {
-  const [darkMode] = useState(true);
-  const [theme, setTheme] = useState<Theme>(_defaultTheme);
+type HomePageProps = {
+  theme: Treatment<Theme>;
+};
+
+function Home(props: HomePageProps) {
+  const {
+    theme: { font, palette }
+  } = props.theme.meta!;
 
   const { push: redirect } = useRouter();
-
-  const { data, error, isError, isLoading } = useQueryThemeTreatment(
-    undefined,
-    undefined,
-    undefined,
-    ['major', 'oswald']
-  );
+  const navigateToAnthologyPage = () =>
+    redirect('/story/season-one/?seasonKey=01&episodeKey=01');
 
   useEffect(() => {
-    if (data?.data) {
-      console.log({ data });
-      if (data.data.themeOptions.length > 0) {
-        setTheme({
-          darkMode,
-          font: data.data.themeOptions[0].meta!.theme!.font,
-          palette: data.data.themeOptions[0].meta!.theme!.palette,
-          treatmentId: data.data.themeOptions[0].meta!.theme!.treatmentId
-        });
-        const { body } = document;
+    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
+  }, []);
+
+  useEffect(() => {
+    const { body } = document;
         body.setAttribute(
           'class',
           deriveCssClassname(
-            data.data.themeOptions[0].meta!.theme!.palette.backgroundColor
+            palette.backgroundColor
           )?.css.bg ?? ''
         );
-      }
-    }
-  }, [data]);
+  }, [props.theme])
 
-  if (isLoading) {
+  function renderWidgetOne() {
     return (
-      <Container customStyles={pageStyles}>
-        <Spinner />
+      <Container
+        padding="1rem"
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start'
+        }}
+      >
+        {forwardVarText(getSafeFontKey(font.google.family), 'the', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            fontSize: '4rem'
+          }
+        })}
+        {forwardVarText(getSafeFontKey(font.google.family), 'couch gag', 'h1', {
+          customStyles: {
+            color: palette.headingPrimaryColor,
+            margin: '0px',
+            marginBottom: '12px',
+            fontSize: '4rem'
+          }
+        })}
+        <Container width="68%">
+          {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+            customStyles: {
+              color: palette.paragraphTextColor
+            }
+          })}
+        </Container>
       </Container>
     );
   }
 
-  if (isError) {
-    log('error', JSON.stringify(error));
-    redirect('/not-found');
+  function renderWidgetTwo() {
+    return (
+      <Container
+        id="home-page-widget-two-parent-container"
+        className="home-page-widget-two-parent-container-cl"
+        padding="0px"
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row'
+        }}
+        height="100%"
+      >
+        <Container
+          height="100%"
+          width="50%"
+          padding="0px"
+          customStyles={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignItems: 'center'
+          }}
+        >
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            'The Good',
+            'h3',
+            {
+              customStyles: {
+                color: palette.backgroundTertiaryColor,
+                marginTop: '2rem',
+                fontWeight: '800'
+              }
+            }
+          )}
+          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
+        </Container>
+        <Container height="100%" width="50%" padding="0px">
+          <SlideIn dir="right" customStyles={{ marginTop: '2rem' }}>
+            <div id="placeholder" />
+          </SlideIn>
+        </Container>
+      </Container>
+    );
   }
 
   return (
-    <ThemeProvider value={theme ?? _defaultTheme}>
+    <ThemeProvider value={{ darkMode: false, font, palette, treatmentId: props.theme.id}}>
       <Nav />
-      <Home />
+      <Container
+        width="100%"
+        padding="0rem"
+        id="cg-home-page-wrapping-container"
+      >
+        <OneCol
+          widgetKey="home-page-widget-one"
+          height="60vh"
+          containerProps={{
+            customStyles: {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              paddingLeft: '8vw'
+            }
+          }}
+          childNode={renderWidgetOne()}
+        />
+        <OneCol
+          widgetKey="home-page-widget-two"
+          containerProps={{
+            background: palette.backgroundComplimentColor
+          }}
+          childNode={renderWidgetTwo()}
+        />
+        <OneCol
+          widgetKey="home-page-widget-three"
+          containerProps={{
+            background: palette.backgroundTertiaryColor
+          }}
+        />
+      </Container>
     </ThemeProvider>
   );
 }
 
-export default App;
+export const getServerSideProps = async (ctx) => {
+  log('info', '#Home.getServerSideProps()');
+
+  let theme: Treatment<Theme>;
+
+  if (!serverThemeCacheInstance.cache) {
+    const { data, error } = await getViewThemeTreatment(
+      undefined,
+      undefined,
+      undefined,
+      ['major', 'oswald']
+    );
+
+    if (error) {
+      theme = defaultTheme;
+    } else {
+      log('info', 'inside successful else block - data is \n');
+      log('info', JSON.stringify(data));
+      serverThemeCacheInstance.getCacheInstance(); // we know cache is undefined at this point
+      serverThemeCacheInstance.setCacheInstance({
+        k: 'theme',
+        v: data.themeOptions[0]
+      });
+      theme = serverThemeCacheInstance.getCacheInstance().theme;
+    }
+  } else {
+    theme = serverThemeCacheInstance.getCacheInstance().theme;
+  }
+
+  return { props: { theme } };
+};
+
+export default Home;
