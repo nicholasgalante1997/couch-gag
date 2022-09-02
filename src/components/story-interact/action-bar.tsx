@@ -1,6 +1,6 @@
 import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
-import { useLocation } from 'react-router';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShareFromSquare,
@@ -27,7 +27,7 @@ function getMetricType(s: string) {
 }
 
 const StoryBar = () => {
-  const { search } = useLocation();
+  const { query } = useRouter();
   const { palette } = useThemeContext();
 
   return (

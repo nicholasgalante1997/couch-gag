@@ -17,7 +17,12 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const [res, setRes] = useState<InlineMediaQueryReturnType>({
+  const isServer = typeof window === 'undefined';
+
+  const [res, setRes] = useState<InlineMediaQueryReturnType | undefined>(
+    isServer ?
+    undefined :
+    {
     breakpoint: window.matchMedia('(max-width: 600px)').matches
       ? CouchGagBreakpoints.MOBILE
       : CouchGagBreakpoints.DESKTOP,
@@ -52,5 +57,5 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
     };
   }, []);
 
-  return res;
+  return res ? res : { breakpoint: CouchGagBreakpoints.DESKTOP, opsState: { loading: true, ready: false }, width: 1000 };
 };

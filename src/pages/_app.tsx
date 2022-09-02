@@ -12,7 +12,9 @@ const appQueryClient = new QueryClient();
 function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={appQueryClient}>
-      <Component {...pageProps} />
+      <Hydrate state={pageProps.dehydratedState}>
+        <Component {...pageProps} />
+      </Hydrate>
     </QueryClientProvider>
   );
 }

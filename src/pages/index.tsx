@@ -5,22 +5,22 @@ import {
   Treatment,
   heller_couch_view_theme_treatment_pool as POOL,
   Theme,
-  log,
   deriveCssClassname
 } from '@nickgdev/couch-gag-common-lib';
 import { Container, _heller_base } from '@nickgdev/hellerui';
 
-import { emit } from '../service/metric';
+import { ThemeProvider } from '../contexts';
 import {
   forwardVarText,
   getSafeFontKey,
   serverThemeCacheInstance
 } from '../utils';
+import { getViewThemeTreatment } from '../service';
+import { emit } from '../service/metric';
+import { Nav } from '../components';
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { getViewThemeTreatment } from '../service';
-import { Nav } from '../components';
-import { ThemeProvider } from '../contexts';
+import { GetServerSideProps } from 'next';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
@@ -48,13 +48,11 @@ function Home(props: HomePageProps) {
 
   useEffect(() => {
     const { body } = document;
-        body.setAttribute(
-          'class',
-          deriveCssClassname(
-            palette.backgroundColor
-          )?.css.bg ?? ''
-        );
-  }, [props.theme])
+    body.setAttribute(
+      'class',
+      deriveCssClassname(palette.backgroundColor)?.css.bg ?? ''
+    );
+  }, [props.theme]);
 
   function renderWidgetOne() {
     return (
@@ -139,7 +137,9 @@ function Home(props: HomePageProps) {
   }
 
   return (
-    <ThemeProvider value={{ darkMode: false, font, palette, treatmentId: props.theme.id}}>
+    <ThemeProvider
+      value={{ darkMode: false, font, palette, treatmentId: props.theme.id }}
+    >
       <Nav />
       <Container
         width="100%"
@@ -177,9 +177,7 @@ function Home(props: HomePageProps) {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
-  log('info', '#Home.getServerSideProps()');
-
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let theme: Treatment<Theme>;
 
   if (!serverThemeCacheInstance.cache) {
@@ -193,8 +191,6 @@ export const getServerSideProps = async (ctx) => {
     if (error) {
       theme = defaultTheme;
     } else {
-      log('info', 'inside successful else block - data is \n');
-      log('info', JSON.stringify(data));
       serverThemeCacheInstance.getCacheInstance(); // we know cache is undefined at this point
       serverThemeCacheInstance.setCacheInstance({
         k: 'theme',
