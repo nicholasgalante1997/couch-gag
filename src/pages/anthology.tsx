@@ -6,7 +6,7 @@ import {
   Treatment,
   heller_couch_view_theme_treatment_pool as POOL
 } from '@nickgdev/couch-gag-common-lib';
-import { Container, _heller_base } from '@nickgdev/hellerui';
+import { Container } from '@nickgdev/hellerui';
 
 import {
   pageStyles,
@@ -109,7 +109,8 @@ function AnthologyPage(props: AnthologyPageProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getServerSideProps: GetServerSideProps = async (_ctx) => {
   let theme: Treatment<Theme>;
 
   if (!serverThemeCacheInstance.cache) {

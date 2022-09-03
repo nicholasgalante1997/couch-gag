@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Font, Palette } from '@nickgdev/couch-gag-common-lib';
 import { forwardVarText } from './theme';
 import { getSafeFontKey } from './font';
@@ -45,3 +47,5 @@ export default (font: Font, palette: Palette) => ({
       }
     })
 });
+
+/** eslint-enable */

@@ -1,4 +1,3 @@
-import { _heller_base } from '@nickgdev/hellerui';
 import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';

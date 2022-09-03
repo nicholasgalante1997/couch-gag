@@ -13,8 +13,10 @@ function reduceSlideClassName(dir: 'left' | 'right', fast?: boolean) {
   }
 }
 
-export default ({ dir, children, fast = false, ...rest }: SlideProps) => (
+const SlideIn = ({ dir, children, fast = false, ...rest }: SlideProps) => (
   <Container {...rest} className={reduceSlideClassName(dir, fast)}>
     {children}
   </Container>
 );
+
+export default SlideIn;

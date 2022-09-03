@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import {
   MetricType,
   Treatment,
@@ -7,7 +6,7 @@ import {
   Theme,
   deriveCssClassname
 } from '@nickgdev/couch-gag-common-lib';
-import { Container, _heller_base } from '@nickgdev/hellerui';
+import { Container } from '@nickgdev/hellerui';
 
 import { ThemeProvider } from '../contexts';
 import {
@@ -37,10 +36,6 @@ function Home(props: HomePageProps) {
   const {
     theme: { font, palette }
   } = props.theme.meta!;
-
-  const { push: redirect } = useRouter();
-  const navigateToAnthologyPage = () =>
-    redirect('/story/season-one/?seasonKey=01&episodeKey=01');
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
@@ -177,7 +172,8 @@ function Home(props: HomePageProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getServerSideProps: GetServerSideProps = async (_ctx) => {
   let theme: Treatment<Theme>;
 
   if (!serverThemeCacheInstance.cache) {

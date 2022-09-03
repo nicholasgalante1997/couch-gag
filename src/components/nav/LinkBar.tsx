@@ -1,4 +1,4 @@
-import { Container, _heller_base } from '@nickgdev/hellerui';
+import { Container } from '@nickgdev/hellerui';
 import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
@@ -12,7 +12,7 @@ export function LinkBar() {
   return (
     <Container customStyles={{ display: 'flex', flexDirection: 'row' }}>
       {navJson.links.map((l) => (
-        <Hoverable>
+        <Hoverable key={l.plainText}>
           {forwardVarText(
             getSafeFontKey(font.google.family),
             l.plainText,
@@ -24,7 +24,8 @@ export function LinkBar() {
                 marginLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 fontSize: 'inherit'
-              }
+              },
+              key: l.plainText
             }
           )}
         </Hoverable>

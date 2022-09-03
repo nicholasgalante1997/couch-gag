@@ -38,7 +38,7 @@ export function findThemeInDevEnvOrUndefined(
   i?: number
 ): Theme | undefined {
   if (process.env.NODE_ENV === 'production') return undefined;
-  let matchingThemes = POOL.filter((vt) => vt.id.includes(slice));
+  const matchingThemes = POOL.filter((vt) => vt.id.includes(slice));
   if (matchingThemes.length === 0) return undefined;
   if (typeof i === 'undefined' || i > matchingThemes.length - 1) {
     return {

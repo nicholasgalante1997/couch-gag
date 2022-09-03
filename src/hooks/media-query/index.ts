@@ -20,15 +20,16 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
   const isServer = typeof window === 'undefined';
 
   const [res, setRes] = useState<InlineMediaQueryReturnType | undefined>(
-    isServer ?
-    undefined :
-    {
-    breakpoint: window.matchMedia('(max-width: 600px)').matches
-      ? CouchGagBreakpoints.MOBILE
-      : CouchGagBreakpoints.DESKTOP,
-    opsState: { loading, ready },
-    width: window.screen.width
-  });
+    isServer
+      ? undefined
+      : {
+          breakpoint: window.matchMedia('(max-width: 600px)').matches
+            ? CouchGagBreakpoints.MOBILE
+            : CouchGagBreakpoints.DESKTOP,
+          opsState: { loading, ready },
+          width: window.screen.width
+        }
+  );
 
   function handleScreenResize(event: MediaQueryListEvent) {
     setLoading(true);
@@ -57,5 +58,11 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
     };
   }, []);
 
-  return res ? res : { breakpoint: CouchGagBreakpoints.DESKTOP, opsState: { loading: true, ready: false }, width: 1000 };
+  return res
+    ? res
+    : {
+        breakpoint: CouchGagBreakpoints.DESKTOP,
+        opsState: { loading: true, ready: false },
+        width: 1000
+      };
 };

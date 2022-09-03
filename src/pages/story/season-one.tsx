@@ -2,8 +2,13 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { QueryClient, dehydrate } from 'react-query';
-import { log, Treatment, Theme, heller_couch_view_theme_treatment_pool as POOL } from '@nickgdev/couch-gag-common-lib';
-import { Container, Page, _heller_base } from '@nickgdev/hellerui';
+import {
+  log,
+  Treatment,
+  Theme,
+  heller_couch_view_theme_treatment_pool as POOL
+} from '@nickgdev/couch-gag-common-lib';
+import { Container, Page } from '@nickgdev/hellerui';
 
 import { Spinner } from '../../components/animated/spinner';
 import { StoryInteract } from '../../components/story-interact';
@@ -187,7 +192,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } else {
     theme = serverThemeCacheInstance.getCacheInstance().theme;
   }
-  
+
   return { props: { dehydratedState: dehydrate(queryClient), theme } };
 };
 

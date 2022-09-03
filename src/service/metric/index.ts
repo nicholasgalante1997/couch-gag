@@ -18,7 +18,7 @@ export const emit = async ({
       mode: 'cors',
       headers: [
         ['Content-Type', 'application/json'],
-        ['x-ulysses-key', process.env.REACT_APP_ULYSSES_HASHED_KEY ?? 'null']
+        ['x-ulysses-key', process.env.NEXT_PUBLIC_ULYSSES_HASHED_KEY ?? 'null']
       ]
     }
   );

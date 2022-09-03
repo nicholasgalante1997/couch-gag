@@ -1,6 +1,4 @@
-import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
-import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShareFromSquare,
@@ -11,25 +9,8 @@ import {
 import css from '../css/story-interact.module.css';
 import { useThemeContext } from '../../contexts';
 
-function getMetricType(s: string) {
-  switch (s) {
-    case 'page-view':
-      return MetricType.PAGE_VIEW;
-    case 'story-view':
-      return MetricType.STORY_VIEW;
-    case 'button-click':
-      return MetricType.BUTTON_CLICK;
-    case 'share':
-      return MetricType.SHARE;
-    default:
-      return MetricType.ERROR;
-  }
-}
-
 const StoryBar = () => {
-  const { query } = useRouter();
   const { palette } = useThemeContext();
-
   return (
     <Container
       customStyles={{
