@@ -4,6 +4,8 @@ import { Container, Button, Break } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
 import { pageStyles, getSafeFontKey, forwardVarText } from '../utils';
 
+import { Carousel } from '../components';
+
 export const ErrorPage = () => {
   const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
