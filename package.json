@@ -2,6 +2,7 @@
   "name": "couch-gag-client",
   "version": "1.0.0",
   "private": false,
+  "license": "ISC",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,6 +14,9 @@
     "cleanup": "yarn lint:write && yarn fmt",
     "gith": "git log --graph --oneline",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts(x)?": "yarn cleanup"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +74,7 @@
     "eslint": "^8.23.0",
     "eslint-plugin-react": "^7.31.2",
     "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.6.2"
   }
 }
