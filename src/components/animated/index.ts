@@ -1,5 +1,5 @@
-export { default as Carousel } from './Carousel';
-export { default as SlideIn } from './SlideIn';
+export { default as Carousel } from './carousel';
+export { default as SlideIn } from './slide-in';
 
-export * from './Hoverable';
-export * from './Spinner';
+export * from './hoverable';
+export * from './spinner';

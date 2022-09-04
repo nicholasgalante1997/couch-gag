@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/animated/spinner spinner/default 1`] = `
+<div
+  class="spinner"
+  data-testid="spinner-test"
+/>
+`;

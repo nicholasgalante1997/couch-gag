@@ -1,15 +1,9 @@
 import { Button, Container } from '@nickgdev/hellerui';
-import {
-  heller_couch_font_treatment_pool,
-  heller_couch_palette_treatment_pool,
-  heller_couch_view_theme_treatment_pool
-} from '@nickgdev/couch-gag-common-lib';
+import { heller_couch_view_theme_treatment_pool } from '@nickgdev/couch-gag-common-lib';
 import React, { useState } from 'react';
 import { Theme } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
 
-const fontOpts = heller_couch_font_treatment_pool.FontTreatments;
-const colorOpts = heller_couch_palette_treatment_pool.ColorTreatments;
 const themeOpts = heller_couch_view_theme_treatment_pool.ViewThemeTreatments;
 
 const ip =
@@ -91,8 +85,6 @@ export function ThemeGui() {
     );
   }
 
-  function renderSubsliceOfThemeLayout() {}
-
   return (
     <Container asGridParent height="100%">
       <Container
@@ -127,7 +119,11 @@ export function ThemeGui() {
         >
           {themeOpts.map((theme) => {
             return (
-              <option style={{ fontFamily: 'Poppins' }} value={theme.id}>
+              <option
+                key={theme.id}
+                style={{ fontFamily: 'Poppins' }}
+                value={theme.id}
+              >
                 {theme.id}
               </option>
             );

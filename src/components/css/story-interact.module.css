@@ -1,0 +1,25 @@
+.couch-gag-icon {
+    height: 16px;
+    width: 16px;
+    margin-left: 8px;
+    margin-right: 8px;   
+    color: black;
+}
+
+.share:hover {
+    height: 20px;
+    width: 20px;
+    color: #0000EE;
+}
+
+.like:hover {
+    height: 20px;
+    width: 20px;
+    color: lightcoral;
+}
+
+.bookmark:hover {
+    height: 20px;
+    width: 20px;
+    color: lightseagreen;
+}

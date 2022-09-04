@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /** REPRESENTS BP UPPER BOUND */
 export enum CouchGagBreakpoints {
@@ -17,13 +17,19 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const [res, setRes] = useState<InlineMediaQueryReturnType>({
-    breakpoint: window.matchMedia('(max-width: 600px)').matches
-      ? CouchGagBreakpoints.MOBILE
-      : CouchGagBreakpoints.DESKTOP,
-    opsState: { loading, ready },
-    width: window.screen.width
-  });
+  const isServer = typeof window === 'undefined';
+
+  const [res, setRes] = useState<InlineMediaQueryReturnType | undefined>(
+    isServer
+      ? undefined
+      : {
+          breakpoint: window.matchMedia('(max-width: 600px)').matches
+            ? CouchGagBreakpoints.MOBILE
+            : CouchGagBreakpoints.DESKTOP,
+          opsState: { loading, ready },
+          width: window.screen.width
+        }
+  );
 
   function handleScreenResize(event: MediaQueryListEvent) {
     setLoading(true);
@@ -52,5 +58,11 @@ export const useInlineMediaQuery = (): InlineMediaQueryReturnType => {
     };
   }, []);
 
-  return res;
+  return res
+    ? res
+    : {
+        breakpoint: CouchGagBreakpoints.DESKTOP,
+        opsState: { loading: true, ready: false },
+        width: 1000
+      };
 };
