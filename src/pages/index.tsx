@@ -1,53 +1,22 @@
 import React, { useEffect } from 'react';
-import { GetServerSideProps } from 'next';
-import {
-  MetricType,
-  heller_couch_view_theme_treatment_pool as POOL,
-  Theme,
-  Treatment,
-  deriveCssClassname
-} from '@nickgdev/couch-gag-common-lib';
+import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 
-import { ThemeProvider } from '../contexts';
-import {
-  forwardVarText,
-  getSafeFontKey,
-  serverThemeCacheInstance
-} from '../utils';
-import { getViewThemeTreatment } from '../service';
+import { useThemeContext } from '../contexts';
+import { forwardVarText, getSafeFontKey } from '../utils';
 import { emit } from '../service/metric';
-import { Nav } from '../components';
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
-const defaultTheme = POOL.ViewThemeTreatments.filter(
-  (vt) => vt.id.includes('major') && vt.id.includes('oswald')
-)[0];
-
-type HomePageProps = {
-  theme: Treatment<Theme>;
-};
-
-function Home(props: HomePageProps) {
-  const {
-    theme: { font, palette }
-  } = props.theme.meta!;
+function Home() {
+  const { font, palette } = useThemeContext();
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
-
-  useEffect(() => {
-    const { body } = document;
-    body.setAttribute(
-      'class',
-      deriveCssClassname(palette.backgroundColor)?.css.bg ?? ''
-    );
-  }, [props.theme]);
 
   function renderWidgetOne() {
     return (
@@ -132,73 +101,35 @@ function Home(props: HomePageProps) {
   }
 
   return (
-    <ThemeProvider
-      value={{ darkMode: false, font, palette, treatmentId: props.theme.id }}
-    >
-      <Nav />
-      <Container
-        width="100%"
-        padding="0rem"
-        id="cg-home-page-wrapping-container"
-      >
-        <OneCol
-          widgetKey="home-page-widget-one"
-          height="60vh"
-          containerProps={{
-            customStyles: {
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              paddingLeft: '8vw'
-            }
-          }}
-          childNode={renderWidgetOne()}
-        />
-        <OneCol
-          widgetKey="home-page-widget-two"
-          containerProps={{
-            background: palette.backgroundComplimentColor
-          }}
-          childNode={renderWidgetTwo()}
-        />
-        <OneCol
-          widgetKey="home-page-widget-three"
-          containerProps={{
-            background: palette.backgroundTertiaryColor
-          }}
-        />
-      </Container>
-    </ThemeProvider>
+    <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
+      <OneCol
+        widgetKey="home-page-widget-one"
+        height="60vh"
+        containerProps={{
+          customStyles: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            paddingLeft: '8vw'
+          }
+        }}
+        childNode={renderWidgetOne()}
+      />
+      <OneCol
+        widgetKey="home-page-widget-two"
+        containerProps={{
+          background: palette.backgroundComplimentColor
+        }}
+        childNode={renderWidgetTwo()}
+      />
+      <OneCol
+        widgetKey="home-page-widget-three"
+        containerProps={{
+          background: palette.backgroundTertiaryColor
+        }}
+      />
+    </Container>
   );
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getServerSideProps: GetServerSideProps = async (_ctx) => {
-  let theme: Treatment<Theme>;
-
-  if (!serverThemeCacheInstance.cache) {
-    const { data, error } = await getViewThemeTreatment(
-      undefined,
-      undefined,
-      undefined,
-      ['major', 'oswald']
-    );
-
-    if (error) {
-      theme = defaultTheme;
-    } else {
-      serverThemeCacheInstance.getCacheInstance(); // we know cache is undefined at this point
-      serverThemeCacheInstance.setCacheInstance({
-        k: 'theme',
-        v: data.themeOptions[0]
-      });
-      theme = serverThemeCacheInstance.getCacheInstance().theme;
-    }
-  } else {
-    theme = serverThemeCacheInstance.getCacheInstance().theme;
-  }
-
-  return { props: { theme } };
-};
 
 export default Home;
