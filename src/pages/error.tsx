@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router';
-import { Container, Button, Break } from '@nickgdev/hellerui';
+import { useRouter } from 'next/router';
+import { Break, Button, Container } from '@nickgdev/hellerui';
 
 import { useThemeContext } from '../contexts';
-import { pageStyles, getSafeFontKey, forwardVarText } from '../utils';
+import { forwardVarText, getSafeFontKey, pageStyles } from '../utils';
 
 export const ErrorPage = () => {
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
   return (
     <Container customStyles={pageStyles}>
@@ -28,7 +28,7 @@ export const ErrorPage = () => {
         }
       )}
       <Break />
-      <Button onClick={() => navigate('/')} ghost backgroundColor="#ffffff">
+      <Button onClick={() => redirect('/')} ghost backgroundColor="#ffffff">
         {forwardVarText(
           getSafeFontKey(font.google.family),
           'back to home',

@@ -1,13 +1,8 @@
-import { Container } from '@nickgdev/hellerui';
 import { useEffect, useState } from 'react';
+import type { CarouselProps } from './types';
+import { Container } from '@nickgdev/hellerui';
 
-import '../css/Carousel.css';
-
-type CarouselProps = {
-  items: JSX.Element[];
-};
-
-export default function (props: CarouselProps) {
+function Carousel(props: CarouselProps) {
   const [current, setCurrent] = useState<number>(0);
 
   useEffect(() => {
@@ -45,3 +40,5 @@ export default function (props: CarouselProps) {
     </Container>
   );
 }
+
+export default Carousel;

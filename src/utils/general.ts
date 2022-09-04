@@ -1,7 +1,7 @@
 /* eslint-disable no-loop-func */
 export async function resiliantTryCatch(
   callback: () => void | Promise<any> | any,
-  tries: number = 3,
+  tries = 3,
   timeout = 500,
   initialTryNumber = 0
 ) {
