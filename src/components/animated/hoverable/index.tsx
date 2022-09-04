@@ -1,5 +1,4 @@
-import type { HoverableProps } from './types';
-
+import { HoverableProps } from './types';
 import styled from 'styled-components';
 import { _heller_base } from '@nickgdev/hellerui';
 

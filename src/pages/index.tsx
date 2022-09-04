@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 import {
   MetricType,
-  Treatment,
   heller_couch_view_theme_treatment_pool as POOL,
   Theme,
+  Treatment,
   deriveCssClassname
 } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
@@ -19,7 +20,6 @@ import { emit } from '../service/metric';
 import { Nav } from '../components';
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { GetServerSideProps } from 'next';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;

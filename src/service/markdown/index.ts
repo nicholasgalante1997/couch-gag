@@ -1,5 +1,5 @@
 import { Story, StoryCollection } from '../../types';
-import { devApiTargets, prodApiTargets, isDev } from '../../utils';
+import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
 export async function getStoryByStoryKey(storyKey: {
   seasonKey: string;

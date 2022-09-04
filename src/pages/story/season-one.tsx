@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { QueryClient, dehydrate } from 'react-query';
 import {
-  log,
-  Treatment,
+  heller_couch_view_theme_treatment_pool as POOL,
   Theme,
-  heller_couch_view_theme_treatment_pool as POOL
+  Treatment,
+  log
 } from '@nickgdev/couch-gag-common-lib';
 import { Container, Page } from '@nickgdev/hellerui';
 
@@ -15,11 +15,11 @@ import { StoryInteract } from '../../components/story-interact';
 import { ThemeProvider } from '../../contexts';
 import { useQuerySingleMarkdownStory } from '../../queries';
 import {
+  MARKDOWN_COMPONENT_MAPPING_FN,
+  forwardVarText,
+  getSafeFontKey,
   pageStyles,
   parseContent,
-  getSafeFontKey,
-  forwardVarText,
-  MARKDOWN_COMPONENT_MAPPING_FN,
   serverThemeCacheInstance
 } from '../../utils';
 import { getStoryByStoryKey, getViewThemeTreatment } from '../../service';

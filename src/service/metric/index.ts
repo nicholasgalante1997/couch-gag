@@ -1,5 +1,5 @@
 import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
-import { formatQueryParams, devApiTargets } from '../../utils';
+import { devApiTargets, formatQueryParams } from '../../utils';
 
 export const emit = async ({
   metricName,

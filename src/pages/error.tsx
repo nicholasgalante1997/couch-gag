@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router';
-import { Container, Button, Break } from '@nickgdev/hellerui';
+import { Break, Button, Container } from '@nickgdev/hellerui';
 
 import { useThemeContext } from '../contexts';
-import { pageStyles, getSafeFontKey, forwardVarText } from '../utils';
-
-import { Carousel } from '../components';
+import { forwardVarText, getSafeFontKey, pageStyles } from '../utils';
 
 export const ErrorPage = () => {
   const { push: redirect } = useRouter();

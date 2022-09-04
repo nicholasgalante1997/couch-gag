@@ -1,6 +1,6 @@
 import type { AnthologyTileProps } from './types';
 
-import { Container, Button } from '@nickgdev/hellerui';
+import { Button, Container } from '@nickgdev/hellerui';
 
 import { useThemeContext } from '../../../contexts';
 import { CouchGagBreakpoints, useInlineMediaQuery } from '../../../hooks';

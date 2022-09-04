@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import { QueryClient, dehydrate } from 'react-query';
 import {
-  log,
+  heller_couch_view_theme_treatment_pool as POOL,
   Theme,
   Treatment,
-  heller_couch_view_theme_treatment_pool as POOL
+  log
 } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 
 import {
-  pageStyles,
   forwardVarText,
   getSafeFontKey,
+  pageStyles,
   serverThemeCacheInstance
 } from '../utils';
 import { ThemeProvider } from '../contexts';
@@ -21,8 +23,6 @@ import { useQueryAllMarkdownStories } from '../queries';
 import { AnthologyTile } from '../components/cards/anthology';
 import { Spinner } from '../components/animated/spinner';
 import { Nav } from '../components';
-import { dehydrate, QueryClient } from 'react-query';
-import { GetServerSideProps } from 'next';
 
 const defaultTheme = POOL.ViewThemeTreatments.filter(
   (vt) => vt.id.includes('major') && vt.id.includes('oswald')

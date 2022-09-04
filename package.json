@@ -10,7 +10,7 @@
     "test": "echo 'testing...'",
     "fmt": "prettier --write src",
     "lint": "next lint",
-    "lint:write": "eslint -c .eslintrc.js --fix ./src/",
+    "lint:write": "eslint -c .eslintrc --fix src",
     "cleanup": "yarn lint:write && yarn fmt",
     "gith": "git log --graph --oneline"
   },

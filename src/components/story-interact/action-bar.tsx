@@ -1,9 +1,9 @@
 import { Container } from '@nickgdev/hellerui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faShareFromSquare,
+  faBookmark,
   faHeart,
-  faBookmark
+  faShareFromSquare
 } from '@fortawesome/free-regular-svg-icons';
 
 import css from '../css/story-interact.module.css';

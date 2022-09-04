@@ -1,6 +1,5 @@
-import type { CarouselProps } from './types';
-
 import { useEffect, useState } from 'react';
+import type { CarouselProps } from './types';
 import { Container } from '@nickgdev/hellerui';
 
 function Carousel(props: CarouselProps) {
