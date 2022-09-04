@@ -1,5 +1,8 @@
 import css from '../../css/Spinner.module.css';
+import { WithFlexibleHtmlDataProps } from '../../../types';
 
-export function Spinner() {
-  return <div className={css.spinner} />;
+type SpinnerProps = WithFlexibleHtmlDataProps;
+
+export function Spinner(props: SpinnerProps) {
+  return <div {...props} className={css.spinner} />;
 }

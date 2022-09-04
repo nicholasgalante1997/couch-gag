@@ -52,8 +52,8 @@
     "@next/mdx": "^12.2.5",
     "@nickgdev/couch-gag-common-lib": "^1.1.91",
     "@nickgdev/hellerui": "^0.0.45",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.31",
@@ -81,7 +81,11 @@
     "eslint": "^8.23.0",
     "eslint-plugin-react": "^7.31.2",
     "husky": "4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.0.2",
+    "jest-environment-jsdom": "^29.0.2",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.8"
   }
 }
