@@ -21,7 +21,10 @@ const withMDX = require('@next/mdx')({
  * @type {import('next').NextConfig}
  **/
 const config = { 
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'] 
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  compiler: {
+    styledComponents: true
+  }
 }
 
 module.exports = withTM(withMDX(config));
