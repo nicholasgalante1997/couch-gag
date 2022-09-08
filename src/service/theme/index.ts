@@ -1,7 +1,7 @@
 import { Theme, Treatment } from '@nickgdev/couch-gag-common-lib';
 import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
-type ThemeResponseBody = {
+export type ThemeResponseBody = {
   data: { themeOptions: Treatment<Theme>[] };
   error?: string;
 };
@@ -10,14 +10,14 @@ type ThemeRequestBody = {
   uId?: string;
   cId?: string;
   cookie?: string;
-  devEnvThemeOverride?: string;
+  devEnvThemeOverride?: string | string[];
 };
 
 export async function getViewThemeTreatment(
   uId?: string,
   cId?: string,
   cookie?: string,
-  themeSlice?: string
+  themeSlice?: string | string[]
 ): Promise<ThemeResponseBody> {
   const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
   const url = base + 'theme';
@@ -33,7 +33,7 @@ export async function getViewThemeTreatment(
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      'x-ulysses-key': process.env.REACT_APP_ULYSSES_HASHED_KEY!
+      'x-ulysses-key': process.env.NEXT_PUBLIC_ULYSSES_HASHED_KEY!
     },
     body: JSON.stringify(data)
   })

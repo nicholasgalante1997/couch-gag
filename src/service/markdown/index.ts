@@ -1,5 +1,5 @@
 import { Story, StoryCollection } from '../../types';
-import { devApiTargets, prodApiTargets, isDev } from '../../utils';
+import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
 export async function getStoryByStoryKey(storyKey: {
   seasonKey: string;
@@ -13,7 +13,7 @@ export async function getStoryByStoryKey(storyKey: {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      'x-ulysses-key': process.env.REACT_APP_ULYSSES_HASHED_KEY!
+      'x-ulysses-key': process.env.NEXT_PUBLIC_ULYSSES_HASHED_KEY!
     }
   })
     .then((r: Response) => r.json())
@@ -28,7 +28,7 @@ export async function getStories(): Promise<StoryCollection> {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      'x-ulysses-key': process.env.REACT_APP_ULYSSES_HASHED_KEY!
+      'x-ulysses-key': process.env.NEXT_PUBLIC_ULYSSES_HASHED_KEY!
     }
   })
     .then((r: Response) => r.json())

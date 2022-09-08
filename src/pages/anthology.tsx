@@ -1,32 +1,68 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
+import React, { useEffect, useMemo } from 'react';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { QueryClient, dehydrate } from 'react-query';
 import { log } from '@nickgdev/couch-gag-common-lib';
-import { Container, _heller_base } from '@nickgdev/hellerui';
+import { Container } from '@nickgdev/hellerui';
 
-import { pageStyles, forwardVarText, getSafeFontKey } from '../utils';
+import {
+  forwardVarText,
+  getSafeFontKey,
+  pageStyles,
+  reduceAndBool
+} from '../utils';
 import { useThemeContext } from '../contexts';
+import { getStories } from '../service';
 import { useQueryAllMarkdownStories } from '../queries';
 
-import { StoryRow } from '../components/widgets/StoryRow.widget';
-import { Spinner } from '../components/animated/Spinner';
+import { AnthologyTile } from '../components/cards/anthology';
+import { Spinner } from '../components/animated/spinner';
+import {
+  AnthException,
+  AnthExceptionEnum,
+  EXCEPTION_DELIMITER
+} from '../exceptions';
 
-export function AnthologyPage() {
-  const navigate = useNavigate();
+function AnthologyPage() {
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const failureCase = isError || (data && !data.collection);
     if (failureCase) {
+      let errorType: AnthExceptionEnum;
+      if (typeof error === 'string' && error.includes('ulysses'))
+        errorType = AnthExceptionEnum.ULYSSES_VERIFICATION;
+      else if (
+        typeof error === 'string' &&
+        !error.includes('ulysses') &&
+        Object.keys(data?.collection ?? {}).length === 0
+      )
+        errorType = AnthExceptionEnum.EMPTY_COLLECTION;
+      else errorType = AnthExceptionEnum.NETWORK;
       log(
         'error',
-        JSON.stringify(error ?? '[anthology] collection fetching error.')
+        new AnthException(errorType).message +
+          EXCEPTION_DELIMITER +
+          `relayed error ::: ${error}`
       );
-      navigate('/not-found');
+      redirect('/404');
     }
   }, [isError, error]);
 
-  return !isLoading && data && data.collection ? (
+  const ready = useMemo(
+    () =>
+      reduceAndBool(
+        !isLoading,
+        data,
+        data?.collection,
+        Object.keys(data?.collection ?? {}).length > 0
+      ),
+    [isLoading, data]
+  );
+
+  return ready ? (
     <Container
       radius="none"
       width={'100%'}
@@ -46,19 +82,31 @@ export function AnthologyPage() {
           }
         })}
       </Container>
-      {Object.keys(data.collection).map((s: any, i: number) => (
-        <Container width={'90%'}>
-          <StoryRow
-            index={i}
-            imgSrc={data.collection[s].img}
-            title={data.collection[s].title}
-            subtitle={data.collection[s].subtitle}
-            genres={data.collection[s].genres ?? []}
-            episodeKey={data.collection[s].episodeKey}
-            seasonKey={data.collection[s].seasonKey}
-          />
+      <Container width="90%" padding="0px">
+        <Container
+          asGridParent
+          padding="0px"
+          customStyles={{ flexWrap: 'wrap' }}
+        >
+          {Object.keys(data!.collection).map((s: any, i: number) => (
+            <AnthologyTile
+              key={`${data!.collection[s].episodeKey}-${i}`}
+              title={data!.collection[s].title}
+              desc={data!.collection[s].subtitle}
+              cardKey={`${data!.collection[s].seasonKey}-${
+                data!.collection[s].episodeKey
+              }`}
+              navigationFn={() => {
+                redirect(
+                  `/story/season-one?seasonKey=01&episodeKey=${
+                    data!.collection[s].episodeKey
+                  }`
+                );
+              }}
+            />
+          ))}
         </Container>
-      ))}
+      </Container>
     </Container>
   ) : (
     <Container customStyles={pageStyles}>
@@ -66,3 +114,16 @@ export function AnthologyPage() {
     </Container>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getServerSideProps: GetServerSideProps = async (_ctx) => {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: 'markdown',
+    queryFn: getStories
+  });
+
+  return { props: { dehydratedState: dehydrate(queryClient) } };
+};
+
+export default AnthologyPage;

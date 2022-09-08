@@ -1,18 +1,18 @@
-import { Container, _heller_base } from '@nickgdev/hellerui';
-import { useNavigate } from 'react-router';
+import { Container } from '@nickgdev/hellerui';
+import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
-import { Hoverable } from '../animated/Hoverable';
+import { Hoverable } from '../animated/hoverable';
 import navJson from './data/nav.json';
 
 export function LinkBar() {
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
-  const forwardNavEventDest = (d: string) => navigate(d);
+  const forwardNavEventDest = (d: string) => redirect(d);
   return (
     <Container customStyles={{ display: 'flex', flexDirection: 'row' }}>
       {navJson.links.map((l) => (
-        <Hoverable>
+        <Hoverable key={l.plainText}>
           {forwardVarText(
             getSafeFontKey(font.google.family),
             l.plainText,
@@ -24,7 +24,8 @@ export function LinkBar() {
                 marginLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 fontSize: 'inherit'
-              }
+              },
+              key: l.plainText
             }
           )}
         </Hoverable>

@@ -1,11 +1,10 @@
-import { _heller_base } from '@nickgdev/hellerui';
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../utils';
-import { Hoverable } from '../animated/Hoverable';
+import { Hoverable } from '../animated/hoverable';
 
 export function Title() {
-  const navigate = useNavigate();
+  const { push: redirect } = useRouter();
   const { font, palette } = useThemeContext();
 
   return (
@@ -18,7 +17,7 @@ export function Title() {
         'couch gag v0',
         'h5',
         {
-          onClick: () => navigate('/')
+          onClick: () => redirect('/')
         }
       )}
     </Hoverable>

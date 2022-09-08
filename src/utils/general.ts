@@ -1,7 +1,7 @@
 /* eslint-disable no-loop-func */
-export async function resiliantTryCatch(
-  callback: () => void | Promise<any> | any,
-  tries: number = 3,
+export async function resiliantTryCatch<T>(
+  callback: () => Promise<T> | T,
+  tries = 3,
   timeout = 500,
   initialTryNumber = 0
 ) {
@@ -25,4 +25,12 @@ export async function resiliantTryCatch(
     }
   }
   return { isError: true };
+}
+
+export function reduceAndBool(...args: any[]) {
+  let b = true;
+  for (const arg of args) {
+    if (!arg) b = false;
+  }
+  return b;
 }
