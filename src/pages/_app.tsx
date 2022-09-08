@@ -17,6 +17,9 @@ import {
   ThemeExceptionEnum
 } from '../exceptions';
 import { defaultTheme } from '../utils';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
 /** Stylesheets */
 import '@nickgdev/hellerui/lib/index.css';
