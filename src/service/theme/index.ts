@@ -1,7 +1,7 @@
 import { Theme, Treatment } from '@nickgdev/couch-gag-common-lib';
 import { devApiTargets, isDev, prodApiTargets } from '../../utils';
 
-type ThemeResponseBody = {
+export type ThemeResponseBody = {
   data: { themeOptions: Treatment<Theme>[] };
   error?: string;
 };
