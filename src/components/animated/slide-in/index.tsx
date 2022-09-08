@@ -15,9 +15,9 @@ function reduceShakeClassName(shake?: boolean, fast?: boolean) {
     return '';
   }
   if (fast) {
-    return 'shake-fast';
+    return css['shake-fast'];
   } else {
-    return 'shake';
+    return css['shake'];
   }
 }
 
