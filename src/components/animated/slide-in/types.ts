@@ -5,4 +5,6 @@ export type SlideProps = {
   fast?: boolean;
   children: JSX.Element;
   id?: string;
+  shake?: boolean;
+  shakeFast?: boolean;
 } & ContainerProps;
