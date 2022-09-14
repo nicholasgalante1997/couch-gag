@@ -5,11 +5,14 @@ import { OneCol } from '../components/widgets/OneCol.widget';
 import { TwoColStaggered } from '../components/widgets/TwoColStaggered.widget';
 import { useThemeContext } from '../contexts';
 import { forwardVarText, getSafeFontKey } from '../utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
+import { SlideIn } from '../components';
 
 const blurb =
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
-export function About() {
+export default function About() {
   const { font, palette } = useThemeContext();
   function renderAboutWidget() {
     return (
@@ -98,18 +101,21 @@ export function About() {
           alignItems: 'center'
         }}
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          'image here',
-          'h1',
-          {
-            customStyles: {
-              color: palette.headingSecondaryColor,
-              margin: '0px',
-              fontSize: '2rem'
-            }
-          }
-        )}
+        <SlideIn
+          fast
+          dir="right"
+          height={'100%'}
+          padding="0px"
+          customStyles={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100%'
+          }}
+          shakeFast
+        >
+          <FontAwesomeIcon icon={faPeopleGroup} size="10x" color="#EC7628" />
+        </SlideIn>
       </Container>
     );
   }
