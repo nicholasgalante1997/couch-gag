@@ -101,21 +101,23 @@ export default function About() {
           alignItems: 'center'
         }}
       >
-        <SlideIn
-          fast
-          dir="right"
-          height={'100%'}
-          padding="0px"
-          customStyles={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100%'
-          }}
-          shakeFast
-        >
-          <FontAwesomeIcon icon={faPeopleGroup} size="10x" color="#EC7628" />
-        </SlideIn>
+        <Container height="100%" width="50%" padding="0px">
+          <SlideIn
+            fast
+            dir="right"
+            height={'100%'}
+            padding="15px"
+            customStyles={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '100%'
+            }}
+            shakeFast
+          >
+            <FontAwesomeIcon icon={faPeopleGroup} size="10x" color="#EC7628" />
+          </SlideIn>
+        </Container>
       </Container>
     );
   }
