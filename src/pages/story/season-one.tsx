@@ -113,7 +113,6 @@ function StoryPage() {
           }}
           customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
         />
-        )
       </Container>
     </Container>
   ) : (
@@ -136,7 +135,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['markdown', query?.seasonKey ?? '', query?.episodeKey ?? ''],
+    queryKey: ['markdown', query.seasonKey ?? '', query.episodeKey ?? ''],
     queryFn: () =>
       getStoryByStoryKey({
         seasonKey: Array.isArray(query.seasonKey)

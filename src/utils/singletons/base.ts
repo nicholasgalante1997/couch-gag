@@ -18,6 +18,7 @@ export default class NextServerCache implements INextServerCache {
   setCacheInstance({ k, v }: { k: string; v: any }) {
     this.cache = {
       ...this.cache,
+      __updatedAt: Date.now(),
       [k]: v
     };
   }

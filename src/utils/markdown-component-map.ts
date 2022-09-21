@@ -5,7 +5,42 @@ import { forwardVarText } from './theme';
 import { getSafeFontKey } from './font';
 
 export default (font: Font, palette: Palette) => ({
+  h1: ({ node, ...props }: any) =>
+    forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+      ...props,
+      customStyles: {
+        color: palette.headingPrimaryColor
+      }
+    }),
+  h2: ({ node, ...props }: any) =>
+    forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+      ...props,
+      customStyles: {
+        color: palette.headingPrimaryColor
+      }
+    }),
+  h3: ({ node, ...props }: any) =>
+    forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+      ...props,
+      customStyles: {
+        color: palette.headingPrimaryColor
+      }
+    }),
   h4: ({ node, ...props }: any) =>
+    forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+      ...props,
+      customStyles: {
+        color: palette.headingPrimaryColor
+      }
+    }),
+  h5: ({ node, ...props }: any) =>
+    forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
+      ...props,
+      customStyles: {
+        color: palette.headingPrimaryColor
+      }
+    }),
+  h6: ({ node, ...props }: any) =>
     forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
       ...props,
       customStyles: {

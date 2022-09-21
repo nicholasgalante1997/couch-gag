@@ -4,12 +4,19 @@ export async function resiliantTryCatch<T>(
   tries = 3,
   timeout = 500,
   initialTryNumber = 0
-) {
+): Promise<{
+  data?: T;
+  isError: boolean;
+  error?: string;
+}> {
   let x = initialTryNumber;
   while (x < tries) {
     try {
-      const res = await callback();
-      return res;
+      const res: T = await callback();
+      return {
+        data: res,
+        isError: false
+      };
     } catch (e) {
       console.error(
         'error with function call ' +

@@ -1,27 +1,47 @@
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
-import { Container } from '@nickgdev/hellerui';
-
+import { Button, Container } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
 import { forwardVarText, getSafeFontKey } from '../utils';
+import { useHomePageText } from '../store';
 import { emit } from '../service/metric';
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCouch } from '@fortawesome/free-solid-svg-icons';
-import { faPersonFallingBurst } from '@fortawesome/free-solid-svg-icons';
-import { faPoo } from '@fortawesome/free-solid-svg-icons';
-
-const blurb =
-  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` as const;
 
 function Home() {
+  /** dynamic context */
   const { font, palette } = useThemeContext();
+  const { push: redirect } = useRouter();
 
+  /** static context */
+  const text = useHomePageText();
+
+  /** metric emissions */
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
+  /** function defs */
+  function handleOriginStoryClick() {
+    redirect('/story/season-one?seasonKey=01&episodeKey=01');
+  }
+
+  function handleSignUpClick() {
+    redirect('/auth');
+  }
+
+  function reduceImageSizeByFactor(
+    f: number,
+    imageDimensions: { height: number; width: number }
+  ) {
+    return {
+      height: imageDimensions.height / f,
+      width: imageDimensions.width / f
+    };
+  }
+
+  /** subviews */
   function renderWidgetOne() {
     return (
       <Container
@@ -33,32 +53,46 @@ function Home() {
           alignItems: 'flex-start'
         }}
       >
-        {forwardVarText(getSafeFontKey(font.google.family), 'the', 'h1', {
-          customStyles: {
-            color: palette.headingPrimaryColor,
-            margin: '0px',
-            fontSize: '4rem'
-          }
-        })}
-        {forwardVarText(getSafeFontKey(font.google.family), 'couch gag', 'h1', {
-          customStyles: {
-            color: palette.headingPrimaryColor,
-            margin: '0px',
-            marginBottom: '12px',
-            fontSize: '4rem'
-          }
-        })}
-        <Container width="68%">
-          {forwardVarText(getSafeFontKey(font.google.family), blurb, 'p', {
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          text.heroWidget.the,
+          'h1',
+          {
             customStyles: {
-              color: palette.paragraphTextColor
+              color: palette.headingPrimaryColor,
+              margin: '0px',
+              fontSize: '4rem'
             }
-          })}
+          }
+        )}
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          text.heroWidget.title,
+          'h1',
+          {
+            customStyles: {
+              color: palette.headingPrimaryColor,
+              margin: '0px',
+              marginBottom: '12px',
+              fontSize: '4rem'
+            }
+          }
+        )}
+        <Container width="68%">
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.heroWidget.supportingNotion,
+            'p',
+            {
+              customStyles: {
+                color: palette.paragraphTextColor
+              }
+            }
+          )}
         </Container>
       </Container>
     );
   }
-
   function renderWidgetTwo() {
     return (
       <Container
@@ -83,7 +117,7 @@ function Home() {
         >
           {forwardVarText(
             getSafeFontKey(font.google.family),
-            'The Good',
+            text.originWidget.title,
             'h3',
             {
               customStyles: {
@@ -96,17 +130,29 @@ function Home() {
           <hr style={{ width: '90%' }} color={palette.backgroundColor} />
           {forwardVarText(
             getSafeFontKey(font.google.family),
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+            text.originWidget.supportingNotion,
             'p',
             {
               customStyles: {
                 color: palette.backgroundTertiaryColor,
                 marginTop: '2rem',
                 fontWeight: '800',
-                paddingLeft: '3rem'
+                paddingLeft: '3rem',
+                textAlign: 'center'
               }
             }
           )}
+          <Button
+            ghost
+            backgroundColor={palette.backgroundTertiaryColor}
+            onClick={handleOriginStoryClick}
+          >
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              text.originWidget.actionText,
+              'span'
+            )}
+          </Button>
         </Container>
         <Container height="100%" width="50%" padding="0px">
           <SlideIn
@@ -122,13 +168,31 @@ function Home() {
             }}
             shakeFast
           >
-            <FontAwesomeIcon icon={faCouch} size="10x" color="#EC7628" />
+            <Container
+              height={
+                reduceImageSizeByFactor(
+                  3,
+                  text.originWidget.image.originalDimensions
+                ).height
+              }
+              width={
+                reduceImageSizeByFactor(
+                  3,
+                  text.originWidget.image.originalDimensions
+                ).width
+              }
+            >
+              <img
+                src={text.originWidget.image.src}
+                height="100%"
+                width="100%"
+              />
+            </Container>
           </SlideIn>
         </Container>
       </Container>
     );
   }
-
   function renderWidgetThree() {
     return (
       <Container
@@ -144,112 +208,6 @@ function Home() {
         <Container height="100%" width="50%" padding="0px">
           <SlideIn
             fast
-            dir="left"
-            height={'100%'}
-            padding="0px"
-            customStyles={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: '100%'
-            }}
-            shakeFast
-          >
-            <FontAwesomeIcon
-              icon={faPersonFallingBurst}
-              className="fa-duotone"
-              size="10x"
-              color="#6665FE"
-            />
-          </SlideIn>
-        </Container>
-        <Container
-          height="100%"
-          width="50%"
-          padding="0px"
-          customStyles={{
-            display: 'flex',
-            justifyContent: 'start',
-            alignItems: 'center'
-          }}
-        >
-          {forwardVarText(getSafeFontKey(font.google.family), 'The Bad', 'h3', {
-            customStyles: {
-              color: palette.backgroundComplimentColor,
-              marginTop: '2rem',
-              fontWeight: '800'
-            }
-          })}
-          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
-            'p',
-            {
-              customStyles: {
-                color: palette.backgroundComplimentColor,
-                marginTop: '2rem',
-                fontWeight: '800',
-                paddingRight: '3rem'
-              }
-            }
-          )}
-        </Container>
-      </Container>
-    );
-  }
-  function renderWidgetFour() {
-    return (
-      <Container
-        id="home-page-widget-two-parent-container"
-        className="home-page-widget-two-parent-container-cl"
-        padding="0px"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row'
-        }}
-        height="100%"
-      >
-        <Container
-          height="100%"
-          width="50%"
-          padding="0px"
-          customStyles={{
-            display: 'flex',
-            justifyContent: 'start',
-            alignItems: 'center'
-          }}
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'The Ugly',
-            'h3',
-            {
-              customStyles: {
-                color: palette.backgroundTertiaryColor,
-                marginTop: '2rem',
-                fontWeight: '800'
-              }
-            }
-          )}
-          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
-            'p',
-            {
-              customStyles: {
-                color: palette.backgroundTertiaryColor,
-                marginTop: '2rem',
-                fontWeight: '800',
-                paddingLeft: '3rem'
-              }
-            }
-          )}
-        </Container>
-        <Container height="100%" width="50%" padding="0px">
-          <SlideIn
-            fast
             dir="right"
             height={'100%'}
             padding="0px"
@@ -261,9 +219,129 @@ function Home() {
             }}
             shakeFast
           >
-            <FontAwesomeIcon icon={faPoo} size="10x" color="#6F5E3D" />
+            <Container
+              customStyles={{ overflow: 'visible' }}
+              height={
+                reduceImageSizeByFactor(
+                  1.7,
+                  text.supportingWidget.image.originalDimensions
+                ).height
+              }
+              width={
+                reduceImageSizeByFactor(
+                  1.7,
+                  text.supportingWidget.image.originalDimensions
+                ).width
+              }
+            >
+              <img
+                src={text.supportingWidget.image.src}
+                height="100%"
+                width="100%"
+              />
+            </Container>
           </SlideIn>
         </Container>
+        <Container
+          height="100%"
+          width="50%"
+          padding="0px"
+          customStyles={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignItems: 'center'
+          }}
+        >
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.supportingWidget.title,
+            'h3',
+            {
+              customStyles: {
+                color: palette.backgroundComplimentColor,
+                marginTop: '2rem',
+                fontWeight: '800'
+              }
+            }
+          )}
+          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.supportingWidget.supportingNotion,
+            'p',
+            {
+              customStyles: {
+                color: palette.backgroundComplimentColor,
+                marginTop: '2rem',
+                fontWeight: '800',
+                paddingRight: '3rem',
+                textAlign: 'center'
+              }
+            }
+          )}
+          <Button
+            ghost
+            backgroundColor={palette.buttonColorOptions[2]}
+            onClick={handleSignUpClick}
+          >
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              text.supportingWidget.actionText,
+              'span'
+            )}
+          </Button>
+        </Container>
+      </Container>
+    );
+  }
+  function renderWidgetFour() {
+    return (
+      <Container
+        height="100%"
+        width="50%"
+        padding="0px"
+        customStyles={{
+          display: 'flex',
+          justifyContent: 'start',
+          alignItems: 'center'
+        }}
+      >
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          text.tertiaryWidget.title,
+          'h3',
+          {
+            customStyles: {
+              color: palette.backgroundTertiaryColor,
+              marginTop: '2rem',
+              fontWeight: '800'
+            }
+          }
+        )}
+        <hr
+          style={{ width: '90%' }}
+          color={palette.backgroundComplimentColor}
+        />
+        {forwardVarText(
+          getSafeFontKey(font.google.family),
+          text.tertiaryWidget.supportingNotion,
+          'p',
+          {
+            customStyles: {
+              color: palette.backgroundTertiaryColor,
+              marginTop: '2rem',
+              fontWeight: '800',
+              textAlign: 'center'
+            }
+          }
+        )}
+        <Button ghost backgroundColor={palette.buttonColorOptions[3]}>
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.tertiaryWidget.actionText,
+            'span'
+          )}
+        </Button>
       </Container>
     );
   }
@@ -293,14 +371,18 @@ function Home() {
       <OneCol
         widgetKey="home-page-widget-three"
         containerProps={{
-          background: palette.backgroundTertiaryColor
+          background: palette.buttonColorOptions[0]
         }}
         childNode={renderWidgetThree()}
       />
       <OneCol
         widgetKey="home-page-widget-four"
         containerProps={{
-          background: palette.backgroundComplimentColor
+          customStyles: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }
         }}
         childNode={renderWidgetFour()}
       />

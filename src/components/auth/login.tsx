@@ -1,5 +1,5 @@
 import { Button, Container } from '@nickgdev/hellerui';
-import { useReducer, useState } from 'react';
+import { useReducer, useState, useMemo } from 'react';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey, pageStyles } from '../../utils';
 import { StyledForm, StyledInput, StyledLabel } from './styled';
@@ -73,6 +73,12 @@ export const LoginForm = () => {
     renderUserNameFormField(),
     renderPasswordFormField()
   ] as const;
+
+  const isFirst = useMemo(() => currentFormIndex === 0, [currentFormIndex]);
+  const isLast = useMemo(
+    () => currentFormIndex !== formFieldElems.length - 1,
+    [currentFormIndex]
+  );
 
   function renderFormTitleSection() {
     return (
@@ -236,6 +242,15 @@ export const LoginForm = () => {
   function renderFormActionButton() {
     return (
       <Container customStyles={pageStyles} margin="8px">
+        {!isFirst && (
+          <Button
+            onClick={handleNextFormClick}
+            ghost
+            backgroundColor={palette.buttonColorOptions[1]}
+          >
+            {forwardVarText(getSafeFontKey(font.google.family), 'back', 'span')}
+          </Button>
+        )}
         <Button
           onClick={handleNextFormClick}
           ghost
@@ -243,7 +258,7 @@ export const LoginForm = () => {
         >
           {forwardVarText(
             getSafeFontKey(font.google.family),
-            currentFormIndex !== formFieldElems.length - 1 ? 'next' : 'submit',
+            isLast ? 'next' : 'submit',
             'span'
           )}
         </Button>
