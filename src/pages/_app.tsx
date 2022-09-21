@@ -1,16 +1,73 @@
-import type { AppContext, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import NextApp from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import {
+  Theme,
+  Treatment,
+  deriveCssClassname,
+  log
+} from '@nickgdev/couch-gag-common-lib';
+
+import {
+  EXCEPTION_DELIMITER,
+  ThemeException,
+  ThemeExceptionEnum
+} from '../exceptions';
+import { Nav } from '../components';
+import { ThemeProvider } from '../contexts';
+import { getViewThemeTreatment } from '../service';
+import { defaultTheme } from '../utils';
 
 /** Stylesheets */
 import '@nickgdev/hellerui/lib/index.css';
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import '../App.css';
 
+config.autoAddCss = false;
+
 const appQueryClient = new QueryClient();
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
+  const [theme, setTheme] = useState<Treatment<Theme>>(defaultTheme);
+
+  useEffect(() => {
+    (async () => {
+      const { error, data } = await getViewThemeTreatment(
+        undefined,
+        undefined,
+        undefined,
+        ['yoss', 'kreon']
+      );
+
+      if (error || data.themeOptions.length === 0) {
+        log(
+          'error',
+          new ThemeException(ThemeExceptionEnum.NETWORK).message +
+            EXCEPTION_DELIMITER +
+            `relayed error :: ${error}`
+        );
+      } else {
+        setTheme(data.themeOptions[0]);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!theme) return;
+    const { body } = document;
+    body.setAttribute(
+      'class',
+      deriveCssClassname(theme.meta!.theme!.palette.backgroundColor)?.css.bg ??
+        ''
+    );
+  }, [theme]);
+
+  const { font, palette } = theme.meta!.theme!;
+
   return (
     <>
       {/* HEAD */}
@@ -23,16 +80,18 @@ function App({ Component, pageProps }: AppProps) {
       {/* BODY */}
       <QueryClientProvider client={appQueryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
+          <RecoilRoot>
+            <ThemeProvider
+              value={{ darkMode: false, font, palette, treatmentId: theme.id }}
+            >
+              <Nav />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
     </>
   );
 }
-
-App.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await NextApp.getInitialProps(appContext);
-  return { ...appProps };
-};
 
 export default App;

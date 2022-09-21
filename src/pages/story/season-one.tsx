@@ -2,17 +2,12 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { QueryClient, dehydrate } from 'react-query';
-import {
-  heller_couch_view_theme_treatment_pool as POOL,
-  Theme,
-  Treatment,
-  log
-} from '@nickgdev/couch-gag-common-lib';
+import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, Page } from '@nickgdev/hellerui';
 
 import { Spinner } from '../../components/animated/spinner';
 import { StoryInteract } from '../../components/story-interact';
-import { ThemeProvider } from '../../contexts';
+import { useThemeContext } from '../../contexts';
 import { useQuerySingleMarkdownStory } from '../../queries';
 import {
   MARKDOWN_COMPONENT_MAPPING_FN,
@@ -20,24 +15,13 @@ import {
   getSafeFontKey,
   pageStyles,
   parseContent,
-  serverThemeCacheInstance
+  reduceAndBool
 } from '../../utils';
-import { getStoryByStoryKey, getViewThemeTreatment } from '../../service';
-import { Nav } from '../../components';
+import { getStoryByStoryKey } from '../../service';
 
-type StoryPageProps = {
-  theme: Treatment<Theme>;
-};
-
-const defaultTheme = POOL.ViewThemeTreatments.filter(
-  (vt) => vt.id.includes('major') && vt.id.includes('oswald')
-)[0];
-
-function StoryPage(props: StoryPageProps) {
+function StoryPage() {
   const { push: redirect, query } = useRouter();
-  const {
-    theme: { palette, font }
-  } = props.theme.meta!;
+  const { palette, font } = useThemeContext();
 
   const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
     seasonKey:
@@ -55,6 +39,10 @@ function StoryPage(props: StoryPageProps) {
   });
 
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);
+  const ready = useMemo(
+    () => reduceAndBool(data, data?.meta, parsedContent, parsedContent?.body),
+    [data, parsedContent]
+  );
 
   function renderPageHeading(t: string, s: string) {
     return (
@@ -100,39 +88,33 @@ function StoryPage(props: StoryPageProps) {
     return <Spinner />;
   }
 
-  return data && data.meta && parsedContent && parsedContent.body ? (
-    <ThemeProvider
-      value={{ darkMode: false, font, palette, treatmentId: props.theme.id }}
-    >
-      <Nav />
-      <Container width="100%" customStyles={pageStyles}>
-        <StoryInteract />
-        <Container
-          radius="none"
-          width={'90%'}
-          padding="0px"
-          margin="0px"
-          customStyles={pageStyles}
-        >
-          {renderPageHeading(data.meta.title, data.meta.subtitle ?? '')}
-          <Page
-            contentEngine="markdown"
-            content={parsedContent.body}
-            title=""
-            dangerouslyOverrideInnerContentStyles={{
-              styles: {
-                maxWidth: '80%',
-                width: 'auto',
-                justifySelf: 'center',
-                alignSelf: 'center'
-              }
-            }}
-            customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
-          />
-          )
-        </Container>
+  return ready ? (
+    <Container width="100%" customStyles={pageStyles}>
+      <StoryInteract />
+      <Container
+        radius="none"
+        width={'90%'}
+        padding="0px"
+        margin="0px"
+        customStyles={pageStyles}
+      >
+        {renderPageHeading(data!.meta.title, data!.meta.subtitle ?? '')}
+        <Page
+          contentEngine="markdown"
+          content={parsedContent!.body}
+          title=""
+          dangerouslyOverrideInnerContentStyles={{
+            styles: {
+              maxWidth: '80%',
+              width: 'auto',
+              justifySelf: 'center',
+              alignSelf: 'center'
+            }
+          }}
+          customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
+        />
       </Container>
-    </ThemeProvider>
+    </Container>
   ) : (
     <Container
       radius="none"
@@ -153,7 +135,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['markdown', query?.seasonKey ?? '', query?.episodeKey ?? ''],
+    queryKey: ['markdown', query.seasonKey ?? '', query.episodeKey ?? ''],
     queryFn: () =>
       getStoryByStoryKey({
         seasonKey: Array.isArray(query.seasonKey)
@@ -169,31 +151,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       })
   });
 
-  let theme: Treatment<Theme>;
-
-  if (!serverThemeCacheInstance.cache) {
-    const { data, error } = await getViewThemeTreatment(
-      undefined,
-      undefined,
-      undefined,
-      ['major', 'oswald']
-    );
-
-    if (error) {
-      theme = defaultTheme;
-    } else {
-      serverThemeCacheInstance.getCacheInstance(); // we know cache is undefined at this point
-      serverThemeCacheInstance.setCacheInstance({
-        k: 'theme',
-        v: data.themeOptions[0]
-      });
-      theme = serverThemeCacheInstance.getCacheInstance().theme;
-    }
-  } else {
-    theme = serverThemeCacheInstance.getCacheInstance().theme;
-  }
-
-  return { props: { dehydratedState: dehydrate(queryClient), theme } };
+  return { props: { dehydratedState: dehydrate(queryClient) } };
 };
 
 export default StoryPage;

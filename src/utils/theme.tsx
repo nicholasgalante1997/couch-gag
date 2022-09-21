@@ -8,6 +8,10 @@ const POOL = heller_couch_view_theme_treatment_pool.ViewThemeTreatments;
 
 export type FontKey = keyof typeof fontBlob;
 
+export const defaultTheme = POOL.filter(
+  (vt) => vt.id.includes('bullwinkle') && vt.id.includes('spectral')
+)[0];
+
 export const pageStyles = {
   display: 'flex',
   flexDirection: 'column',

@@ -25,6 +25,7 @@
         "react/react-in-jsx-scope": 0,
         "react/no-unknown-property": 1,
         "@typescript-eslint/no-unused-vars": 2,
-        "sort-imports": 1
+        "sort-imports": 0,
+        "react/no-unescaped-entities": 0
     }
 }

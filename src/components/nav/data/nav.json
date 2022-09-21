@@ -1,7 +1,7 @@
 {
   "links": [
     {
-      "localHref": "/whats-all-this-then",
+      "localHref": "/about",
       "plainText": "about this endeavor",
       "meta": {
         "pageClickTag": "about"
@@ -15,7 +15,7 @@
       }
     },
     {
-      "localHref": "/auth-form",
+      "localHref": "/login",
       "plainText": "sign up / login",
       "meta": {
         "pageClickTag": "user_registry"
