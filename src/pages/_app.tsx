@@ -40,7 +40,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         undefined,
         undefined,
         undefined,
-        ['yoss', 'kreon']
+        ['woodland', 'kreon']
       );
 
       if (error || data.themeOptions.length === 0) {

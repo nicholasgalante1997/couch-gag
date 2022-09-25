@@ -371,7 +371,7 @@ function Home() {
       <OneCol
         widgetKey="home-page-widget-three"
         containerProps={{
-          background: palette.buttonColorOptions[0]
+          background: palette.backgroundTertiaryColor
         }}
         childNode={renderWidgetThree()}
       />

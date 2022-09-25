@@ -11,26 +11,25 @@
         "supportingNotion": "Like all great and awful things, the origin of our story is something altogether familiar and singular. Join us and we'll witness our brave pioneers, as they journey through the Antarctic, and towards a demise that no one expected. Stumble onwards with us into the future.",
         "actionText": "Go There",
         "image": {
-            "src": "https://www.onlygfx.com/wp-content/uploads/2017/06/mountain-drawing-3-1024x379.png",
-            "aspectRatio": "16x7",
-            "originalDimensions": {
-                "height": 379,
-                "width": 1024
-            }
+          "src": "https://www.onlygfx.com/wp-content/uploads/2017/06/mountain-drawing-3-1024x379.png",
+          "aspectRatio": "16x7",
+          "originalDimensions": {
+            "height": 379,
+            "width": 1024
+          }
         }
-        
       },
       "supportingWidget": {
         "title": "Come Join Our Cult!",
         "supportingNotion": "Our pack is growing. That could include you. Sign up below for all the latest and greatest updates, included but not limited to; emails when new stories drop, first grabs at merchandise (including NFTs), and invites to cult mixers.",
         "actionText": "Sign Up",
         "image": {
-           "src": "https://freesvg.org/img/1549922378.png",
-           "aspectRatio": "1x1",
-           "originalDimensions": {
-              "height": 600,
-              "width": 600
-           } 
+          "src": "https://freesvg.org/img/1549922378.png",
+          "aspectRatio": "1x1",
+          "originalDimensions": {
+            "height": 600,
+            "width": 600
+          }
         }
       },
       "tertiaryWidget": {
@@ -38,12 +37,12 @@
         "supportingNotion": "couch gag© is actively looking to onboard writers, software engineers, and god forbid, UI/UX designers. We don't want your money. We want your life. No but we do need help so like if you want to pitch in and join a great team, see below.",
         "actionText": "Im interested",
         "image": {
-           "src": "https://freesvg.org/img/1549922378.png",
-           "aspectRatio": "1x1",
-           "originalDimensions": {
-              "height": 600,
-              "width": 600
-           } 
+          "src": "https://freesvg.org/img/1549922378.png",
+          "aspectRatio": "1x1",
+          "originalDimensions": {
+            "height": 600,
+            "width": 600
+          }
         }
       }
     }
