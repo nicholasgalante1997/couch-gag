@@ -1,4 +1,4 @@
-import css from '../../css/Spinner.module.css';
+import css from '../../../styles/components/animated/Spinner.module.css';
 import { WithFlexibleHtmlDataProps } from '../../../types';
 
 type SpinnerProps = WithFlexibleHtmlDataProps;

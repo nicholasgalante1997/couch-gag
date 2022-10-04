@@ -10,3 +10,13 @@ export const useHomePageText = () => {
   const [state] = useRecoilState(textAtomState);
   return state.home;
 };
+
+export const useFooterText = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.footer;
+};
+
+export const useNavbarData = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.navbar;
+};

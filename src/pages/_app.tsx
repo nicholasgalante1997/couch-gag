@@ -1,10 +1,12 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { useEffect, useState } from 'react';
+
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
+
 import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+
 import {
   Theme,
   Treatment,
@@ -17,12 +19,12 @@ import {
   ThemeException,
   ThemeExceptionEnum
 } from '../exceptions';
-import { Nav } from '../components';
+import { Footer, Nav } from '../components';
 import { ThemeProvider } from '../contexts';
 import { getViewThemeTreatment } from '../service';
 import { defaultTheme } from '../utils';
 
-/** Stylesheets */
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@nickgdev/hellerui/lib/index.css';
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import '../App.css';
@@ -40,7 +42,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         undefined,
         undefined,
         undefined,
-        ['woodland', 'kreon']
+        ['yoss', 'kreon']
       );
 
       if (error || data.themeOptions.length === 0) {
@@ -86,6 +88,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
             >
               <Nav />
               <Component {...pageProps} />
+              <Footer />
             </ThemeProvider>
           </RecoilRoot>
         </Hydrate>

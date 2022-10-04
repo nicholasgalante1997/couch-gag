@@ -19,10 +19,39 @@ import {
 } from '../../utils';
 import { getStoryByStoryKey } from '../../service';
 
+export const selectors = {
+  storyHeading: {
+    container: {
+      id: 'story-page-heading'
+    }
+  }
+} as const;
+
+function isStoryHeadingInView(): boolean {
+  if (typeof window === 'undefined') return false;
+  const element = document.querySelector(
+    `#${selectors.storyHeading.container.id}`
+  );
+  console.log(element);
+  if (!element) return false;
+  const rect = element.getBoundingClientRect();
+  const isViewable =
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+  console.log(isViewable);
+  return isViewable;
+}
+
 function StoryPage() {
   const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();
-
+  const [headingOutOfView, setHeadingOutOfView] = React.useState<boolean>(
+    isStoryHeadingInView()
+  );
+  console.log(headingOutOfView, setHeadingOutOfView);
   const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
     seasonKey:
       typeof query?.seasonKey === 'string'
@@ -48,6 +77,7 @@ function StoryPage() {
     return (
       <Container
         width="90%"
+        id={selectors.storyHeading.container.id}
         customStyles={{
           marginTop: '2rem',
           display: 'flex',
@@ -76,6 +106,14 @@ function StoryPage() {
       </Container>
     );
   }
+
+  React.useEffect(() => {
+    function handleTitleExit() {
+      console.log('scroll');
+    }
+
+    document.addEventListener('scroll', handleTitleExit);
+  }, []);
 
   React.useEffect(() => {
     if (isError) {

@@ -4,7 +4,8 @@
       "heroWidget": {
         "the": "the",
         "title": "couch gag",
-        "supportingNotion": "Come bored, come tired and high, and gather around the fire. We'll weave stories about a fantastical world that looks, smells, and fucks like the one you've been acquainted with all of your life. Only it isn't. It's our world."
+        "supportingNotion_1": "Come bored, come tired and high, and gather around the fire. We'll weave stories about a fantastical world that looks, smells, and fucks like the one you've been acquainted with all of your life. Only it isn't. It's our world.",
+        "supportingNotion_2": "Come bored, come tired and high, and gather around the fire. We'll weave stories about a fantastical world that looks, smells, and fucks like the one you've been acquainted with all of your life. Only it isn't. It's our world."
       },
       "originWidget": {
         "title": "On our prolific origin...",
@@ -45,6 +46,51 @@
           }
         }
       }
+    },
+    "season_one": {
+      "mainTitle": "Season One",
+      "subtitle": "im tired"
+    },
+    "footer": {
+      "left": {
+        "banner": "Page {{ pageNumber }}"
+      },
+      "right": {
+        "banner": "Beta / v0.0.1"
+      }
+    },
+    "navbar": {
+      "mainTitle": "the couch gag",
+      "links": [
+        {
+          "localHref": "/about",
+          "plainText": "about this endeavor",
+          "meta": {
+            "pageClickTag": "about"
+          }
+        },
+        {
+          "localHref": "/anthology",
+          "plainText": "our anthology",
+          "meta": {
+            "pageClickTag": "anthology"
+          }
+        },
+        {
+          "localHref": "/login",
+          "plainText": "sign up / login",
+          "meta": {
+            "pageClickTag": "user_registry"
+          }
+        },
+        {
+          "localHref": "/development",
+          "plainText": "specs",
+          "meta": {
+            "pageClickTag": "dev"
+          }
+        }
+      ]
     }
   }
 }

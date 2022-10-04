@@ -1,8 +1,6 @@
-import type { SlideProps } from './types';
-
 import { Container } from '@nickgdev/hellerui';
-
-import css from '../../css/SlideIn.module.css';
+import type { SlideProps } from './types';
+import css from '../../../styles/components/animated/SlideIn.module.css';
 
 function reduceClassNames(classNames: string[]) {
   return classNames.reduce((a, n) => {

@@ -27,6 +27,7 @@ export function formatQueryParams(
   url: string,
   queryParams: { [k: string]: string }
 ) {
+  if (Object.keys(queryParams).length === 0) return url;
   url += '?';
   for (const [key, value] of Object.entries(queryParams)) {
     url += key + '=' + value;

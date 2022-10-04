@@ -1,28 +1,25 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
-import { useThemeContext } from '../contexts';
-import { forwardVarText, getSafeFontKey } from '../utils';
-import { useHomePageText } from '../store';
-import { emit } from '../service/metric';
+
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
+import { useThemeContext } from '../contexts';
+import { emit } from '../service/metric';
+import { useHomePageText } from '../store';
+import { forwardVarText, getSafeFontKey } from '../utils';
 
 function Home() {
-  /** dynamic context */
   const { font, palette } = useThemeContext();
   const { push: redirect } = useRouter();
-
-  /** static context */
   const text = useHomePageText();
 
-  /** metric emissions */
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
-  /** function defs */
   function handleOriginStoryClick() {
     redirect('/story/season-one?seasonKey=01&episodeKey=01');
   }
@@ -41,7 +38,6 @@ function Home() {
     };
   }
 
-  /** subviews */
   function renderWidgetOne() {
     return (
       <Container
@@ -50,7 +46,8 @@ function Home() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
+          paddingBottom: '5rem'
         }}
       >
         {forwardVarText(
@@ -59,7 +56,7 @@ function Home() {
           'h1',
           {
             customStyles: {
-              color: palette.headingPrimaryColor,
+              color: '#fff',
               margin: '0px',
               fontSize: '4rem'
             }
@@ -71,21 +68,33 @@ function Home() {
           'h1',
           {
             customStyles: {
-              color: palette.headingPrimaryColor,
+              color: '#fff',
               margin: '0px',
               marginBottom: '12px',
               fontSize: '4rem'
             }
           }
         )}
-        <Container width="68%">
+        <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>
           {forwardVarText(
             getSafeFontKey(font.google.family),
-            text.heroWidget.supportingNotion,
+            text.heroWidget.supportingNotion_1,
             'p',
             {
               customStyles: {
-                color: palette.paragraphTextColor
+                color: palette.headingSecondaryColor,
+                fontSize: '16px'
+              }
+            }
+          )}
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.heroWidget.supportingNotion_1,
+            'p',
+            {
+              customStyles: {
+                color: palette.headingSecondaryColor,
+                fontSize: '16px'
               }
             }
           )}
@@ -111,7 +120,7 @@ function Home() {
           padding="0px"
           customStyles={{
             display: 'flex',
-            justifyContent: 'start',
+            justifyContent: 'center',
             alignItems: 'center'
           }}
         >
@@ -350,7 +359,7 @@ function Home() {
     <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
       <OneCol
         widgetKey="home-page-widget-one"
-        height="60vh"
+        height="90vh"
         containerProps={{
           customStyles: {
             display: 'flex',
@@ -363,6 +372,7 @@ function Home() {
       />
       <OneCol
         widgetKey="home-page-widget-two"
+        height="50vh"
         containerProps={{
           background: palette.backgroundComplimentColor
         }}
