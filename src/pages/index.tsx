@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
+import ColorScales from 'color-scales';
 
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
@@ -10,6 +11,8 @@ import { useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { useHomePageText } from '../store';
 import { forwardVarText, getSafeFontKey } from '../utils';
+import { WonderBall } from '../components/animated/bouncing-ball/styles';
+import { WonderBallSize } from '../components/animated/bouncing-ball/types';
 
 function Home() {
   const { font, palette } = useThemeContext();
@@ -62,19 +65,36 @@ function Home() {
             }
           }
         )}
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.heroWidget.title,
-          'h1',
-          {
-            customStyles: {
-              color: '#fff',
-              margin: '0px',
-              marginBottom: '12px',
-              fontSize: '4rem'
+        <Container
+          margin="0"
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '-2rem'
+          }}
+        >
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.heroWidget.title,
+            'h1',
+            {
+              customStyles: {
+                color: '#fff',
+                margin: '0px',
+                marginBottom: '12px',
+                fontSize: '5rem'
+              }
             }
-          }
-        )}
+          )}
+          <WonderBall
+            size={WonderBallSize.SMALL}
+            color={palette.headingSecondaryColor!}
+            repeat={1}
+            style={{ marginLeft: '0.25rem', marginTop: '1rem' }}
+          />
+        </Container>
         <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>
           {forwardVarText(
             getSafeFontKey(font.google.family),
@@ -82,22 +102,29 @@ function Home() {
             'p',
             {
               customStyles: {
-                color: palette.headingSecondaryColor,
+                color: palette.backgroundComplimentColor,
                 fontSize: '16px'
               }
             }
           )}
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.heroWidget.supportingNotion_1,
-            'p',
-            {
-              customStyles: {
-                color: palette.headingSecondaryColor,
-                fontSize: '16px'
+          <Button
+            onClick={handleOriginStoryClick}
+            size={'md'}
+            width={'120px'}
+            height={'36px'}
+            backgroundColor={palette.backgroundComplimentColor}
+          >
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              text.heroWidget.actionButtonText,
+              'span',
+              {
+                customStyles: {
+                  color: palette.headingSecondaryColor
+                }
               }
-            }
-          )}
+            )}
+          </Button>
         </Container>
       </Container>
     );
@@ -361,6 +388,13 @@ function Home() {
         widgetKey="home-page-widget-one"
         height="90vh"
         containerProps={{
+          gradient: {
+            flow: 'to bottom',
+            from: palette.backgroundColor,
+            to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
+              .getColor(40)
+              .toHexString()
+          },
           customStyles: {
             display: 'flex',
             justifyContent: 'center',
