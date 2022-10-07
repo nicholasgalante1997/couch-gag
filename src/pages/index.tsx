@@ -1,28 +1,28 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
-import { useThemeContext } from '../contexts';
-import { forwardVarText, getSafeFontKey } from '../utils';
-import { useHomePageText } from '../store';
-import { emit } from '../service/metric';
+import ColorScales from 'color-scales';
+
 import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
+import { useThemeContext } from '../contexts';
+import { emit } from '../service/metric';
+import { useHomePageText } from '../store';
+import { forwardVarText, getSafeFontKey } from '../utils';
+import { WonderBall } from '../components/animated/bouncing-ball/styles';
+import { WonderBallSize } from '../components/animated/bouncing-ball/types';
 
 function Home() {
-  /** dynamic context */
   const { font, palette } = useThemeContext();
   const { push: redirect } = useRouter();
-
-  /** static context */
   const text = useHomePageText();
 
-  /** metric emissions */
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
   }, []);
 
-  /** function defs */
   function handleOriginStoryClick() {
     redirect('/story/season-one?seasonKey=01&episodeKey=01');
   }
@@ -41,7 +41,6 @@ function Home() {
     };
   }
 
-  /** subviews */
   function renderWidgetOne() {
     return (
       <Container
@@ -50,7 +49,8 @@ function Home() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
+          paddingBottom: '5rem'
         }}
       >
         {forwardVarText(
@@ -59,36 +59,72 @@ function Home() {
           'h1',
           {
             customStyles: {
-              color: palette.headingPrimaryColor,
+              color: '#fff',
               margin: '0px',
               fontSize: '4rem'
             }
           }
         )}
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.heroWidget.title,
-          'h1',
-          {
-            customStyles: {
-              color: palette.headingPrimaryColor,
-              margin: '0px',
-              marginBottom: '12px',
-              fontSize: '4rem'
-            }
-          }
-        )}
-        <Container width="68%">
+        <Container
+          margin="0"
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '-2rem'
+          }}
+        >
           {forwardVarText(
             getSafeFontKey(font.google.family),
-            text.heroWidget.supportingNotion,
-            'p',
+            text.heroWidget.title,
+            'h1',
             {
               customStyles: {
-                color: palette.paragraphTextColor
+                color: '#fff',
+                margin: '0px',
+                marginBottom: '12px',
+                fontSize: '5rem'
               }
             }
           )}
+          <WonderBall
+            size={WonderBallSize.SMALL}
+            color={palette.headingSecondaryColor!}
+            repeat={1}
+            style={{ marginLeft: '0.25rem', marginTop: '1rem' }}
+          />
+        </Container>
+        <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>
+          {forwardVarText(
+            getSafeFontKey(font.google.family),
+            text.heroWidget.supportingNotion_1,
+            'p',
+            {
+              customStyles: {
+                color: palette.backgroundComplimentColor,
+                fontSize: '16px'
+              }
+            }
+          )}
+          <Button
+            onClick={handleOriginStoryClick}
+            size={'md'}
+            width={'120px'}
+            height={'36px'}
+            backgroundColor={palette.backgroundComplimentColor}
+          >
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              text.heroWidget.actionButtonText,
+              'span',
+              {
+                customStyles: {
+                  color: palette.headingSecondaryColor
+                }
+              }
+            )}
+          </Button>
         </Container>
       </Container>
     );
@@ -111,7 +147,7 @@ function Home() {
           padding="0px"
           customStyles={{
             display: 'flex',
-            justifyContent: 'start',
+            justifyContent: 'center',
             alignItems: 'center'
           }}
         >
@@ -350,8 +386,15 @@ function Home() {
     <Container width="100%" padding="0rem" id="cg-home-page-wrapping-container">
       <OneCol
         widgetKey="home-page-widget-one"
-        height="60vh"
+        height="90vh"
         containerProps={{
+          gradient: {
+            flow: 'to bottom',
+            from: palette.backgroundColor,
+            to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
+              .getColor(40)
+              .toHexString()
+          },
           customStyles: {
             display: 'flex',
             justifyContent: 'center',
@@ -363,6 +406,7 @@ function Home() {
       />
       <OneCol
         widgetKey="home-page-widget-two"
+        height="50vh"
         containerProps={{
           background: palette.backgroundComplimentColor
         }}
@@ -371,7 +415,7 @@ function Home() {
       <OneCol
         widgetKey="home-page-widget-three"
         containerProps={{
-          background: palette.buttonColorOptions[0]
+          background: palette.backgroundTertiaryColor
         }}
         childNode={renderWidgetThree()}
       />

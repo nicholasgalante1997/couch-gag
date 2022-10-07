@@ -9,7 +9,11 @@ export function NavContainer({
 }) {
   return (
     <Container>
-      <Container padding="0.25rem" customStyles={navContainerStylesControl}>
+      <Container
+        height="10vh"
+        padding="0.25rem"
+        customStyles={navContainerStylesControl}
+      >
         {children}
       </Container>
     </Container>

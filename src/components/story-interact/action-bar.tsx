@@ -5,9 +5,8 @@ import {
   faHeart,
   faShareFromSquare
 } from '@fortawesome/free-regular-svg-icons';
-
-import css from '../css/story-interact.module.css';
 import { useThemeContext } from '../../contexts';
+import css from '../../styles/components/story/StoryAction.module.css';
 
 const StoryBar = () => {
   const { palette } = useThemeContext();

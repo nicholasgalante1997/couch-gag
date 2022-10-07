@@ -12,7 +12,7 @@ function Carousel(props: CarouselProps) {
       } else {
         setCurrent((c) => c + 1);
       }
-    }, 7000);
+    }, 7000); // 7 seconds
 
     return () => clearInterval(interval);
   }, [current]);

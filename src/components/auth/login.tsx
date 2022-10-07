@@ -2,7 +2,7 @@ import { Button, Container } from '@nickgdev/hellerui';
 import { useReducer, useState, useMemo } from 'react';
 import { useThemeContext } from '../../contexts';
 import { forwardVarText, getSafeFontKey, pageStyles } from '../../utils';
-import { StyledForm, StyledInput, StyledLabel } from './styled';
+import { StyledForm, StyledInput, StyledLabel } from './styles';
 
 type FormErrorStateType = {
   component: 'name' | 'email' | 'username' | 'passwordPlt';
