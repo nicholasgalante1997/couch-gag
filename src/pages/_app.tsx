@@ -19,7 +19,7 @@ import {
   ThemeException,
   ThemeExceptionEnum
 } from '../exceptions';
-import { Footer, Nav } from '../components';
+import { Nav } from '../components';
 import { ThemeProvider } from '../contexts';
 import { getViewThemeTreatment } from '../service';
 import { defaultTheme } from '../utils';
@@ -42,7 +42,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         undefined,
         undefined,
         undefined,
-        ['yoss', 'kreon']
+        ['yoss', 'martel']
       );
 
       if (error || data.themeOptions.length === 0) {
@@ -88,7 +88,6 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
             >
               <Nav />
               <Component {...pageProps} />
-              <Footer />
             </ThemeProvider>
           </RecoilRoot>
         </Hydrate>
