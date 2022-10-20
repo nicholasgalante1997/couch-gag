@@ -6,28 +6,24 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
+import ColorScales from 'color-scales';
 
 import {
   Theme,
   Treatment,
-  deriveCssClassname,
-  log
+  heller_couch_palette_treatment_pool as commonPalette,
+  heller_couch_font_treatment_pool as commonFont
 } from '@nickgdev/couch-gag-common-lib';
 
-import {
-  EXCEPTION_DELIMITER,
-  ThemeException,
-  ThemeExceptionEnum
-} from '../exceptions';
 import { Nav } from '../components';
 import { ThemeProvider } from '../contexts';
-import { getViewThemeTreatment } from '../service';
 import { defaultTheme } from '../utils';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@nickgdev/hellerui/lib/index.css';
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import '../App.css';
+import { Container } from '@nickgdev/hellerui';
 
 config.autoAddCss = false;
 
@@ -37,36 +33,29 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
   const [theme, setTheme] = useState<Treatment<Theme>>(defaultTheme);
 
   useEffect(() => {
-    (async () => {
-      const { error, data } = await getViewThemeTreatment(
-        undefined,
-        undefined,
-        undefined,
-        ['yoss', 'martel']
-      );
+    /**
+     * Select a theme from commons
+     */
+    const targetFont = commonFont.spectral_serif;
+    const targetColorPalette = commonPalette.treatment_bullwinkle_dark_1;
 
-      if (error || data.themeOptions.length === 0) {
-        log(
-          'error',
-          new ThemeException(ThemeExceptionEnum.NETWORK).message +
-            EXCEPTION_DELIMITER +
-            `relayed error :: ${error}`
-        );
-      } else {
-        setTheme(data.themeOptions[0]);
+    /**
+     * dispatch it to theme
+     */
+    setTheme({
+      control: true,
+      id: 'non-network-theme',
+      treatment: false,
+      weblabName: 'control',
+      meta: {
+        theme: {
+          font: targetFont.meta!.font,
+          palette: targetColorPalette.meta!.color,
+          treatmentId: 'control-non-network-theme'
+        }
       }
-    })();
+    })
   }, []);
-
-  useEffect(() => {
-    if (!theme) return;
-    const { body } = document;
-    body.setAttribute(
-      'class',
-      deriveCssClassname(theme.meta!.theme!.palette.backgroundColor)?.css.bg ??
-        ''
-    );
-  }, [theme]);
 
   const { font, palette } = theme.meta!.theme!;
 
@@ -86,8 +75,19 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
             <ThemeProvider
               value={{ darkMode: false, font, palette, treatmentId: theme.id }}
             >
-              <Nav />
-              <Component {...pageProps} />
+              <Container 
+                id="couch-gag-wrapping-gradient-layer"
+                gradient={{
+                  flow: 'to bottom right',
+                  from: palette.backgroundColor,
+                  to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
+                    .getColor(40)
+                    .toHexString()
+                }}
+              >
+                <Nav />
+                <Component {...pageProps} />
+              </Container>
             </ThemeProvider>
           </RecoilRoot>
         </Hydrate>

@@ -20,3 +20,8 @@ export const useNavbarData = () => {
   const [state] = useRecoilState(textAtomState);
   return state.navbar;
 };
+
+export const useAnthText = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.anthology;
+};

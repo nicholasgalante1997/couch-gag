@@ -127,14 +127,17 @@ function StoryPage() {
   }
 
   return ready ? (
-    <Container width="100%" customStyles={pageStyles}>
+    <Container
+      width="100%"
+      customStyles={{ ...pageStyles }}
+    >
       <StoryInteract />
       <Container
         radius="none"
         width={'90%'}
         padding="0px"
         margin="0px"
-        customStyles={pageStyles}
+        customStyles={{ ...pageStyles }}
       >
         {renderPageHeading(data!.meta.title, data!.meta.subtitle ?? '')}
         <Page

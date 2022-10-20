@@ -1,9 +1,9 @@
 export function reduceImageSizeByFactor(
-    f: number,
-    imageDimensions: { height: number; width: number }
+  f: number,
+  imageDimensions: { height: number; width: number }
 ) {
-return {
+  return {
     height: imageDimensions.height / f,
     width: imageDimensions.width / f
-};
+  };
 }

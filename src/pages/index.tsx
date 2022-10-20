@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
-import ColorScales from 'color-scales';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
 import { useThemeContext } from '../contexts';
@@ -117,13 +116,6 @@ function Home() {
         widgetKey="home-page-widget-one"
         height="90vh"
         containerProps={{
-          gradient: {
-            flow: 'to bottom',
-            from: palette.backgroundColor,
-            to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
-              .getColor(40)
-              .toHexString()
-          },
           customStyles: {
             display: 'flex',
             justifyContent: 'center',

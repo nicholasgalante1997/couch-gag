@@ -7,10 +7,12 @@ export function NavContainer({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) {
+
   return (
-    <Container>
+    <Container width="100vw">
       <Container
         height="10vh"
+        width="100%"
         padding="0.25rem"
         customStyles={navContainerStylesControl}
       >
