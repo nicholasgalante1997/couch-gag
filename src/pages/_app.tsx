@@ -54,7 +54,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
           treatmentId: 'control-non-network-theme'
         }
       }
-    })
+    });
   }, []);
 
   const { font, palette } = theme.meta!.theme!;
@@ -75,12 +75,15 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
             <ThemeProvider
               value={{ darkMode: false, font, palette, treatmentId: theme.id }}
             >
-              <Container 
+              <Container
                 id="couch-gag-wrapping-gradient-layer"
                 gradient={{
                   flow: 'to bottom right',
                   from: palette.backgroundColor,
-                  to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
+                  to: new ColorScales(0, 100, [
+                    palette.backgroundColor,
+                    '#000000'
+                  ])
                     .getColor(40)
                     .toHexString()
                 }}

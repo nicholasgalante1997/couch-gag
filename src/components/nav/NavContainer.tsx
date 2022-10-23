@@ -7,7 +7,6 @@ export function NavContainer({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) {
-
   return (
     <Container width="100vw">
       <Container

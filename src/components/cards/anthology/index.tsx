@@ -66,22 +66,35 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           alignItems: 'center'
         }}
       >
-        <Container customStyles={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-          {props.genres && props.genres.map(stGen => forwardVarText(
-            getSafeFontKey(font.google.family),
-            stGen,
-            'span',
-            {
-              customStyles: {
-                fontSize: '14px',
-                marginLeft: '0.25rem',
-                marginRight: '0.25rem',
-                display: 'inline-block',
-                color: activeHover ? palette.buttonColorOptions[0] : palette.headingPrimaryColor,
-                textDecoration: activeHover ? 'underline' : 'none'
-              }
-            }
-          ))}
+        <Container
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: '20px'
+          }}
+        >
+          {props.genres &&
+            props.genres.map((stGen) =>
+              forwardVarText(
+                getSafeFontKey(font.google.family),
+                stGen,
+                'span',
+                {
+                  customStyles: {
+                    fontSize: '14px',
+                    marginLeft: '0.25rem',
+                    marginRight: '0.25rem',
+                    display: 'inline-block',
+                    color: activeHover
+                      ? palette.buttonColorOptions[0]
+                      : palette.headingPrimaryColor,
+                    textDecoration: activeHover ? 'underline' : 'none'
+                  }
+                }
+              )
+            )}
         </Container>
         <Button
           backgroundColor={palette.backgroundTertiaryColor}

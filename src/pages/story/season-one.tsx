@@ -127,10 +127,7 @@ function StoryPage() {
   }
 
   return ready ? (
-    <Container
-      width="100%"
-      customStyles={{ ...pageStyles }}
-    >
+    <Container width="100%" customStyles={{ ...pageStyles }}>
       <StoryInteract />
       <Container
         radius="none"

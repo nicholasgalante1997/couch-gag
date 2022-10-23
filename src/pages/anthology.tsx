@@ -84,26 +84,51 @@ function AnthologyPage() {
             color: palette.paragraphTextColor
           }
         })}
-        {forwardVarText(getSafeFontKey('Caveat'), anthText.seasonOneShort, 'p', {
-          customStyles: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: palette.backgroundComplimentColor,
-            width: '70%'
+        {forwardVarText(
+          getSafeFontKey('Caveat'),
+          anthText.seasonOneShort,
+          'p',
+          {
+            customStyles: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: palette.backgroundComplimentColor,
+              width: '70%'
+            }
           }
-        })}
-        {forwardVarText(getSafeFontKey('Caveat'), `- ${anthText.seasonOneAuthor}`, 'span', {
-          customStyles: {
-            fontSize: 32,
-            marginBottom: '1rem',
-            fontWeight: 'bold',
-            color: palette.backgroundComplimentColor,
-            float: 'right'
+        )}
+        {forwardVarText(
+          getSafeFontKey('Caveat'),
+          `- ${anthText.seasonOneAuthor}`,
+          'span',
+          {
+            customStyles: {
+              fontSize: 32,
+              marginBottom: '1rem',
+              fontWeight: 'bold',
+              color: palette.backgroundComplimentColor,
+              float: 'right'
+            }
           }
-        })}
-        <hr color={palette.paragraphTextColor} style={{width:"100%"}} />
+        )}
+        <hr
+          color={
+            typeof palette.paragraphTextColor === 'string'
+              ? palette.paragraphTextColor
+              : palette.paragraphTextColor[0]
+          }
+          style={{ width: '100%' }}
+        />
       </Container>
-      <Container width="90%" padding="0px" customStyles={{ overflow: 'visible', marginTop: '1rem', marginBottom: '1rem' }}>
+      <Container
+        width="90%"
+        padding="0px"
+        customStyles={{
+          overflow: 'visible',
+          marginTop: '1rem',
+          marginBottom: '1rem'
+        }}
+      >
         <Container
           asGridParent
           padding="0px"
