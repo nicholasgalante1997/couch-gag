@@ -37,18 +37,13 @@ function Home() {
           paddingBottom: '5rem'
         }}
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.heroWidget.the,
-          'h1',
-          {
-            customStyles: {
-              color: '#fff',
-              margin: '0px',
-              fontSize: '4rem'
-            }
+        {forwardVarText(getSafeFontKey('Caveat'), text.heroWidget.the, 'h1', {
+          customStyles: {
+            color: '#fff',
+            margin: '0px',
+            fontSize: '4rem'
           }
-        )}
+        })}
         <Container
           margin="0"
           customStyles={{
@@ -60,7 +55,7 @@ function Home() {
           }}
         >
           {forwardVarText(
-            getSafeFontKey(font.google.family),
+            getSafeFontKey('Caveat'),
             text.heroWidget.title,
             'h1',
             {
@@ -76,7 +71,7 @@ function Home() {
             size={WonderBallSize.SMALL}
             color={palette.headingSecondaryColor!}
             repeat={1}
-            style={{ marginLeft: '0.25rem', marginTop: '1rem' }}
+            style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
           />
         </Container>
         <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>

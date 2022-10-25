@@ -19,6 +19,7 @@
     "build-storybook": "build-storybook",
     "docker:image-build": "docker build . -t couch-gag:latest -t couch-gag-server:latest",
     "docker:container-run": "docker run -d -p 5090:5090 --name couch-gag-website couch-gag-website:latest",
+    "compose:dev:up": "docker-compose -f docker-compose.dev.yml up -d --build",
     "compose:up": "docker-compose -f docker-compose.yml up -d --build",
     "compose:down": "docker-compose down"
   },
@@ -29,8 +30,7 @@
   },
   "lint-staged": {
     "*.ts(x)?": [
-      "yarn cleanup",
-      "yarn test"
+      "yarn cleanup"
     ]
   },
   "eslintConfig": {
