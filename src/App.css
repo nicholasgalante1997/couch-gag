@@ -33,3 +33,17 @@ h6 {
   margin-right: 0.25rem;
 }
 
+#sp-sticky-top-sect {
+  position: fixed;
+  top: 0;
+}
+
+#zeroed {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+#story-markup-page-content-pad-top {
+  margin-top: 60px;
+}

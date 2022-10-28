@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { QueryClient, dehydrate } from 'react-query';
 import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, Page } from '@nickgdev/hellerui';
@@ -27,31 +27,72 @@ export const selectors = {
   }
 } as const;
 
-function isStoryHeadingInView(): boolean {
-  if (typeof window === 'undefined') return false;
-  const element = document.querySelector(
-    `#${selectors.storyHeading.container.id}`
+function StickyTopSection(props: {
+  isViewable: boolean;
+  title: string;
+}): JSX.Element {
+  const { palette } = useThemeContext();
+  return props.isViewable ? (
+    <Container
+      id="sp-sticky-top-sect"
+      width="100%"
+      height="48px"
+      background={palette.backgroundComplimentColor}
+    >
+      {forwardVarText(getSafeFontKey('Caveat'), props.title, 'h1', {
+        customStyles: {
+          color: 'black'
+        }
+      })}
+    </Container>
+  ) : (
+    <div id="zeroed" />
   );
-  console.log(element);
-  if (!element) return false;
-  const rect = element.getBoundingClientRect();
-  const isViewable =
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth);
-  console.log(isViewable);
-  return isViewable;
 }
 
 function StoryPage() {
   const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();
-  const [headingOutOfView, setHeadingOutOfView] = React.useState<boolean>(
+  const [initialHeadingBottom, setInitialHeadingBottom] = useState<number>();
+
+  const [isHeadingInView, setHeadingInView] = React.useState<boolean>(
     isStoryHeadingInView()
   );
-  console.log(headingOutOfView, setHeadingOutOfView);
+
+  function isStoryHeadingInView(
+    value?: boolean,
+    callback?: React.Dispatch<React.SetStateAction<boolean>>
+  ): boolean {
+    if (typeof window === 'undefined') return true; // still on server here
+    if (!initialHeadingBottom) return true; // pre-lifecycle hooks at this point, as were pre-render
+    const isViewable = initialHeadingBottom > window.scrollY;
+    if (typeof value !== 'undefined' && callback) {
+      if (isViewable !== value) {
+        callback(isViewable);
+      }
+    }
+    console.log({ hOV: value });
+    return isViewable;
+  }
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && document) {
+      setInitialHeadingBottom(
+        document
+          .querySelector(`#${selectors.storyHeading.container.id}`)!
+          .getBoundingClientRect().bottom
+      );
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (!initialHeadingBottom) return;
+    const resizeEventWrapper = () =>
+      isStoryHeadingInView(isHeadingInView, setHeadingInView);
+    document.addEventListener('scroll', resizeEventWrapper);
+    return () => document.removeEventListener('scroll', resizeEventWrapper);
+  }, [initialHeadingBottom, isHeadingInView]);
+
   const { data, error, isLoading, isError } = useQuerySingleMarkdownStory({
     seasonKey:
       typeof query?.seasonKey === 'string'
@@ -67,13 +108,25 @@ function StoryPage() {
         : ''
   });
 
+  React.useEffect(() => {
+    if (isError) {
+      log('error', JSON.stringify(error));
+      redirect('/not-found');
+    }
+  }, [query, data]);
+
   const parsedContent = useMemo(() => parseContent(data?.content), [data]);
   const ready = useMemo(
     () => reduceAndBool(data, data?.meta, parsedContent, parsedContent?.body),
     [data, parsedContent]
   );
 
-  function renderPageHeading(t: string, s: string) {
+  function renderPageHeading(
+    t: string,
+    s: string,
+    a: string,
+    genres: string[]
+  ) {
     return (
       <Container
         width="90%"
@@ -83,11 +136,13 @@ function StoryPage() {
           display: 'flex',
           flexDirection: 'column',
           flexWrap: 'nowrap',
-          alignItems: 'center',
-          justifyContent: 'flex-start'
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          borderBottom: '1px solid white',
+          paddingBottom: '12px'
         }}
       >
-        {forwardVarText(getSafeFontKey(font.google.family), t, 'h1', {
+        {forwardVarText(getSafeFontKey('Caveat'), t, 'h1', {
           customStyles: {
             color: palette.headingSecondaryColor,
             lineHeight: 1.15,
@@ -96,31 +151,47 @@ function StoryPage() {
         })}
         {forwardVarText(getSafeFontKey(font.google.family), s, 'h5', {
           customStyles: {
-            color: palette.backgroundTertiaryColor,
+            color: palette.paragraphTextColor,
             lineHeight: 1.15,
             fontSize: '1.15rem',
             marginTop: '0.75rem',
-            textAlign: 'center'
+            width: '60%'
           }
         })}
+        {forwardVarText(getSafeFontKey(font.google.family), a, 'span', {
+          customStyles: {
+            color: palette.paragraphTextColor,
+            lineHeight: 1.15,
+            fontSize: '1.15rem',
+            marginTop: '0.75rem',
+            width: '90%'
+          }
+        })}
+        <Container
+          width="100%"
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            marginTop: '22px'
+          }}
+        >
+          {genres.map((g) =>
+            forwardVarText(getSafeFontKey('Caveat'), g, 'span', {
+              customStyles: {
+                padding: '4px 8px',
+                marginRight: '8px',
+                borderRadius: '4px',
+                border: '1px solid ' + palette.backgroundComplimentColor,
+                color: palette.backgroundComplimentColor
+              }
+            })
+          )}
+        </Container>
       </Container>
     );
   }
-
-  React.useEffect(() => {
-    function handleTitleExit() {
-      console.log('scroll');
-    }
-
-    document.addEventListener('scroll', handleTitleExit);
-  }, []);
-
-  React.useEffect(() => {
-    if (isError) {
-      log('error', JSON.stringify(error));
-      redirect('/not-found');
-    }
-  }, [query, data]);
 
   if (isLoading) {
     return <Spinner />;
@@ -129,6 +200,10 @@ function StoryPage() {
   return ready ? (
     <Container width="100%" customStyles={{ ...pageStyles }}>
       <StoryInteract />
+      <StickyTopSection
+        title={data!.meta.title}
+        isViewable={!isHeadingInView}
+      />
       <Container
         radius="none"
         width={'90%'}
@@ -136,11 +211,17 @@ function StoryPage() {
         margin="0px"
         customStyles={{ ...pageStyles }}
       >
-        {renderPageHeading(data!.meta.title, data!.meta.subtitle ?? '')}
+        {renderPageHeading(
+          data!.meta.title,
+          data!.meta.subtitle ?? '',
+          '- Washington Irving',
+          data!.meta.genres
+        )}
         <Page
           contentEngine="markdown"
           content={parsedContent!.body}
           title=""
+          id={isHeadingInView ? '' : 'story-markup-page-content-pad-top'}
           dangerouslyOverrideInnerContentStyles={{
             styles: {
               maxWidth: '80%',

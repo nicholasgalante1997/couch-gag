@@ -14,7 +14,7 @@ import {
   heller_couch_palette_treatment_pool as commonPalette,
   heller_couch_font_treatment_pool as commonFont
 } from '@nickgdev/couch-gag-common-lib';
-
+import { Container } from '@nickgdev/hellerui';
 import { Nav } from '../components';
 import { ThemeProvider } from '../contexts';
 import { defaultTheme } from '../utils';
@@ -23,7 +23,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@nickgdev/hellerui/lib/index.css';
 import '@nickgdev/couch-gag-common-lib/lib/heller.css';
 import '../App.css';
-import { Container } from '@nickgdev/hellerui';
 
 config.autoAddCss = false;
 
