@@ -5,7 +5,7 @@ import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { useThemeContext } from '../contexts';
+import { useBpContext, useThemeContext } from '../contexts';
 import { emit } from '../service/metric';
 import { useHomePageText } from '../store';
 import { forwardVarText, getSafeFontKey } from '../utils';
@@ -16,6 +16,10 @@ function Home() {
   const { font, palette } = useThemeContext();
   const { push: redirect } = useRouter();
   const text = useHomePageText();
+
+  const bp = useBpContext();
+
+  const mobile = React.useMemo(() => bp.breakpointKeyName === 'mobile', [bp]);
 
   useEffect(() => {
     emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
@@ -74,7 +78,10 @@ function Home() {
             style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
           />
         </Container>
-        <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>
+        <Container
+          width={mobile ? '90%' : '68%'}
+          customStyles={{ borderTop: '1px solid white' }}
+        >
           {forwardVarText(
             getSafeFontKey(font.google.family),
             text.heroWidget.supportingNotion_1,
@@ -89,7 +96,7 @@ function Home() {
           <Button
             onClick={handleOriginStoryClick}
             size={'md'}
-            width={'144px'}
+            width={mobile ? '100%' : '144px'}
             height={'36px'}
             backgroundColor={palette.backgroundComplimentColor}
             ghost

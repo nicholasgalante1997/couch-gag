@@ -1,3 +1,4 @@
+export * from './breakpoints';
 export * from './carousel-text';
 export * from './env';
 export * from './font';

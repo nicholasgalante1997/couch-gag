@@ -1,19 +1,29 @@
 import React from 'react';
 import { Container } from '@nickgdev/hellerui';
-import { navContainerStylesControl } from './styles';
+import * as CSS from 'csstype';
 
 export function NavContainer({
   children
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) {
+  const baseStyles: CSS.Properties = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifySelf: 'center',
+    width: '90%',
+    borderBottom: '1px solid white'
+  };
   return (
     <Container width="100vw">
       <Container
         height="10vh"
         width="100%"
         padding="0.25rem"
-        customStyles={navContainerStylesControl}
+        customStyles={baseStyles}
       >
         {children}
       </Container>

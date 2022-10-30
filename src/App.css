@@ -33,6 +33,44 @@ h6 {
   margin-right: 0.25rem;
 }
 
+.ReactModalPortal {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.mobile-sidebar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 101vh;
+  width: 100%;
+  background-color: rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.mobile-sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: white;
+  padding-top: 1rem;
+  animation: inflate_right 120ms ease-in 0s 1 normal forwards;
+}
+
+@keyframes inflate_right {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
 #sp-sticky-top-sect {
   position: fixed;
   top: 0;

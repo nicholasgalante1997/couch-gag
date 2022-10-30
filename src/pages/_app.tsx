@@ -16,8 +16,9 @@ import {
 } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 import { Nav } from '../components';
-import { ThemeProvider } from '../contexts';
-import { defaultTheme } from '../utils';
+import { ThemeProvider, BreakpointProvider } from '../contexts';
+import { defaultTheme, reduceBreakpointOnWindowWidth } from '../utils';
+import * as Breakpoints from '../styles/breakpoints';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@nickgdev/hellerui/lib/index.css';
@@ -30,6 +31,10 @@ const appQueryClient = new QueryClient();
 
 function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
   const [theme, setTheme] = useState<Treatment<Theme>>(defaultTheme);
+  const [breakpoint, setBreakpoint] = useState<Breakpoints.Breakpoint>(
+    Breakpoints.BREAKPOINT_DESKTOP_SMALL
+  );
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     /**
@@ -54,7 +59,32 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         }
       }
     });
+
+    /**
+     * Set breakpoint
+     */
+    setBreakpoint(reduceBreakpointOnWindowWidth());
+
+    /**
+     * Listener for resize events
+     */
+
+    function setBreakpointOnResize() {
+      const currentWindowBp = reduceBreakpointOnWindowWidth();
+      console.log(
+        'in UseEffect, currentWindowBp is ' + currentWindowBp.breakpointKeyName
+      );
+      if (currentWindowBp.breakpointKeyName !== breakpoint.breakpointKeyName) {
+        console.log('triggering update bp state if block');
+        setBreakpoint(currentWindowBp);
+      }
+    }
+
+    window.addEventListener('resize', setBreakpointOnResize);
+    return () => window.removeEventListener('resize', setBreakpointOnResize);
   }, []);
+
+  useEffect(() => console.log({ breakpoint }), [breakpoint]);
 
   const { font, palette } = theme.meta!.theme!;
 
@@ -74,22 +104,25 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
             <ThemeProvider
               value={{ darkMode: false, font, palette, treatmentId: theme.id }}
             >
-              <Container
-                id="couch-gag-wrapping-gradient-layer"
-                gradient={{
-                  flow: 'to bottom right',
-                  from: palette.backgroundColor,
-                  to: new ColorScales(0, 100, [
-                    palette.backgroundColor,
-                    '#000000'
-                  ])
-                    .getColor(40)
-                    .toHexString()
-                }}
-              >
-                <Nav />
-                <Component {...pageProps} />
-              </Container>
+              <BreakpointProvider value={breakpoint}>
+                <Container
+                  id="couch-gag-wrapping-gradient-layer"
+                  padding="0px"
+                  gradient={{
+                    flow: 'to bottom right',
+                    from: palette.backgroundColor,
+                    to: new ColorScales(0, 100, [
+                      palette.backgroundColor,
+                      '#000000'
+                    ])
+                      .getColor(40)
+                      .toHexString()
+                  }}
+                >
+                  <Nav modalOpen={modalOpen} setModal={setModalOpen} />
+                  <Component {...pageProps} />
+                </Container>
+              </BreakpointProvider>
             </ThemeProvider>
           </RecoilRoot>
         </Hydrate>
