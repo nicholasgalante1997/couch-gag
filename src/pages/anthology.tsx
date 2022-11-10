@@ -11,7 +11,7 @@ import {
   pageStyles,
   reduceAndBool
 } from '../utils';
-import { useThemeContext } from '../contexts';
+import { useBpContext, useThemeContext } from '../contexts';
 import { getStories } from '../service';
 import { useQueryAllMarkdownStories } from '../queries';
 
@@ -27,6 +27,7 @@ import { useAnthText } from '../store';
 function AnthologyPage() {
   const { push: redirect } = useRouter();
   const { palette } = useThemeContext();
+  const { breakpointKeyName } = useBpContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
   const anthText = useAnthText();
 
@@ -76,7 +77,14 @@ function AnthologyPage() {
         minHeight: '90vh'
       }}
     >
-      <Container width="90%">
+      <Container
+        padding="12px"
+        width={
+          breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+            ? '100%'
+            : '90%'
+        }
+      >
         {forwardVarText(getSafeFontKey('Caveat'), anthText.seasonOne, 'h1', {
           customStyles: {
             fontSize: 40,
@@ -93,7 +101,10 @@ function AnthologyPage() {
               fontSize: 20,
               fontWeight: 'bold',
               color: palette.backgroundComplimentColor,
-              width: '70%'
+              width:
+                breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                  ? '100%'
+                  : '70%'
             }
           }
         )}

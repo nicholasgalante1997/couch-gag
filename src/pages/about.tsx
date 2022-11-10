@@ -10,10 +10,10 @@ import {
 } from '../utils';
 
 const letter_from_the_editor_markdown = `
-#### A letter from the editor
+#### A letter from the Editor
 ---
 
-
+Title's are gross. That being said, it's me the editor. You're probably wondering what this is. That's a bad place to start. 
 ` as const;
 
 export default function About() {
@@ -40,17 +40,12 @@ export default function About() {
             ...MARKDOWN_COMPONENT_MAPPING_FN(font, palette),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             h4: ({ _node, ...rest }: any) =>
-              forwardVarText(
-                getSafeFontKey(font.google.family),
-                rest.children,
-                'h4',
-                {
-                  customStyles: {
-                    color: palette.headingSecondaryColor,
-                    fontSize: '48px'
-                  }
+              forwardVarText(getSafeFontKey('Caveat'), rest.children, 'h4', {
+                customStyles: {
+                  color: palette.headingSecondaryColor,
+                  fontSize: '48px'
                 }
-              )
+              })
           }}
           content={letter_from_the_editor_markdown}
         />
@@ -69,8 +64,7 @@ export default function About() {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingLeft: '3rem',
-        paddingRight: '3rem',
-        paddingTop: '2.15rem'
+        paddingRight: '3rem'
       }}
     >
       <OneCol

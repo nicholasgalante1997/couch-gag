@@ -96,6 +96,13 @@
           }
         }
       ]
+    },
+    "modals": {
+      "mobile": {
+        "sidebar": {
+          "title": "Contents."
+        }
+      }
     }
   }
 }

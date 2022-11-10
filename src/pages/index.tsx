@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
-import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
 import { useBpContext, useThemeContext } from '../contexts';
-import { emit } from '../service/metric';
 import { useHomePageText } from '../store';
 import { forwardVarText, getSafeFontKey } from '../utils';
 import { WonderBall } from '../components/animated/bouncing-ball/styles';
@@ -20,10 +18,6 @@ function Home() {
   const bp = useBpContext();
 
   const mobile = React.useMemo(() => bp.breakpointKeyName === 'mobile', [bp]);
-
-  useEffect(() => {
-    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
-  }, []);
 
   function handleOriginStoryClick() {
     redirect('/story/season-one?seasonKey=01&episodeKey=01');
@@ -55,7 +49,9 @@ function Home() {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: '-2rem'
+            marginTop: '-2rem',
+            overflow: 'visible',
+            position: 'relative'
           }}
         >
           {forwardVarText(

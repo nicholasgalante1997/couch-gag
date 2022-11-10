@@ -7,7 +7,7 @@ import { Container, Page } from '@nickgdev/hellerui';
 
 import { Spinner } from '../../components/animated/spinner';
 import { StoryInteract } from '../../components/story-interact';
-import { useThemeContext } from '../../contexts';
+import { useThemeContext, useBpContext } from '../../contexts';
 import { useQuerySingleMarkdownStory } from '../../queries';
 import {
   MARKDOWN_COMPONENT_MAPPING_FN,
@@ -53,6 +53,7 @@ function StickyTopSection(props: {
 function StoryPage() {
   const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();
+  const { breakpointKeyName } = useBpContext();
   const [initialHeadingBottom, setInitialHeadingBottom] = useState<number>();
 
   const [isHeadingInView, setHeadingInView] = React.useState<boolean>(
@@ -71,7 +72,6 @@ function StoryPage() {
         callback(isViewable);
       }
     }
-    console.log({ hOV: value });
     return isViewable;
   }
 
@@ -129,7 +129,11 @@ function StoryPage() {
   ) {
     return (
       <Container
-        width="90%"
+        width={
+          breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+            ? '100%'
+            : '90%'
+        }
         id={selectors.storyHeading.container.id}
         customStyles={{
           marginTop: '2rem',
@@ -139,7 +143,10 @@ function StoryPage() {
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
           borderBottom: '1px solid white',
-          paddingBottom: '12px'
+          paddingBottom: '12px',
+          ...(breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+            ? { paddingLeft: '0.75rem' }
+            : {})
         }}
       >
         {forwardVarText(getSafeFontKey('Caveat'), t, 'h1', {
@@ -155,7 +162,10 @@ function StoryPage() {
             lineHeight: 1.15,
             fontSize: '1.15rem',
             marginTop: '0.75rem',
-            width: '60%'
+            width:
+              breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                ? '100%'
+                : '60%'
           }
         })}
         {forwardVarText(getSafeFontKey(font.google.family), a, 'span', {
@@ -164,7 +174,10 @@ function StoryPage() {
             lineHeight: 1.15,
             fontSize: '1.15rem',
             marginTop: '0.75rem',
-            width: '90%'
+            width:
+              breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                ? '100%'
+                : '90%'
           }
         })}
         <Container
@@ -224,10 +237,17 @@ function StoryPage() {
           id={isHeadingInView ? '' : 'story-markup-page-content-pad-top'}
           dangerouslyOverrideInnerContentStyles={{
             styles: {
-              maxWidth: '80%',
+              maxWidth:
+                breakpointKeyName === 'tablet' || breakpointKeyName === 'mobile'
+                  ? '100%'
+                  : '80%',
               width: 'auto',
               justifySelf: 'center',
-              alignSelf: 'center'
+              alignSelf: 'center',
+              ...(breakpointKeyName === 'tablet' ||
+              breakpointKeyName === 'mobile'
+                ? { padding: '8px' }
+                : {})
             }
           }}
           customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}

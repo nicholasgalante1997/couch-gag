@@ -40,7 +40,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
     /**
      * Select a theme from commons
      */
-    const targetFont = commonFont.spectral_serif;
+    const targetFont = commonFont.oswald_sans_serif;
     const targetColorPalette = commonPalette.treatment_bullwinkle_dark_1;
 
     /**
@@ -71,11 +71,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
 
     function setBreakpointOnResize() {
       const currentWindowBp = reduceBreakpointOnWindowWidth();
-      console.log(
-        'in UseEffect, currentWindowBp is ' + currentWindowBp.breakpointKeyName
-      );
       if (currentWindowBp.breakpointKeyName !== breakpoint.breakpointKeyName) {
-        console.log('triggering update bp state if block');
         setBreakpoint(currentWindowBp);
       }
     }
@@ -83,8 +79,6 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
     window.addEventListener('resize', setBreakpointOnResize);
     return () => window.removeEventListener('resize', setBreakpointOnResize);
   }, []);
-
-  useEffect(() => console.log({ breakpoint }), [breakpoint]);
 
   const { font, palette } = theme.meta!.theme!;
 

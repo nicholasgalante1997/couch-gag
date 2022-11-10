@@ -25,3 +25,8 @@ export const useAnthText = () => {
   const [state] = useRecoilState(textAtomState);
   return state.anthology;
 };
+
+export const useModalText = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.modals;
+};

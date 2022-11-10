@@ -2,8 +2,7 @@ import type { AnthologyTileProps } from './types';
 
 import { Button, Container } from '@nickgdev/hellerui';
 
-import { useThemeContext } from '../../../contexts';
-import { CouchGagBreakpoints, useInlineMediaQuery } from '../../../hooks';
+import { useBpContext, useThemeContext } from '../../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../../utils';
 
 import css from './index.module.css';
@@ -11,7 +10,7 @@ import { useState } from 'react';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
   const { font, palette } = useThemeContext();
-  const media = useInlineMediaQuery();
+  const { breakpointKeyName } = useBpContext();
   const [activeHover, setActiveHover] = useState<boolean>(false);
 
   const { cardKey, desc, title, navigationFn } = props;
@@ -22,8 +21,12 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       id={'card-parent-div-' + cardKey}
       className={css['story-card']}
       asGridChild
-      colSpan={media.breakpoint === CouchGagBreakpoints.DESKTOP ? 4 : 12}
-      padding="0px"
+      colSpan={
+        breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+          ? 12
+          : 4
+      }
+      padding="8px"
       height="33vh"
       customStyles={{
         display: 'flex',
@@ -33,7 +36,10 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
         minHeight: '33vh',
         maxHeight: '33vh',
         paddingLeft: '1.5rem',
-        paddingRight: '1.5rem'
+        paddingRight: '1.5rem',
+        ...(breakpointKeyName === 'tablet' || breakpointKeyName === 'mobile'
+          ? { borderBottom: '1px solid white' }
+          : {})
       }}
     >
       <Container padding="0px" width="100%">
