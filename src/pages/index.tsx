@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
-import { MetricType } from '@nickgdev/couch-gag-common-lib';
 import { Button, Container } from '@nickgdev/hellerui';
-import ColorScales from 'color-scales';
 
-import SlideIn from '../components/animated/slide-in';
 import { OneCol } from '../components/widgets/OneCol.widget';
-import { useThemeContext } from '../contexts';
-import { emit } from '../service/metric';
+import { useBpContext, useThemeContext } from '../contexts';
 import { useHomePageText } from '../store';
 import { forwardVarText, getSafeFontKey } from '../utils';
 import { WonderBall } from '../components/animated/bouncing-ball/styles';
@@ -19,26 +15,12 @@ function Home() {
   const { push: redirect } = useRouter();
   const text = useHomePageText();
 
-  useEffect(() => {
-    emit({ metricName: MetricType.PAGE_VIEW, subfield: 'home-page', value: 1 });
-  }, []);
+  const bp = useBpContext();
+
+  const mobile = React.useMemo(() => bp.breakpointKeyName === 'mobile', [bp]);
 
   function handleOriginStoryClick() {
     redirect('/story/season-one?seasonKey=01&episodeKey=01');
-  }
-
-  function handleSignUpClick() {
-    redirect('/auth');
-  }
-
-  function reduceImageSizeByFactor(
-    f: number,
-    imageDimensions: { height: number; width: number }
-  ) {
-    return {
-      height: imageDimensions.height / f,
-      width: imageDimensions.width / f
-    };
   }
 
   function renderWidgetOne() {
@@ -53,18 +35,13 @@ function Home() {
           paddingBottom: '5rem'
         }}
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.heroWidget.the,
-          'h1',
-          {
-            customStyles: {
-              color: '#fff',
-              margin: '0px',
-              fontSize: '4rem'
-            }
+        {forwardVarText(getSafeFontKey('Caveat'), text.heroWidget.the, 'h1', {
+          customStyles: {
+            color: '#fff',
+            margin: '0px',
+            fontSize: '4rem'
           }
-        )}
+        })}
         <Container
           margin="0"
           customStyles={{
@@ -72,11 +49,13 @@ function Home() {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: '-2rem'
+            marginTop: '-2rem',
+            overflow: 'visible',
+            position: 'relative'
           }}
         >
           {forwardVarText(
-            getSafeFontKey(font.google.family),
+            getSafeFontKey('Caveat'),
             text.heroWidget.title,
             'h1',
             {
@@ -92,10 +71,13 @@ function Home() {
             size={WonderBallSize.SMALL}
             color={palette.headingSecondaryColor!}
             repeat={1}
-            style={{ marginLeft: '0.25rem', marginTop: '1rem' }}
+            style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
           />
         </Container>
-        <Container width="68%" customStyles={{ borderTop: '1px solid white' }}>
+        <Container
+          width={mobile ? '90%' : '68%'}
+          customStyles={{ borderTop: '1px solid white' }}
+        >
           {forwardVarText(
             getSafeFontKey(font.google.family),
             text.heroWidget.supportingNotion_1,
@@ -110,274 +92,18 @@ function Home() {
           <Button
             onClick={handleOriginStoryClick}
             size={'md'}
-            width={'120px'}
+            width={mobile ? '100%' : '144px'}
             height={'36px'}
             backgroundColor={palette.backgroundComplimentColor}
+            ghost
           >
             {forwardVarText(
               getSafeFontKey(font.google.family),
               text.heroWidget.actionButtonText,
-              'span',
-              {
-                customStyles: {
-                  color: palette.headingSecondaryColor
-                }
-              }
-            )}
-          </Button>
-        </Container>
-      </Container>
-    );
-  }
-  function renderWidgetTwo() {
-    return (
-      <Container
-        id="home-page-widget-two-parent-container"
-        className="home-page-widget-two-parent-container-cl"
-        padding="0px"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row'
-        }}
-        height="100%"
-      >
-        <Container
-          height="100%"
-          width="50%"
-          padding="0px"
-          customStyles={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.originWidget.title,
-            'h3',
-            {
-              customStyles: {
-                color: palette.backgroundTertiaryColor,
-                marginTop: '2rem',
-                fontWeight: '800'
-              }
-            }
-          )}
-          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.originWidget.supportingNotion,
-            'p',
-            {
-              customStyles: {
-                color: palette.backgroundTertiaryColor,
-                marginTop: '2rem',
-                fontWeight: '800',
-                paddingLeft: '3rem',
-                textAlign: 'center'
-              }
-            }
-          )}
-          <Button
-            ghost
-            backgroundColor={palette.backgroundTertiaryColor}
-            onClick={handleOriginStoryClick}
-          >
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              text.originWidget.actionText,
               'span'
             )}
           </Button>
         </Container>
-        <Container height="100%" width="50%" padding="0px">
-          <SlideIn
-            fast
-            dir="right"
-            height={'100%'}
-            padding="0px"
-            customStyles={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: '100%'
-            }}
-            shakeFast
-          >
-            <Container
-              height={
-                reduceImageSizeByFactor(
-                  3,
-                  text.originWidget.image.originalDimensions
-                ).height
-              }
-              width={
-                reduceImageSizeByFactor(
-                  3,
-                  text.originWidget.image.originalDimensions
-                ).width
-              }
-            >
-              <img
-                src={text.originWidget.image.src}
-                height="100%"
-                width="100%"
-              />
-            </Container>
-          </SlideIn>
-        </Container>
-      </Container>
-    );
-  }
-  function renderWidgetThree() {
-    return (
-      <Container
-        id="home-page-widget-two-parent-container"
-        className="home-page-widget-two-parent-container-cl"
-        padding="0px"
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row'
-        }}
-        height="100%"
-      >
-        <Container height="100%" width="50%" padding="0px">
-          <SlideIn
-            fast
-            dir="right"
-            height={'100%'}
-            padding="0px"
-            customStyles={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: '100%'
-            }}
-            shakeFast
-          >
-            <Container
-              customStyles={{ overflow: 'visible' }}
-              height={
-                reduceImageSizeByFactor(
-                  1.7,
-                  text.supportingWidget.image.originalDimensions
-                ).height
-              }
-              width={
-                reduceImageSizeByFactor(
-                  1.7,
-                  text.supportingWidget.image.originalDimensions
-                ).width
-              }
-            >
-              <img
-                src={text.supportingWidget.image.src}
-                height="100%"
-                width="100%"
-              />
-            </Container>
-          </SlideIn>
-        </Container>
-        <Container
-          height="100%"
-          width="50%"
-          padding="0px"
-          customStyles={{
-            display: 'flex',
-            justifyContent: 'start',
-            alignItems: 'center'
-          }}
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.supportingWidget.title,
-            'h3',
-            {
-              customStyles: {
-                color: palette.backgroundComplimentColor,
-                marginTop: '2rem',
-                fontWeight: '800'
-              }
-            }
-          )}
-          <hr style={{ width: '90%' }} color={palette.backgroundColor} />
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.supportingWidget.supportingNotion,
-            'p',
-            {
-              customStyles: {
-                color: palette.backgroundComplimentColor,
-                marginTop: '2rem',
-                fontWeight: '800',
-                paddingRight: '3rem',
-                textAlign: 'center'
-              }
-            }
-          )}
-          <Button
-            ghost
-            backgroundColor={palette.buttonColorOptions[2]}
-            onClick={handleSignUpClick}
-          >
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              text.supportingWidget.actionText,
-              'span'
-            )}
-          </Button>
-        </Container>
-      </Container>
-    );
-  }
-  function renderWidgetFour() {
-    return (
-      <Container
-        height="100%"
-        width="50%"
-        padding="0px"
-        customStyles={{
-          display: 'flex',
-          justifyContent: 'start',
-          alignItems: 'center'
-        }}
-      >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.tertiaryWidget.title,
-          'h3',
-          {
-            customStyles: {
-              color: palette.backgroundTertiaryColor,
-              marginTop: '2rem',
-              fontWeight: '800'
-            }
-          }
-        )}
-        <hr
-          style={{ width: '90%' }}
-          color={palette.backgroundComplimentColor}
-        />
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.tertiaryWidget.supportingNotion,
-          'p',
-          {
-            customStyles: {
-              color: palette.backgroundTertiaryColor,
-              marginTop: '2rem',
-              fontWeight: '800',
-              textAlign: 'center'
-            }
-          }
-        )}
-        <Button ghost backgroundColor={palette.buttonColorOptions[3]}>
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.tertiaryWidget.actionText,
-            'span'
-          )}
-        </Button>
       </Container>
     );
   }
@@ -388,47 +114,15 @@ function Home() {
         widgetKey="home-page-widget-one"
         height="90vh"
         containerProps={{
-          gradient: {
-            flow: 'to bottom',
-            from: palette.backgroundColor,
-            to: new ColorScales(0, 100, [palette.backgroundColor, '#000000'])
-              .getColor(40)
-              .toHexString()
-          },
           customStyles: {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            paddingLeft: '8vw'
+            paddingLeft: '8vw',
+            overflow: 'hidden'
           }
         }}
         childNode={renderWidgetOne()}
-      />
-      <OneCol
-        widgetKey="home-page-widget-two"
-        height="50vh"
-        containerProps={{
-          background: palette.backgroundComplimentColor
-        }}
-        childNode={renderWidgetTwo()}
-      />
-      <OneCol
-        widgetKey="home-page-widget-three"
-        containerProps={{
-          background: palette.backgroundTertiaryColor
-        }}
-        childNode={renderWidgetThree()}
-      />
-      <OneCol
-        widgetKey="home-page-widget-four"
-        containerProps={{
-          customStyles: {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }
-        }}
-        childNode={renderWidgetFour()}
       />
     </Container>
   );

@@ -20,3 +20,13 @@ export const useNavbarData = () => {
   const [state] = useRecoilState(textAtomState);
   return state.navbar;
 };
+
+export const useAnthText = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.anthology;
+};
+
+export const useModalText = () => {
+  const [state] = useRecoilState(textAtomState);
+  return state.modals;
+};

@@ -1,18 +1,10 @@
 import { Metric, MetricType } from '@nickgdev/couch-gag-common-lib';
-import { devApiTargets, formatQueryParams } from '../../utils';
+import { devApiTargets } from '../../utils';
 
-export const emit = async ({
-  metricName,
-  subfield,
-  value
-}: Metric<MetricType>) => {
+export const emit = async (metric: Metric<MetricType>) => {
   if (process.env.NODE_ENV === 'development') return;
   const res = await fetch(
-    formatQueryParams(devApiTargets.metricHub, {
-      metric: metricName as string,
-      subfield,
-      value: value.toString()
-    }),
+    devApiTargets.metricHub + metric.parseMetricQueryParams(),
     {
       method: 'GET',
       mode: 'cors',
@@ -26,5 +18,6 @@ export const emit = async ({
   if (status > 299) {
     console.error('microservice responded w err code');
     console.error(await res.json());
+    return;
   }
 };

@@ -3,4 +3,5 @@ export type AnthologyTileProps = {
   title: string;
   desc: string;
   navigationFn: () => void;
+  genres?: string[];
 };

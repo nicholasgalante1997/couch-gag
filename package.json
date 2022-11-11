@@ -4,6 +4,8 @@
   "private": false,
   "license": "ISC",
   "scripts": {
+    "clean:build": "rm -rf .next build",
+    "clean:deps": "rm -rf node_modules",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,7 +16,12 @@
     "cleanup": "yarn lint:write && yarn fmt",
     "gith": "git log --graph --oneline",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "docker:image-build": "docker build . -t couch-gag:latest -t couch-gag-server:latest",
+    "docker:container-run": "docker run -d -p 5090:5090 --name couch-gag-website couch-gag-website:latest",
+    "compose:dev:up": "docker-compose -f docker-compose.dev.yml up -d --build",
+    "compose:up": "docker-compose -f docker-compose.yml up -d --build",
+    "compose:down": "docker-compose down"
   },
   "husky": {
     "hooks": {
@@ -23,8 +30,7 @@
   },
   "lint-staged": {
     "*.ts(x)?": [
-      "yarn cleanup",
-      "yarn test"
+      "yarn cleanup"
     ]
   },
   "eslintConfig": {
@@ -52,7 +58,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mdx-js/loader": "^2.1.3",
     "@next/mdx": "^12.2.5",
-    "@nickgdev/couch-gag-common-lib": "^1.2.1",
+    "@nickgdev/couch-gag-common-lib": "^1.2.4",
     "@nickgdev/hellerui": "^0.0.45",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -67,10 +73,10 @@
     "isomorphic-fetch": "^3.0.0",
     "next": "^12.2.5",
     "next-transpile-modules": "^9.0.0",
-    "npm": "^8.18.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-markdown": "6.0.3",
+    "react-modal": "^3.16.1",
     "react-query": "^3.39.1",
     "react-router": "^6.3.0",
     "recoil": "^0.7.5",
@@ -88,6 +94,7 @@
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@types/react-modal": "^3.13.1",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",

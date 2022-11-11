@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  couch-gag-website:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '5090:5090'
+    image: couch-gag-website:latest
+    networks:
+      - couch-gag-website-network
+
+networks:
+  couch-gag-website-network:

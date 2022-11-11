@@ -1,3 +1,10 @@
+/* 
+* **************************
+* top-level css
+* applied at an element by element basis
+* **************************
+*/
+
 html,
 body {
   min-height: 100vh;
@@ -24,6 +31,12 @@ h6 {
   line-height: 1.15;
 }
 
+/*
+* **************************
+* buttons
+* **************************
+*/
+
 .btn {
   margin: 0.5rem;
 }
@@ -33,3 +46,80 @@ h6 {
   margin-right: 0.25rem;
 }
 
+/* 
+* **************************
+* modals
+* **************************
+*/
+
+.mobile-modal-sidebar-x-rule {
+  width: 90%;
+  color: white;
+  height: 1px;
+}
+
+.ReactModalPortal {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.mobile-modal-link-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-sidebar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 101vh;
+  width: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.mobile-sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #92B4A7;
+  padding-top: 1rem;
+  animation: inflate_right 120ms ease-in 0s 1 normal forwards;
+}
+
+@keyframes inflate_right {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+/* 
+* **************************
+* story page (season-one)
+* **************************
+*/
+
+#sp-sticky-top-sect {
+  position: fixed;
+  top: 0;
+}
+
+#zeroed {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+#story-markup-page-content-pad-top {
+  margin-top: 60px;
+}

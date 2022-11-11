@@ -11,7 +11,7 @@ import {
   pageStyles,
   reduceAndBool
 } from '../utils';
-import { useThemeContext } from '../contexts';
+import { useBpContext, useThemeContext } from '../contexts';
 import { getStories } from '../service';
 import { useQueryAllMarkdownStories } from '../queries';
 
@@ -22,11 +22,14 @@ import {
   AnthExceptionEnum,
   EXCEPTION_DELIMITER
 } from '../exceptions';
+import { useAnthText } from '../store';
 
 function AnthologyPage() {
   const { push: redirect } = useRouter();
-  const { font, palette } = useThemeContext();
+  const { palette } = useThemeContext();
+  const { breakpointKeyName } = useBpContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
+  const anthText = useAnthText();
 
   useEffect(() => {
     const failureCase = isError || (data && !data.collection);
@@ -70,23 +73,77 @@ function AnthologyPage() {
       margin="0px"
       customStyles={{
         ...pageStyles,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        minHeight: '90vh'
       }}
     >
-      <Container width="90%">
-        {forwardVarText(getSafeFontKey(font.google.family), 'Season One', 'p', {
+      <Container
+        padding="12px"
+        width={
+          breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+            ? '100%'
+            : '90%'
+        }
+      >
+        {forwardVarText(getSafeFontKey('Caveat'), anthText.seasonOne, 'h1', {
           customStyles: {
             fontSize: 40,
             fontWeight: '200',
-            color: palette.headingPrimaryColor
+            color: palette.paragraphTextColor
           }
         })}
+        {forwardVarText(
+          getSafeFontKey('Caveat'),
+          anthText.seasonOneShort,
+          'p',
+          {
+            customStyles: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: palette.backgroundComplimentColor,
+              width:
+                breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                  ? '100%'
+                  : '70%'
+            }
+          }
+        )}
+        {forwardVarText(
+          getSafeFontKey('Caveat'),
+          `- ${anthText.seasonOneAuthor}`,
+          'span',
+          {
+            customStyles: {
+              fontSize: 32,
+              marginBottom: '1rem',
+              fontWeight: 'bold',
+              color: palette.backgroundComplimentColor,
+              float: 'right'
+            }
+          }
+        )}
+        <hr
+          color={
+            typeof palette.paragraphTextColor === 'string'
+              ? palette.paragraphTextColor
+              : palette.paragraphTextColor[0]
+          }
+          style={{ width: '100%' }}
+        />
       </Container>
-      <Container width="90%" padding="0px">
+      <Container
+        width="90%"
+        padding="0px"
+        customStyles={{
+          overflow: 'visible',
+          marginTop: '1rem',
+          marginBottom: '1rem'
+        }}
+      >
         <Container
           asGridParent
           padding="0px"
-          customStyles={{ flexWrap: 'wrap' }}
+          customStyles={{ flexWrap: 'wrap', overflow: 'visible' }}
         >
           {Object.keys(data!.collection).map((s: any, i: number) => (
             <AnthologyTile
@@ -96,6 +153,7 @@ function AnthologyPage() {
               cardKey={`${data!.collection[s].seasonKey}-${
                 data!.collection[s].episodeKey
               }`}
+              genres={data!.collection[s].genres}
               navigationFn={() => {
                 redirect(
                   `/story/season-one?seasonKey=01&episodeKey=${

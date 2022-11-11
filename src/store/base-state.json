@@ -1,5 +1,10 @@
 {
   "text": {
+    "anthology": {
+      "seasonOne": "Season One",
+      "seasonOneShort": "God, season one I mean, what can I even say about season one. It has glory, it has vindication and discovery and bloodshed, and it has rock and roll. For christ's sake, it has the overhaul of the undercurrent of civilized government. It's a miracle we even got here.",
+      "seasonOneAuthor": "Washington Irving"
+    },
     "home": {
       "heroWidget": {
         "the": "the",
@@ -60,7 +65,7 @@
       }
     },
     "navbar": {
-      "mainTitle": "the couch gag",
+      "mainTitle": "couch gag",
       "links": [
         {
           "localHref": "/about",
@@ -91,6 +96,13 @@
           }
         }
       ]
+    },
+    "modals": {
+      "mobile": {
+        "sidebar": {
+          "title": "Contents."
+        }
+      }
     }
   }
 }
