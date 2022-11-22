@@ -1,6 +1,6 @@
 import type { AnthologyTileProps } from './types';
 
-import { Button, Container } from '@nickgdev/hellerui';
+import { Container } from '@nickgdev/hellerui';
 
 import { useBpContext, useThemeContext } from '../../../contexts';
 import { forwardVarText, getSafeFontKey } from '../../../utils';
@@ -18,6 +18,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
     <Container
       onMouseEnter={() => setActiveHover(true)}
       onMouseLeave={() => setActiveHover(false)}
+      onClick={navigationFn}
       id={'card-parent-div-' + cardKey}
       className={css['story-card']}
       asGridChild
@@ -45,8 +46,12 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       <Container padding="0px" width="100%">
         {forwardVarText(getSafeFontKey(font.google.family), title, 'h3', {
           customStyles: {
-            color: palette.headingSecondaryColor,
-            maxWidth: '50%'
+            color: activeHover ? '#7e667a' : palette.headingSecondaryColor,
+            maxWidth: '50%',
+            ...(activeHover ? {
+              paddingLeft: '4px',
+              transition: 'padding-left 0.4s'
+            } : {})
           }
         })}
         {forwardVarText(getSafeFontKey(font.google.family), desc, 'p', {
@@ -57,7 +62,11 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
             maxWidth: '70%',
             width: '70%',
             minWidth: '70%',
-            fontSize: '14px'
+            fontSize: '14px',
+            ...(activeHover ? {
+              paddingLeft: '4px',
+              transition: 'padding-left 0.4s'
+            } : {})
           }
         })}
       </Container>
@@ -102,23 +111,6 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
               )
             )}
         </Container>
-        <Button
-          backgroundColor={palette.backgroundTertiaryColor}
-          onClick={navigationFn}
-          style={{ marginBottom: '20px', marginRight: '20px' }}
-          ghost
-        >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            'Get Started',
-            'span',
-            {
-              customStyles: {
-                color: palette.paragraphTextColor
-              }
-            }
-          )}
-        </Button>
       </Container>
     </Container>
   );

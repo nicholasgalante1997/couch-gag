@@ -20,7 +20,7 @@ function Home() {
   const mobile = React.useMemo(() => bp.breakpointKeyName === 'mobile', [bp]);
 
   function handleOriginStoryClick() {
-    redirect('/story/season-one?seasonKey=01&episodeKey=01');
+    redirect('/s/one?seasonKey=01&episodeKey=01');
   }
 
   function renderWidgetOne() {

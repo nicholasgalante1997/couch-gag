@@ -50,7 +50,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
       control: true,
       id: 'non-network-theme',
       treatment: false,
-      weblabName: 'control',
+      weblabName: '_control_theme_',
       meta: {
         theme: {
           font: targetFont.meta!.font,
@@ -82,6 +82,18 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
 
   const { font, palette } = theme.meta!.theme!;
 
+  function updateTheme (t: Theme): void { 
+    setTheme({
+      control: false,
+      id: t.treatmentId,
+      treatment: t.treatmentId,
+      weblabName: `_${t.treatmentId}_theme_`,
+      meta: {
+        theme: t
+      }     
+    }) 
+  }
+
   return (
     <>
       {/* HEAD */}
@@ -96,7 +108,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
             <ThemeProvider
-              value={{ darkMode: false, font, palette, treatmentId: theme.id }}
+              value={{ darkMode: false, font, palette, treatmentId: theme.id, setTheme: updateTheme}}
             >
               <BreakpointProvider value={breakpoint}>
                 <Container

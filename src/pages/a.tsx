@@ -57,9 +57,9 @@ function AnthologyPage() {
   const ready = useMemo(
     () =>
       reduceAndBool(
-        !isLoading,
-        data,
-        data?.collection,
+        !isLoading, /** check were in a non loading state */
+        data, /** check we have a valid data object as the result of the query */
+        data?.collection, /** check weve loaded a valid season */
         Object.keys(data?.collection ?? {}).length > 0
       ),
     [isLoading, data]
@@ -156,7 +156,7 @@ function AnthologyPage() {
               genres={data!.collection[s].genres}
               navigationFn={() => {
                 redirect(
-                  `/story/season-one?seasonKey=01&episodeKey=${
+                  `/s/one?seasonKey=01&episodeKey=${
                     data!.collection[s].episodeKey
                   }`
                 );

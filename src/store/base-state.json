@@ -68,29 +68,22 @@
       "mainTitle": "couch gag",
       "links": [
         {
-          "localHref": "/about",
+          "localHref": "/ab",
           "plainText": "about this endeavor",
           "meta": {
             "pageClickTag": "about"
           }
         },
         {
-          "localHref": "/anthology",
-          "plainText": "our anthology",
+          "localHref": "/a",
+          "plainText": "season one",
           "meta": {
             "pageClickTag": "anthology"
           }
         },
         {
-          "localHref": "/login",
-          "plainText": "sign up / login",
-          "meta": {
-            "pageClickTag": "user_registry"
-          }
-        },
-        {
-          "localHref": "/development",
-          "plainText": "specs",
+          "localHref": "/r",
+          "plainText": "recruiting",
           "meta": {
             "pageClickTag": "dev"
           }

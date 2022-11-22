@@ -1,10 +1,12 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import {
   Theme as CouchGagTheme,
   heller_couch_view_theme_treatment_pool
 } from '@nickgdev/couch-gag-common-lib';
 
-export type Theme = CouchGagTheme & { darkMode: boolean };
+export type Theme = CouchGagTheme & { darkMode: boolean; };
+
+export type DispatchableThemeAction = (() => void) | ((t: Theme) => void) | (React.Dispatch<React.SetStateAction<Theme>>);
 
 const vts = heller_couch_view_theme_treatment_pool.ViewThemeTreatments;
 
@@ -15,7 +17,7 @@ export const _defaultTheme: Theme = {
   treatmentId: vts[0].id
 };
 
-const ThemeContext = createContext<Theme>(_defaultTheme);
+const ThemeContext = createContext<Theme & { setTheme: DispatchableThemeAction }>({ ..._defaultTheme, setTheme(){} });
 export const useThemeContext = () => useContext(ThemeContext);
 export const ThemeProvider = ThemeContext.Provider;
 export const LocalThemeContextConsumerConstructor = ThemeContext.Consumer;
