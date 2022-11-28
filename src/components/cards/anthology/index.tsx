@@ -21,21 +21,16 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       onClick={navigationFn}
       id={'card-parent-div-' + cardKey}
       className={css['story-card']}
-      asGridChild
-      colSpan={
-        breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
-          ? 12
-          : 4
-      }
-      padding="8px"
-      height="33vh"
+      padding="6px"
+      width={breakpointKeyName === 'mobile' ? '100%' : '310px'}
+      height="240px"
       customStyles={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        minHeight: '33vh',
-        maxHeight: '33vh',
+        minHeight: '240px',
+        maxHeight: '240px',
         paddingLeft: '1.5rem',
         paddingRight: '1.5rem',
         ...(breakpointKeyName === 'tablet' || breakpointKeyName === 'mobile'
@@ -48,10 +43,12 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           customStyles: {
             color: activeHover ? '#7e667a' : palette.headingSecondaryColor,
             maxWidth: '50%',
-            ...(activeHover ? {
-              paddingLeft: '4px',
-              transition: 'padding-left 0.4s'
-            } : {})
+            ...(activeHover
+              ? {
+                  paddingLeft: '4px',
+                  transition: 'padding-left 0.4s'
+                }
+              : {})
           }
         })}
         {forwardVarText(getSafeFontKey(font.google.family), desc, 'p', {
@@ -62,11 +59,15 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
             maxWidth: '70%',
             width: '70%',
             minWidth: '70%',
-            fontSize: '14px',
-            ...(activeHover ? {
-              paddingLeft: '4px',
-              transition: 'padding-left 0.4s'
-            } : {})
+            ...(activeHover
+              ? {
+                  paddingLeft: '4px',
+                  fontSize: '16px',
+                  transition: 'padding-left 0.4s, font-size 0.4s'
+                }
+              : {
+                  fontSize: '14px'
+                })
           }
         })}
       </Container>

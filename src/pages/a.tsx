@@ -57,9 +57,9 @@ function AnthologyPage() {
   const ready = useMemo(
     () =>
       reduceAndBool(
-        !isLoading, /** check were in a non loading state */
-        data, /** check we have a valid data object as the result of the query */
-        data?.collection, /** check weve loaded a valid season */
+        !isLoading /** check were in a non loading state */,
+        data /** check we have a valid data object as the result of the query */,
+        data?.collection /** check weve loaded a valid season */,
         Object.keys(data?.collection ?? {}).length > 0
       ),
     [isLoading, data]
@@ -141,9 +141,16 @@ function AnthologyPage() {
         }}
       >
         <Container
-          asGridParent
           padding="0px"
-          customStyles={{ flexWrap: 'wrap', overflow: 'visible' }}
+          customStyles={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'flex-start',
+            flexWrap: 'wrap',
+            overflow: 'visible',
+            width: '100%'
+          }}
         >
           {Object.keys(data!.collection).map((s: any, i: number) => (
             <AnthologyTile

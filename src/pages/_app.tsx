@@ -11,8 +11,7 @@ import ColorScales from 'color-scales';
 import {
   Theme,
   Treatment,
-  heller_couch_palette_treatment_pool as commonPalette,
-  heller_couch_font_treatment_pool as commonFont
+  heller_couch_view_theme_treatment_pool
 } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 import { Nav } from '../components';
@@ -40,25 +39,17 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
     /**
      * Select a theme from commons
      */
-    const targetFont = commonFont.oswald_sans_serif;
-    const targetColorPalette = commonPalette.treatment_bullwinkle_dark_1;
+    const targetTheme =
+      heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
+        (t) =>
+          t.id.toLowerCase().includes('oswald') &&
+          t.id.toLowerCase().includes('bullwinkle')
+      );
 
     /**
      * dispatch it to theme
      */
-    setTheme({
-      control: true,
-      id: 'non-network-theme',
-      treatment: false,
-      weblabName: '_control_theme_',
-      meta: {
-        theme: {
-          font: targetFont.meta!.font,
-          palette: targetColorPalette.meta!.color,
-          treatmentId: 'control-non-network-theme'
-        }
-      }
-    });
+    setTheme(targetTheme!);
 
     /**
      * Set breakpoint
@@ -82,7 +73,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
 
   const { font, palette } = theme.meta!.theme!;
 
-  function updateTheme (t: Theme): void { 
+  function updateTheme(t: Theme): void {
     setTheme({
       control: false,
       id: t.treatmentId,
@@ -90,8 +81,8 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
       weblabName: `_${t.treatmentId}_theme_`,
       meta: {
         theme: t
-      }     
-    }) 
+      }
+    });
   }
 
   return (
@@ -108,7 +99,13 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
             <ThemeProvider
-              value={{ darkMode: false, font, palette, treatmentId: theme.id, setTheme: updateTheme}}
+              value={{
+                darkMode: false,
+                font,
+                palette,
+                treatmentId: theme.id,
+                setTheme: updateTheme
+              }}
             >
               <BreakpointProvider value={breakpoint}>
                 <Container

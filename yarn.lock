@@ -1782,10 +1782,10 @@
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.3.4.tgz#d28ea15a72cdcf96201c60a43e9630cd7fda168f"
   integrity sha512-DQ20JEfTBZAgF8QCjYfJhv2/279M6onxFjdG/+5B0Cyj00/EdBxiWb2eGGFgQhrBbNv/lsvzFbbi0Ptf8Vw/bg==
 
-"@nickgdev/couch-gag-common-lib@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@nickgdev/couch-gag-common-lib/-/couch-gag-common-lib-1.2.4.tgz#8e8965e5cfa47b6e4103ee843ee3ace7df55844b"
-  integrity sha512-D1zcE0ID3KINxJ2LZCN2M1dwvXs1dGkrJQpTILfiLXuxx16M0wdpxHKeHCKpCOIB8pDSZjSgjnxWeWaZ0dgnOQ==
+"@nickgdev/couch-gag-common-lib@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@nickgdev/couch-gag-common-lib/-/couch-gag-common-lib-1.2.5.tgz#d2b209055035560f330642b10c996545d9720d96"
+  integrity sha512-jBpgA8mR9w0xQHzyaYFaxNAlIehMxWdLER+9JeUfjjWUbiB9As3sKluuK//4BrWrAj6nmAGaZeEjXRE9dsTOqg==
 
 "@nickgdev/hellerui@^0.0.45":
   version "0.0.45"

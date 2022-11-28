@@ -123,3 +123,18 @@ h6 {
 #story-markup-page-content-pad-top {
   margin-top: 60px;
 }
+
+/* 
+* **************************
+* theme page
+* **************************
+*/
+
+.t-select {
+  border: 2px solid black;
+  border-radius: 4px;
+  height: 44px;
+  padding-left: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
