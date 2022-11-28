@@ -39,6 +39,54 @@ Bad code is so difficult to maintain. Its not even funny. I am not laughing, do 
 - Styled-Components 5.x, @nickgdev/hellerui 1.x, @mdx/react 12.x : *style engines used to serve markup*
 - Eslint 8.x, Prettier 2.x : *everyone's favorite linters*
 
+### File Structure
+
+#### .storybook
+
+- directory to house storybook.js related configuration files
+
+#### src
+
+##### src/components
+
+- housing for components utilized in the application that are *smaller* than a page.
+- ideally when creating a new component, the dir will have the following file structure.
+  - index.ts *used to export all exposable modules from dir*
+  - component.tsx *implementation for component logic*
+  - styles.tsx *view layer of component, used in component.tsx*
+  - types.ts *component prop types*
+  - component.stories.tsx *storybook file for mocking up component states*
+  - component.test.tsx *snapshot and unit tests*
+
+##### src/contexts
+
+- stateful providers are housed in this directory
+- this application makes *liberal* use of the react context api, we fucking love it.
+- Context provides (so far)
+  - theme to all components in tree
+  - breakpoint data to all components in tree
+
+##### src/exceptions
+
+- custom exceptions that could be thrown in the service of our application.
+
+##### src/hooks
+
+- custom hooks built over the react-* apis, for ease of use for common behavior in components
+  
+##### src/pages
+
+- the view layer of the application
+- nextjs apps allow use a filebased routing system, matching pathnames after host `/` to filenames in `/pages`
+- nextjs allows you to subnest the pages folder to `src/pages` as a declarative choice to keep all source code files in `src`
+- the path determines the application file used to render the view, in our case we have a route `s/one` which maps to `https://${hosting_url}/s/one`
+- pages in nextjs have access to some really cool things, like MVC on ketamine, where you can leverage functions that run on the server environment before the page is rendered to the client. These functions have access to the request, response, and server context, and can pass props directly to the page level component. We take *strong* advantage of these utilities in our application, and have established a react-query prefetching pattern to load asynchronous data thats external to the application on the server and dehydrate the response of such queries into a ReactQuery context that's then hydrated on the client with the data necessary for the application to run, reducing the number of network calls occurring after 
+  
 ### Docker and THE COUCH GAG WEBSITE
 
 plcaeholder text
+
+### Addendum and Related Material, Common Resources
+
+- color palette generator <https://colors.muz.li/palette/92B4A7/667e79/b492af/7e667a/b4ac92>
+- github repo <https://github.com/nicholasgalante1997/couch-gag>
