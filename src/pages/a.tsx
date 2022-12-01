@@ -54,6 +54,10 @@ function AnthologyPage() {
     }
   }, [isError, error]);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const ready = useMemo(
     () =>
       reduceAndBool(
@@ -152,24 +156,25 @@ function AnthologyPage() {
             width: '100%'
           }}
         >
-          {Object.keys(data!.collection).map((s: any, i: number) => (
-            <AnthologyTile
-              key={`${data!.collection[s].episodeKey}-${i}`}
-              title={data!.collection[s].title}
-              desc={data!.collection[s].subtitle}
-              cardKey={`${data!.collection[s].seasonKey}-${
-                data!.collection[s].episodeKey
-              }`}
-              genres={data!.collection[s].genres}
-              navigationFn={() => {
-                redirect(
-                  `/s/one?seasonKey=01&episodeKey=${
-                    data!.collection[s].episodeKey
-                  }`
-                );
-              }}
-            />
-          ))}
+          {Object.keys(data!.collection['season_01']).map(
+            (s: any, i: number) => {
+              const story = data!.collection['season_01'][s];
+              return (
+                <AnthologyTile
+                  key={`${story.episodeKey}-${i}`}
+                  title={story.title}
+                  desc={story.subtitle}
+                  cardKey={`${story.seasonKey}-${story.episodeKey}`}
+                  genres={story.genres}
+                  navigationFn={() => {
+                    redirect(
+                      `/s/one?seasonKey=01&episodeKey=${story.episodeKey}`
+                    );
+                  }}
+                />
+              );
+            }
+          )}
         </Container>
       </Container>
     </Container>

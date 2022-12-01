@@ -3,7 +3,7 @@ import { Container } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
 import { forwardVarText, getSafeFontKey } from '../utils';
 
-export default function About() {
+function RecruitmentPage() {
   const { font, palette } = useThemeContext();
   return (
     <Container
@@ -16,13 +16,13 @@ export default function About() {
         alignSelf: 'center',
         justifySelf: 'center',
         width: '90%',
-        minHeight: '88.2vh',
+        height: '88.2vh',
         overflow: 'hidden'
       }}
     >
       {forwardVarText(
         getSafeFontKey(font.google.family),
-        'A letter from the editor',
+        'Couch Gag is looking for writers, marketers, and developers.',
         'h1',
         {
           customStyles: {
@@ -32,7 +32,7 @@ export default function About() {
       )}
       {forwardVarText(
         getSafeFontKey(font.google.family),
-        'Edition One, Colloquial Title: Flagship; 12/1/2022',
+        'We have appeals laid out below, as to why joining Couch Gag is what you were born to do.',
         'p',
         {
           customStyles: {
@@ -43,3 +43,5 @@ export default function About() {
     </Container>
   );
 }
+
+export default RecruitmentPage;

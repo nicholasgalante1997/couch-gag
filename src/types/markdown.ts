@@ -28,7 +28,11 @@ export type StoryMeta = {
 };
 
 export type StoryCollection = {
-  collection: { [x: string]: StoryMeta };
+  collection: {
+    [season: string]: {
+      [episode: string]: StoryMeta;
+    };
+  };
 };
 
 export type StoryRowProps = {

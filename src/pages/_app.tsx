@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { RecoilRoot } from 'recoil';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import ColorScales from 'color-scales';
@@ -16,6 +15,7 @@ import {
 import { Container } from '@nickgdev/hellerui';
 import { Nav } from '../components';
 import { ThemeProvider, BreakpointProvider } from '../contexts';
+import { TextContextProvider } from '../store';
 import { defaultTheme, reduceBreakpointOnWindowWidth } from '../utils';
 import * as Breakpoints from '../styles/breakpoints';
 
@@ -97,7 +97,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
       {/* BODY */}
       <QueryClientProvider client={appQueryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <RecoilRoot>
+          <TextContextProvider>
             <ThemeProvider
               value={{
                 darkMode: false,
@@ -127,7 +127,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
                 </Container>
               </BreakpointProvider>
             </ThemeProvider>
-          </RecoilRoot>
+          </TextContextProvider>
         </Hydrate>
       </QueryClientProvider>
     </>

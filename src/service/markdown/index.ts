@@ -1,12 +1,12 @@
 import { Story, StoryCollection } from '../../types';
-import { devApiTargets, isDev, prodApiTargets } from '../../utils';
+import { getMdServerDevApiEndpoint } from '../../utils';
 
 export async function getStoryByStoryKey(storyKey: {
   seasonKey: string;
   episodeKey: string;
 }): Promise<Story> {
   const { seasonKey, episodeKey } = storyKey;
-  const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
+  const base = getMdServerDevApiEndpoint();
   const url = base + `markdown?seasonKey=${seasonKey}&episodeKey=${episodeKey}`;
   return fetch(url, {
     method: 'GET',
@@ -21,7 +21,7 @@ export async function getStoryByStoryKey(storyKey: {
 }
 
 export async function getStories(): Promise<StoryCollection> {
-  const base = isDev() ? devApiTargets.baseUrl : prodApiTargets.baseUrl;
+  const base = getMdServerDevApiEndpoint();
   const url = base + 'all';
   return fetch(url, {
     method: 'GET',

@@ -16,7 +16,7 @@ const nonsenseWords = [
 ];
 
 function ThemeSelectionPage() {
-  const { setTheme, treatmentId, font } = useThemeContext();
+  const { setTheme, treatmentId, font, palette } = useThemeContext();
   function handleOnChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const futureTreatmentId = e.target.value;
     const futureTheme =
@@ -48,12 +48,22 @@ function ThemeSelectionPage() {
       {forwardVarText(
         getSafeFontKey(font.google.family),
         'Customize your theme',
-        'h1'
+        'h1',
+        {
+          customStyles: {
+            color: palette.backgroundTertiaryColor
+          }
+        }
       )}
       {forwardVarText(
         getSafeFontKey(font.google.family),
         'Select from some pre-constructed themes below',
-        'p'
+        'p',
+        {
+          customStyles: {
+            color: palette.paragraphTextColor
+          }
+        }
       )}
       <select
         onChange={handleOnChange}
@@ -64,13 +74,23 @@ function ThemeSelectionPage() {
           (t) => t.id
         ).map((tId) => (
           <option className="t-option" key={tId} value={tId}>
-            {tId
-              .split('-')
-              .filter((word) => !nonsenseWords.includes(word))
-              .map(
-                (word) => word.substring(0, 1).toUpperCase() + word.substring(1)
-              )
-              .join(' ')}
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              tId
+                .split('-')
+                .filter((word) => !nonsenseWords.includes(word))
+                .map(
+                  (word) =>
+                    word.substring(0, 1).toUpperCase() + word.substring(1)
+                )
+                .join(' '),
+              'span',
+              {
+                customStyles: {
+                  color: palette.paragraphTextColor
+                }
+              }
+            )}
           </option>
         ))}
       </select>

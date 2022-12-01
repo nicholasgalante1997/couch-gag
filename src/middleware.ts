@@ -38,5 +38,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/about', '/anthology', '/story/season-one']
+  matcher: ['/', '/ab', '/a', '/s/one', '/r', '/t']
 };
