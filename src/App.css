@@ -6,7 +6,8 @@
 */
 
 html,
-body {
+body,
+#couch-gag-wrapping-gradient-layer {
   min-height: 100vh;
   margin: 0 auto;
 }

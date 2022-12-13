@@ -15,7 +15,8 @@ import {
   getSafeFontKey,
   pageStyles,
   parseContent,
-  reduceAndBool
+  reduceAndBool,
+  findNestedParagraphPaletteTheme
 } from '../../utils';
 import { getStoryByStoryKey } from '../../service';
 
@@ -158,7 +159,7 @@ function StoryPage() {
         })}
         {forwardVarText(getSafeFontKey(font.google.family), s, 'h5', {
           customStyles: {
-            color: palette.paragraphTextColor,
+            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
             lineHeight: 1.15,
             fontSize: '1.15rem',
             marginTop: '0.75rem',
@@ -170,7 +171,7 @@ function StoryPage() {
         })}
         {forwardVarText(getSafeFontKey(font.google.family), a, 'span', {
           customStyles: {
-            color: palette.paragraphTextColor,
+            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
             lineHeight: 1.15,
             fontSize: '1.15rem',
             marginTop: '0.75rem',

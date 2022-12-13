@@ -3,7 +3,7 @@ import type { AnthologyTileProps } from './types';
 import { Container } from '@nickgdev/hellerui';
 
 import { useBpContext, useThemeContext } from '../../../contexts';
-import { forwardVarText, getSafeFontKey } from '../../../utils';
+import { forwardVarText, getSafeFontKey, findNestedParagraphPaletteTheme } from '../../../utils';
 
 import css from './index.module.css';
 import { useState } from 'react';
@@ -54,7 +54,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
         {forwardVarText(getSafeFontKey(font.google.family), desc, 'p', {
           className: css['trunc'],
           customStyles: {
-            color: palette.paragraphTextColor,
+            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
             marginTop: '8px',
             maxWidth: '70%',
             width: '70%',
@@ -104,7 +104,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
                     marginRight: '0.25rem',
                     display: 'inline-block',
                     color: activeHover
-                      ? palette.buttonColorOptions[0]
+                      ? palette.backgroundTertiaryColor
                       : palette.headingPrimaryColor,
                     textDecoration: activeHover ? 'underline' : 'none'
                   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from '@nickgdev/hellerui';
 import { heller_couch_view_theme_treatment_pool } from '@nickgdev/couch-gag-common-lib';
 import { useThemeContext } from '../contexts';
-import { forwardVarText, getSafeFontKey } from '../utils';
+import { findNestedParagraphPaletteTheme, forwardVarText, getSafeFontKey } from '../utils';
 
 const nonsenseWords = [
   'view',
@@ -17,6 +17,7 @@ const nonsenseWords = [
 
 function ThemeSelectionPage() {
   const { setTheme, treatmentId, font, palette } = useThemeContext();
+  const [localThemeIndex, setLocalThemeIndex] = React.useState(0);
   function handleOnChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const futureTreatmentId = e.target.value;
     const futureTheme =
@@ -61,11 +62,25 @@ function ThemeSelectionPage() {
         'p',
         {
           customStyles: {
-            color: palette.paragraphTextColor
+            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
           }
         }
       )}
-      <select
+      <Container customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}} width="100%" padding="1rem">
+        Current Theme: {treatmentId}
+      </Container>
+      <Container customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}} width="100%" padding="1rem">
+        <Container>
+          left arrow
+        </Container>
+        <Container>
+          content
+        </Container>
+        <Container>
+          right arrow
+        </Container>
+      </Container>
+      {/* <select
         onChange={handleOnChange}
         className="t-select"
         value={treatmentId}
@@ -93,7 +108,7 @@ function ThemeSelectionPage() {
             )}
           </option>
         ))}
-      </select>
+      </select> */}
     </Container>
   );
 }

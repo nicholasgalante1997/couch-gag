@@ -59,3 +59,10 @@ export function findThemeInDevEnvOrUndefined(
     treatmentId: matchingThemes[i].id
   };
 }
+
+export function findNestedParagraphPaletteTheme(p: string | string[], index = 0): string {
+  if (Array.isArray(p)) {
+    return p[index];
+  }
+  return p;
+}

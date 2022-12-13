@@ -9,7 +9,8 @@ import {
   forwardVarText,
   getSafeFontKey,
   pageStyles,
-  reduceAndBool
+  reduceAndBool,
+  findNestedParagraphPaletteTheme
 } from '../utils';
 import { useBpContext, useThemeContext } from '../contexts';
 import { getStories } from '../service';
@@ -93,7 +94,7 @@ function AnthologyPage() {
           customStyles: {
             fontSize: 40,
             fontWeight: '200',
-            color: palette.paragraphTextColor
+            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
           }
         })}
         {forwardVarText(
