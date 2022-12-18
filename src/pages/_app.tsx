@@ -43,7 +43,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
       heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
         (t) =>
           t.id.toLowerCase().includes('oswald') &&
-          t.id.toLowerCase().includes('bullwinkle')
+          t.id.toLowerCase().includes('lasercat')
       );
 
     /**

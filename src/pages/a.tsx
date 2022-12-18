@@ -55,10 +55,6 @@ function AnthologyPage() {
     }
   }, [isError, error]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const ready = useMemo(
     () =>
       reduceAndBool(
