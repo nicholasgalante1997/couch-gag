@@ -14,7 +14,18 @@ export function LinkBar() {
   return (
     <Container customStyles={{ display: 'flex', flexDirection: 'row' }}>
       {links.map((l) => (
-        <Hoverable key={l.plainText}>
+        <Hoverable
+          key={l.plainText}
+          from={{
+            color:
+              pathname === l.localHref
+                ? palette.backgroundTertiaryColor
+                : palette.headingSecondaryColor
+          }}
+          to={{
+            color: palette.headingPrimaryColor
+          }}
+        >
           {forwardVarText(
             getSafeFontKey(font.google.family),
             l.plainText,
@@ -22,15 +33,12 @@ export function LinkBar() {
             {
               onClick: () => forwardNavEventDest(l.localHref),
               customStyles: {
-                color:
-                  pathname === l.localHref
-                    ? palette.backgroundTertiaryColor
-                    : palette.headingSecondaryColor,
                 marginLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 fontSize: 'inherit'
               },
-              key: l.plainText
+              key: l.plainText,
+              className: 'nav-link'
             }
           )}
         </Hoverable>

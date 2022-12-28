@@ -1,10 +1,18 @@
 import React from 'react';
 import { Button, Container } from '@nickgdev/hellerui';
-import { heller_couch_view_theme_treatment_pool, Theme, Treatment } from '@nickgdev/couch-gag-common-lib';
+import {
+  heller_couch_view_theme_treatment_pool,
+  Theme,
+  Treatment
+} from '@nickgdev/couch-gag-common-lib';
 import { useThemeContext } from '../contexts';
-import { findNestedParagraphPaletteTheme, forwardVarText, getSafeFontKey } from '../utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  findNestedParagraphPaletteTheme,
+  forwardVarText,
+  getSafeFontKey
+} from '../utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const nonsenseWords = [
   'view',
@@ -21,7 +29,10 @@ const nonsenseWords = [
 ];
 
 function friendlyThemeName(s: string): string {
-  return s.split('-').filter(w => !nonsenseWords.includes(w)).join(' ');
+  return s
+    .split('-')
+    .filter((w) => !nonsenseWords.includes(w))
+    .join(' ');
 }
 
 function ThemeSelectionPage() {
@@ -29,16 +40,24 @@ function ThemeSelectionPage() {
   const [localThemeIndex, setLocalThemeIndex] = React.useState(0);
 
   const orderedThemeList = React.useMemo(() => {
-    const currentTheme = heller_couch_view_theme_treatment_pool.ViewThemeTreatments.filter(t => t.id === treatmentId);
-    return [...currentTheme, ...heller_couch_view_theme_treatment_pool.ViewThemeTreatments.filter(t => t.id !== treatmentId)];
-  }, [])
+    const currentTheme =
+      heller_couch_view_theme_treatment_pool.ViewThemeTreatments.filter(
+        (t) => t.id === treatmentId
+      );
+    return [
+      ...currentTheme,
+      ...heller_couch_view_theme_treatment_pool.ViewThemeTreatments.filter(
+        (t) => t.id !== treatmentId
+      )
+    ];
+  }, []);
 
   const futureTheme = React.useMemo(() => {
     return orderedThemeList[localThemeIndex].meta!.theme;
-  }, [localThemeIndex])
+  }, [localThemeIndex]);
 
-  function incrementLocalIndex(){
-    setLocalThemeIndex(prevIndex => {
+  function incrementLocalIndex() {
+    setLocalThemeIndex((prevIndex) => {
       if (prevIndex === orderedThemeList.length - 1) {
         return 0;
       } else {
@@ -47,8 +66,8 @@ function ThemeSelectionPage() {
     });
   }
 
-  function decrementLocalIndex(){
-    setLocalThemeIndex(prevIndex => {
+  function decrementLocalIndex() {
+    setLocalThemeIndex((prevIndex) => {
       if (prevIndex === 0) {
         return orderedThemeList.length - 1;
       } else {
@@ -59,7 +78,7 @@ function ThemeSelectionPage() {
 
   function getNestedBackground(s?: string | string[]): string | undefined {
     if (Array.isArray(s)) {
-      return `linear-gradient(to bottom right, ${s[0]}, ${s[1]})`
+      return `linear-gradient(to bottom right, ${s[0]}, ${s[1]})`;
     } else if (s) {
       return s;
     }
@@ -113,7 +132,15 @@ function ThemeSelectionPage() {
           }
         }
       )}
-      <Container customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}} width="100%">
+      <Container
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center'
+        }}
+        width="100%"
+      >
         {forwardVarText(
           getSafeFontKey(font.google.family),
           `Current Theme: ${friendlyThemeName(treatmentId)}`,
@@ -125,13 +152,46 @@ function ThemeSelectionPage() {
           }
         )}
       </Container>
-      <Container customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}} width="100%">
+      <Container
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center'
+        }}
+        width="100%"
+      >
         <Container>
-          <FontAwesomeIcon className="pointer" color={palette.headingPrimaryColor} icon={faCaretLeft} size={'3x'} onClick={decrementLocalIndex} />
+          <FontAwesomeIcon
+            className="pointer"
+            color={palette.headingPrimaryColor}
+            icon={faCaretLeft}
+            size={'3x'}
+            onClick={decrementLocalIndex}
+          />
         </Container>
         <Container>
-          <Container customStyles={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', overflow: "hidden" }} width="500px">
-            <Container margin='0px' padding="0px" width="100%" customStyles={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+          <Container
+            customStyles={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+              overflow: 'hidden'
+            }}
+            width="500px"
+          >
+            <Container
+              margin="0px"
+              padding="0px"
+              width="100%"
+              customStyles={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
               {forwardVarText(
                 getSafeFontKey(futureTheme.font.google.family),
                 'New Theme: ' + friendlyThemeName(futureTheme.treatmentId),
@@ -140,25 +200,45 @@ function ThemeSelectionPage() {
                   customStyles: {
                     color: futureTheme.palette.headingPrimaryColor
                   }
-              }
-              )}
-              <Button onClick={handleOnChange} ghost backgroundColor={futureTheme.palette.backgroundTertiaryColor}>
-                {
-                  forwardVarText(
-                    getSafeFontKey(futureTheme.font.google.family),
-                    'Set as new theme',
-                    'span'
-                  )
                 }
+              )}
+              <Button
+                onClick={handleOnChange}
+                ghost
+                backgroundColor={futureTheme.palette.backgroundTertiaryColor}
+              >
+                {forwardVarText(
+                  getSafeFontKey(futureTheme.font.google.family),
+                  'Set as new theme',
+                  'span'
+                )}
               </Button>
             </Container>
-            {
-              Object.values(futureTheme.palette.buttonColorOptions).map(colorKey => <Container margin="4px" width="100%" height={futureTheme.palette.buttonColorOptions.length > 6 ? "20px" : "40px"} radius='normal' background={colorKey} />)
-            }
+            {Object.values(futureTheme.palette.buttonColorOptions).map(
+              (colorKey) => (
+                <Container
+                  margin="4px"
+                  width="100%"
+                  height={
+                    futureTheme.palette.buttonColorOptions.length > 6
+                      ? '20px'
+                      : '40px'
+                  }
+                  radius="normal"
+                  background={colorKey}
+                />
+              )
+            )}
           </Container>
         </Container>
         <Container>
-          <FontAwesomeIcon className="pointer" color={palette.headingPrimaryColor} icon={faCaretRight} size={'3x'} onClick={incrementLocalIndex} />
+          <FontAwesomeIcon
+            className="pointer"
+            color={palette.headingPrimaryColor}
+            icon={faCaretRight}
+            size={'3x'}
+            onClick={incrementLocalIndex}
+          />
         </Container>
       </Container>
       {/* <select

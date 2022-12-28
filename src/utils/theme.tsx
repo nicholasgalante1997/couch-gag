@@ -60,7 +60,10 @@ export function findThemeInDevEnvOrUndefined(
   };
 }
 
-export function findNestedParagraphPaletteTheme(p: string | string[], index = 0): string {
+export function findNestedParagraphPaletteTheme(
+  p: string | string[],
+  index = 0
+): string {
   if (Array.isArray(p)) {
     return p[index];
   }

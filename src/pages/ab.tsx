@@ -1,7 +1,11 @@
 import React from 'react';
 import { Container } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
-import { forwardVarText, getSafeFontKey, findNestedParagraphPaletteTheme } from '../utils';
+import {
+  forwardVarText,
+  getSafeFontKey,
+  findNestedParagraphPaletteTheme
+} from '../utils';
 
 export default function About() {
   const { font, palette } = useThemeContext();

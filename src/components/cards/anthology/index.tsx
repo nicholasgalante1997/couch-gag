@@ -3,7 +3,11 @@ import type { AnthologyTileProps } from './types';
 import { Container } from '@nickgdev/hellerui';
 
 import { useBpContext, useThemeContext } from '../../../contexts';
-import { forwardVarText, getSafeFontKey, findNestedParagraphPaletteTheme } from '../../../utils';
+import {
+  forwardVarText,
+  getSafeFontKey,
+  findNestedParagraphPaletteTheme
+} from '../../../utils';
 
 import css from './index.module.css';
 import { useState } from 'react';

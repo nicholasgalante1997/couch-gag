@@ -36,7 +36,7 @@ export function Title(props: TitleProps) {
   return (
     <Hoverable
       from={{ color: palette.headingPrimaryColor, fontSize: '1.15rem' }}
-      to={{ color: palette.headingSecondaryColor, fontSize: '1.25rem' }}
+      to={{ color: palette.backgroundTertiaryColor, fontSize: '1.25rem' }}
     >
       {forwardVarText(getSafeFontKey('Caveat'), mainTitle, 'h3', {
         onClick: mobile ? onClickMobile : onClickBrowser,

@@ -6,7 +6,6 @@ import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container, Page } from '@nickgdev/hellerui';
 
 import { Spinner } from '../../components/animated/spinner';
-import { StoryInteract } from '../../components/story-interact';
 import { useThemeContext, useBpContext } from '../../contexts';
 import { useQuerySingleMarkdownStory } from '../../queries';
 import {
@@ -19,6 +18,7 @@ import {
   findNestedParagraphPaletteTheme
 } from '../../utils';
 import { getStoryByStoryKey } from '../../service';
+import { Hoverable } from '../../components';
 
 export const selectors = {
   storyHeading: {
@@ -28,23 +28,86 @@ export const selectors = {
   }
 } as const;
 
+const actions = [
+  {
+    type: 'like',
+  },
+  {
+    type: 'share'
+  },
+  {
+    type: 'bookmark'
+  }
+] as const;
+
 function StickyTopSection(props: {
   isViewable: boolean;
   title: string;
+  shortSum: string;
 }): JSX.Element {
-  const { palette } = useThemeContext();
+  const { palette, font } = useThemeContext();
   return props.isViewable ? (
     <Container
       id="sp-sticky-top-sect"
       width="100%"
       height="48px"
       background={palette.backgroundComplimentColor}
+      customStyles={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+      }}
     >
-      {forwardVarText(getSafeFontKey('Caveat'), props.title, 'h1', {
-        customStyles: {
-          color: 'black'
+      {forwardVarText(
+        getSafeFontKey(getSafeFontKey(font.google.family)),
+        props.title,
+        'h4',
+        {
+          customStyles: {
+            color: 'black'
+          }
         }
-      })}
+      )}
+      {forwardVarText(
+        getSafeFontKey(getSafeFontKey(font.google.family)),
+        props.shortSum,
+        'p',
+        {
+          customStyles: {
+            color: 'black',
+            maxWidth: '50%',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap'
+          }
+        }
+      )}
+      <Container
+        customStyles={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'center'
+        }}
+      >
+        {actions.map(action => (
+          <Hoverable from={{ color: palette.backgroundTertiaryColor }} to={{ color: palette.headingSecondaryColor, fontWeight: 'bold' }}>
+            {forwardVarText(
+              getSafeFontKey(font.google.family),
+              action.type,
+              'span',
+              {
+                customStyles: {
+                  fontStyle: 'italic',
+                  marginLeft: '4px',
+                  marginRight: '4px'
+                }
+              }
+            )}
+          </Hoverable>
+        ))}
+      </Container>
     </Container>
   ) : (
     <div id="zeroed" />
@@ -56,6 +119,7 @@ function StoryPage() {
   const { palette, font } = useThemeContext();
   const { breakpointKeyName } = useBpContext();
   const [initialHeadingBottom, setInitialHeadingBottom] = useState<number>();
+  const [subheadings, setSubheadings] = useState<string[]>([]);
 
   const [isHeadingInView, setHeadingInView] = React.useState<boolean>(
     isStoryHeadingInView()
@@ -121,6 +185,17 @@ function StoryPage() {
     () => reduceAndBool(data, data?.meta, parsedContent, parsedContent?.body),
     [data, parsedContent]
   );
+  function pollForSubheadings(content: string){
+    // 1 split on linebreaks
+    const splitContent = content.split('\n');
+    return splitContent.filter(line => (line.startsWith('####')));
+  }
+
+  React.useEffect(() => {
+    setSubheadings(pollForSubheadings(parsedContent?.body ?? ''));
+  }, [parsedContent])
+
+  React.useEffect(() => {console.log(subheadings) }, [subheadings])
 
   function renderPageHeading(
     t: string,
@@ -213,10 +288,10 @@ function StoryPage() {
 
   return ready ? (
     <Container width="100%" customStyles={{ ...pageStyles }}>
-      <StoryInteract />
       <StickyTopSection
         title={data!.meta.title}
         isViewable={!isHeadingInView}
+        shortSum={data!.meta.subtitle ?? ''}
       />
       <Container
         radius="none"
