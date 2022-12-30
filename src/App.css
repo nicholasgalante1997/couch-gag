@@ -153,3 +153,11 @@ h6 {
 .pointer:hover {
   cursor: pointer;
 }
+
+.poptop {
+  position: absolute;
+  isolation: isolate;
+  z-index: 1;
+  bottom: 16px;
+  right: 20px;
+}

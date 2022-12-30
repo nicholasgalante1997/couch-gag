@@ -114,6 +114,19 @@ function StickyTopSection(props: {
   );
 }
 
+function PopToTop(){
+  const { palette, font } = useThemeContext();
+  return (
+    <Hoverable className="poptop" from={{ boxShadow: 'none' }} to={{ boxShadow: '1px 2px 2px white'}}>
+      <Container background={palette.backgroundTertiaryColor} radius="rounded" padding="0.5rem">
+        {forwardVarText(
+          getSafeFontKey(font.goog)
+        )}
+      </Container>
+    </Hoverable>
+  );
+}
+
 function StoryPage() {
   const { push: redirect, query } = useRouter();
   const { palette, font } = useThemeContext();

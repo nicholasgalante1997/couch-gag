@@ -30,28 +30,31 @@ export default (font: Font, palette: Palette) => ({
     forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
       ...props,
       customStyles: {
-        color: palette.headingPrimaryColor
+        color: palette.headingPrimaryColor,
+        fontSize: 30
       }
     }),
   h5: ({ node, ...props }: any) =>
     forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
       ...props,
       customStyles: {
-        color: palette.headingPrimaryColor
+        color: palette.headingPrimaryColor,
+        fontSize: 30
       }
     }),
   h6: ({ node, ...props }: any) =>
     forwardVarText(getSafeFontKey(font.google.family), props.children, 'h4', {
       ...props,
       customStyles: {
-        color: palette.headingPrimaryColor
+        color: palette.headingPrimaryColor,
+        fontSize: 30
       }
     }),
   p: ({ node, ...props }: any) =>
     forwardVarText(getSafeFontKey(font.google.family), props.children, 'p', {
       ...props,
       customStyles: {
-        fontSize: 14,
+        fontSize: 16,
         color: palette.paragraphTextColor
       }
     }),
