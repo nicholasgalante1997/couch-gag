@@ -155,9 +155,8 @@ h6 {
 }
 
 .poptop {
-  position: absolute;
-  isolation: isolate;
-  z-index: 1;
-  bottom: 16px;
-  right: 20px;
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+
 }

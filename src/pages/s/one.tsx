@@ -114,14 +114,34 @@ function StickyTopSection(props: {
   );
 }
 
-function PopToTop(){
+type PopToTopProps = {
+  isViewable: boolean;
+};
+
+function PopToTop({ isViewable }: PopToTopProps){
   const { palette, font } = useThemeContext();
+  const [openChapterFold, setOpenChapterFold] = useState(false);
+  React.useEffect(() => { console.log(openChapterFold) }, [openChapterFold])
+  if (!isViewable) {
+    return <div id="zeroed" />
+  }
   return (
     <Hoverable className="poptop" from={{ boxShadow: 'none' }} to={{ boxShadow: '1px 2px 2px white'}}>
       <Container background={palette.backgroundTertiaryColor} radius="rounded" padding="0.5rem">
-        {forwardVarText(
-          getSafeFontKey(font.goog)
-        )}
+        <label>
+          {forwardVarText(
+            getSafeFontKey('Caveat'),
+            'table of contents',
+            'span',
+            {
+              onClick: () => setOpenChapterFold(prev => !prev),
+              customStyles: {
+                fontSize: 16,
+                cursor: 'pointer'
+              }
+            }
+          )}
+        </label>
       </Container>
     </Hoverable>
   );
@@ -341,6 +361,7 @@ function StoryPage() {
           }}
           customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
         />
+        <PopToTop isViewable={!isHeadingInView} />
       </Container>
     </Container>
   ) : (
