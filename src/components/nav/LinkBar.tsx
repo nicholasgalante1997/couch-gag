@@ -19,11 +19,13 @@ export function LinkBar() {
           from={{
             color:
               pathname === l.localHref
-                ? palette.backgroundTertiaryColor
-                : palette.headingSecondaryColor
+                ? palette.headingPrimaryColor
+                : Array.isArray(palette.paragraphTextColor) 
+                ? palette.paragraphTextColor[0]
+                : palette.paragraphTextColor
           }}
           to={{
-            color: palette.headingPrimaryColor
+            color: palette.backgroundTertiaryColor
           }}
         >
           {forwardVarText(

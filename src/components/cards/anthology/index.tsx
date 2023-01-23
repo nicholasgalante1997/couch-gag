@@ -31,6 +31,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       customStyles={{
         display: 'flex',
         flexDirection: 'column',
+        flexWrap: 'nowrap',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         minHeight: '240px',
@@ -43,14 +44,15 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       }}
     >
       <Container padding="0px" width="100%">
-        {forwardVarText(getSafeFontKey(font.google.family), title, 'h3', {
+        {forwardVarText(getSafeFontKey(font.google.family), title, 'h4', {
           customStyles: {
-            color: activeHover ? '#7e667a' : palette.headingSecondaryColor,
-            maxWidth: '50%',
+            color: activeHover ? palette.headingPrimaryColor : palette.backgroundTertiaryColor,
+            maxWidth: '70%',
             ...(activeHover
               ? {
                   paddingLeft: '4px',
-                  transition: 'padding-left 0.4s'
+                  transition: 'padding-left 0.4s',
+                  fontSize: '18px'
                 }
               : {})
           }
@@ -60,9 +62,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           customStyles: {
             color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
             marginTop: '8px',
-            maxWidth: '70%',
-            width: '70%',
-            minWidth: '70%',
+            maxWidth: '80%',
             ...(activeHover
               ? {
                   paddingLeft: '4px',
@@ -103,13 +103,11 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
                 'span',
                 {
                   customStyles: {
-                    fontSize: '14px',
+                    fontSize: activeHover ? '16px' : '14px',
                     marginLeft: '0.25rem',
                     marginRight: '0.25rem',
                     display: 'inline-block',
-                    color: activeHover
-                      ? palette.backgroundTertiaryColor
-                      : palette.headingPrimaryColor,
+                    color: '#7e667a',
                     textDecoration: activeHover ? 'underline' : 'none'
                   }
                 }
