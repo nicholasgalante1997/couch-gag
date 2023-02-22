@@ -33,3 +33,8 @@ export const useModalText = () => {
   const state = useContext(textContext);
   return state.text.modals;
 };
+
+export const useAboutPageText = () => {
+  const state = useContext(textContext);
+  return state.text.about;
+};
