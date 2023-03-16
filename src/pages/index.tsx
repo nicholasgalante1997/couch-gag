@@ -11,7 +11,7 @@ import { WonderBall } from '../components/animated/bouncing-ball/styles';
 import { WonderBallSize } from '../components/animated/bouncing-ball/types';
 
 function Home() {
-  const { font, palette } = useThemeContext();
+  const { font, palette, darkMode } = useThemeContext();
   const { push: redirect } = useRouter();
   const text = useHomePageText();
 
@@ -28,7 +28,7 @@ function Home() {
       <>
         {forwardVarText(getSafeFontKey('Caveat'), text.heroWidget.the, 'h1', {
           customStyles: {
-            color: '#fff',
+            color: darkMode ? '#fff' : '#000',
             margin: '0px',
             fontSize: '4rem'
           }
@@ -51,7 +51,7 @@ function Home() {
             'h1',
             {
               customStyles: {
-                color: '#fff',
+                color: darkMode ? '#fff' : '#000',
                 margin: '0px',
                 marginBottom: '12px',
                 fontSize: '5rem'
@@ -60,7 +60,7 @@ function Home() {
           )}
           <WonderBall
             size={WonderBallSize.SMALL}
-            color={palette.headingSecondaryColor!}
+            color={darkMode ? palette.headingSecondaryColor! : 'rgb(242, 7, 117)'}
             repeat={1}
             style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
           />

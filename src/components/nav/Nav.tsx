@@ -4,10 +4,13 @@ import { MobileSidebarNavModal } from '../modals/mobile/sidebar-nav';
 import { LinkBar } from './LinkBar';
 import { Title } from './MainTitle';
 import { NavContainer } from './NavContainer';
+import { ToggleSwitch } from '../animated/toggle/index';
 
 export type NavProps = {
   modalOpen: boolean;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  themeMode: 'light' | 'dark';
+  toggleTheme: (mode: 'light' | 'dark') => void;
 };
 
 export function Nav(props: NavProps) {
@@ -22,6 +25,7 @@ export function Nav(props: NavProps) {
         mobile={mobile}
         mobileToggleVisibleStateFn={() => props.setModal(true)}
       />
+      <ToggleSwitch onSelect={props.toggleTheme} themeMode={props.themeMode} />
       {!mobile && <LinkBar />}
       {props.modalOpen && (
         <MobileSidebarNavModal
