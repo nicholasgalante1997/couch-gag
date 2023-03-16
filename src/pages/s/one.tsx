@@ -349,7 +349,7 @@ function StoryPage() {
               maxWidth:
                 breakpointKeyName === 'tablet' || breakpointKeyName === 'mobile'
                   ? '100%'
-                  : '80%',
+                  : '900px',
               width: 'auto',
               justifySelf: 'center',
               alignSelf: 'center',

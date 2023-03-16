@@ -25,6 +25,7 @@ export default function About() {
         alignSelf: 'center',
         justifySelf: 'center',
         width: '90%',
+        maxWidth: '900px',
         minHeight: '88.2vh',
         overflow: 'hidden'
       }}

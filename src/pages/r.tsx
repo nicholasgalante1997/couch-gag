@@ -20,6 +20,7 @@ function RecruitmentPage() {
         alignSelf: 'center',
         justifySelf: 'center',
         width: '90%',
+        maxWidth: '900px',
         height: '88.2vh',
         overflow: 'hidden'
       }}
