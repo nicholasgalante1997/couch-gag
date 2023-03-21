@@ -15,6 +15,7 @@ function Home() {
   const { font, palette, darkMode } = useThemeContext();
   const { push: redirect } = useRouter();
   const text = useHomePageText();
+  const [buttonIsHover, setButtonIsHover] = React.useState(false);
 
   const bp = useBpContext();
 
@@ -69,7 +70,7 @@ function Home() {
           <WonderBall
             size={WonderBallSize.SMALL}
             color={
-              darkMode ? palette.headingSecondaryColor! : 'rgb(242, 7, 117)'
+              darkMode ? palette.backgroundTertiaryColor : 'rgb(242, 7, 117)'
             }
             repeat={1}
             style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
@@ -82,34 +83,40 @@ function Home() {
   function renderSubtextAction() {
     return (
       <Container
-        width={mobile ? '90%' : '68%'}
-        customStyles={{ borderTop: '1px solid white' }}
+        width={mobile ? '90%' : '65%'}
+        customStyles={{ borderTop: darkMode ? '1px solid white' : '1px solid black' }}
       >
         <Font
           family={getSafeFontKey(font.google.family)}
           impl="p"
           {...{
             customStyles: {
-              color: palette.backgroundComplimentColor,
+              color: darkMode ? palette.backgroundTertiaryColor : 'rgb(242, 7, 117)',
               fontSize: '16px'
             }
           }}
         >
           {text.heroWidget.supportingNotion_1}
         </Font>
-        <Button
-          onClick={handleOriginStoryClick}
-          size={'md'}
-          width={mobile ? '100%' : '244px'}
-          height={'36px'}
-          backgroundColor={palette.backgroundComplimentColor}
-          ghost
-        >
-          <Font family={getSafeFontKey(font.google.family)} impl="span">
-            {text.heroWidget.actionButtonText}
-          </Font>
-        </Button>
       </Container>
+    );
+  }
+
+  function renderButton(){
+    return (
+      <Container onMouseEnter={() => setButtonIsHover(true)} onMouseLeave={() => setButtonIsHover(false)} customStyles={{marginTop: '1rem'}}>
+        <Button
+        onClick={handleOriginStoryClick}
+        size={'lg'}
+        width={mobile ? '100%' : '400px'}
+        backgroundColor={palette.backgroundComplimentColor}
+        ghost={buttonIsHover}
+      >
+        <Font family={getSafeFontKey(font.google.family)} impl="span">
+          {text.heroWidget.actionButtonText}
+        </Font>
+      </Button>
+    </Container>
     );
   }
 
@@ -127,6 +134,7 @@ function Home() {
       >
         {renderTitle()}
         {renderSubtextAction()}
+        {renderButton()}
       </Container>
     );
   }

@@ -25,8 +25,8 @@ export function Nav(props: NavProps) {
         mobile={mobile}
         mobileToggleVisibleStateFn={() => props.setModal(true)}
       />
-      <ToggleSwitch onSelect={props.toggleTheme} themeMode={props.themeMode} />
-      {!mobile && <LinkBar />}
+      {mobile && <ToggleSwitch onSelect={props.toggleTheme} themeMode={props.themeMode} />}
+      {!mobile && <LinkBar onSelect={props.toggleTheme} themeMode={props.themeMode} />}
       {props.modalOpen && (
         <MobileSidebarNavModal
           isOpen={props.modalOpen}

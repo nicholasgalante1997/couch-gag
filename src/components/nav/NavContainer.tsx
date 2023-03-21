@@ -1,12 +1,14 @@
 import React from 'react';
 import { Container } from '@nickgdev/hellerui';
 import * as CSS from 'csstype';
+import { useThemeContext } from '../../contexts';
 
 export function NavContainer({
   children
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) {
+  const { darkMode } = useThemeContext();
   const baseStyles: CSS.Properties = {
     display: 'flex',
     flexDirection: 'row',
@@ -15,7 +17,7 @@ export function NavContainer({
     alignSelf: 'center',
     justifySelf: 'center',
     width: '90%',
-    borderBottom: '1px solid white'
+    borderBottom: darkMode ? '1px solid white' : '1px solid black'
   };
   return (
     <Container width="100vw">

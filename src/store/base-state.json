@@ -87,13 +87,6 @@
           "meta": {
             "pageClickTag": "dev"
           }
-        },
-        {
-          "localHref": "/t",
-          "plainText": "customizations",
-          "meta": {
-            "pageClickTag": "theme"
-          }
         }
       ]
     },

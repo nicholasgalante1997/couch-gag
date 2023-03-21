@@ -12,7 +12,7 @@ import { useAboutPageText } from '../store';
 import { Font } from '../components';
 
 export default function About() {
-  const { font, palette } = useThemeContext();
+  const { font, palette, darkMode } = useThemeContext();
   const {
     main: { title, subtitle, body }
   } = useAboutPageText();
@@ -37,7 +37,7 @@ export default function About() {
         impl="h1"
         {...{
           customStyles: {
-            color: palette.backgroundTertiaryColor
+            color: darkMode ? palette.backgroundTertiaryColor : palette.headingPrimaryColor
           },
           id: 'cg-about-title-heading'
         }}
@@ -65,8 +65,8 @@ export default function About() {
             customStyles: {
               color:
                 parseVisualJsonString(p) === 'p'
-                  ? 'white'
-                  : palette.backgroundTertiaryColor,
+                  ? darkMode ? 'white' : 'black'
+                  : darkMode ? palette.backgroundTertiaryColor : palette.headingSecondaryColor,
               fontSize: 14,
               lineHeight: 1.5,
               ...(parseVisualJsonString(p) === 'p'

@@ -14,7 +14,7 @@ type TitleProps = {
 
 export function Title(props: TitleProps) {
   const { push: redirect } = useRouter();
-  const { palette } = useThemeContext();
+  const { palette, darkMode } = useThemeContext();
   const { mainTitle } = useNavbarData();
   const { mobile, mobileToggleVisibleStateFn } = props;
 
@@ -36,8 +36,8 @@ export function Title(props: TitleProps) {
 
   return (
     <Hoverable
-      from={{ color: palette.headingPrimaryColor, fontSize: '1.15rem' }}
-      to={{ color: palette.backgroundTertiaryColor, fontSize: '1.25rem' }}
+      from={{ color: darkMode ? palette.headingPrimaryColor : '#000', fontSize: '1.15rem' }}
+      to={{ color: darkMode ? palette.backgroundTertiaryColor : palette.headingPrimaryColor, fontSize: '1.25rem' }}
     >
       <Font
         family={getSafeFontKey('Caveat')}

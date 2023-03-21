@@ -5,10 +5,10 @@ import { useThemeContext } from '../../../contexts';
 import { Font } from '../../../components';
 
 const Wrapper = styled.div<{ themeMode?: 'light' | 'dark' }>`
-  width: 110px;
-  height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
+  width: 90px;
+  height: 30px;
+  border: 1px solid ${props => props.themeMode === 'dark' ? 'white' : 'black'};
+  border-radius: 4px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -20,7 +20,7 @@ const Wrapper = styled.div<{ themeMode?: 'light' | 'dark' }>`
 
 const LightTab = styled.div<{ active: boolean }>`
   height: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,14 +28,14 @@ const LightTab = styled.div<{ active: boolean }>`
   flex-grow: 1;
   color: ${(props) => (props.active ? '#fff' : '#000')};
   background-color: ${(props) => (props.active ? 'black' : 'white')};
-  font-size: 14px;
+  font-size: 10px;
   line-height: 1.15;
   cursor: pointer;
 `;
 
 const DarkTab = styled.div<{ active: boolean }>`
   height: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,15 +43,17 @@ const DarkTab = styled.div<{ active: boolean }>`
   flex-grow: 1;
   color: ${(props) => (props.active ? '#fff' : '#000')};
   background-color: ${(props) => (props.active ? 'rgb(242, 7, 117)' : 'white')};
-  font-size: 18px;
+  font-size: 10px;
   line-height: 1.15;
   cursor: pointer;
 `;
 
-export function ToggleSwitch(props: {
+export type ToggleSwitchProps = {
   themeMode?: 'light' | 'dark';
   onSelect: (mode: 'light' | 'dark') => void;
-}) {
+};
+
+export function ToggleSwitch(props: ToggleSwitchProps) {
   const { font } = useThemeContext();
   return (
     <Wrapper themeMode={props.themeMode}>
