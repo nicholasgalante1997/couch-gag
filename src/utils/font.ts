@@ -8,11 +8,13 @@ export function getSafeFontKey(s: string): keyof typeof fontJson {
   );
 }
 
-export function parseVisualJsonString(str: string): 'p' | `h${1 | 2 | 3 | 4 | 5 | 6}` {
+export function parseVisualJsonString(
+  str: string
+): 'p' | `h${1 | 2 | 3 | 4 | 5 | 6}` {
   if (str.includes('#')) {
     let count = 0;
     for (const char of str) {
-      if (char === "#") {
+      if (char === '#') {
         count++;
       }
     }
@@ -40,7 +42,6 @@ export function parseBoldOrItalicVisualJson(str: string) {
   return { fontStyle: 'normal' };
 }
 
-
-export function purgeMarkdownFromJson(str: string){
+export function purgeMarkdownFromJson(str: string) {
   return str.replace(/(#|_|\*)/g, '');
 }

@@ -1,10 +1,11 @@
 import { Container } from '@nickgdev/hellerui';
+import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
-import { forwardVarText, getSafeFontKey } from '../../utils';
+import { getSafeFontKey } from '../../utils';
 import { useFooterText } from '../../store';
 import { footerContainerStyles } from './styles';
 import { replaceStringVariables } from '../../utils/string';
-import { useRouter } from 'next/router';
+import { Font } from '../font';
 
 export function Footer() {
   const { font, palette } = useThemeContext();
@@ -28,30 +29,32 @@ export function Footer() {
       padding="1rem"
       width="100%"
     >
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        replaceStringVariables(leftBanner, {
-          pageNumber: getPageNumber(router.pathname)
-        }),
-        'h3',
-        {
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="h3"
+        {...{
           customStyles: {
             color: palette.headingSecondaryColor
           }
-        }
-      )}
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        replaceStringVariables(rightBanner, {
+        }}
+      >
+        {replaceStringVariables(leftBanner, {
           pageNumber: getPageNumber(router.pathname)
-        }),
-        'p',
-        {
+        })}
+      </Font>
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="p"
+        {...{
           customStyles: {
             color: palette.paragraphTextColor
           }
-        }
-      )}
+        }}
+      >
+        {replaceStringVariables(rightBanner, {
+          pageNumber: getPageNumber(router.pathname)
+        })}
+      </Font>
     </Container>
   );
 }

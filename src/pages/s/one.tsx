@@ -10,7 +10,6 @@ import { useThemeContext, useBpContext } from '../../contexts';
 import { useQuerySingleMarkdownStory } from '../../queries';
 import {
   MARKDOWN_COMPONENT_MAPPING_FN,
-  forwardVarText,
   getSafeFontKey,
   pageStyles,
   parseContent,
@@ -18,7 +17,8 @@ import {
   findNestedParagraphPaletteTheme
 } from '../../utils';
 import { getStoryByStoryKey } from '../../service';
-import { Hoverable } from '../../components';
+import { StickyTopSection, TableOfContents } from '../../components/story';
+import { Font } from '../../components';
 
 export const selectors = {
   storyHeading: {
@@ -27,125 +27,6 @@ export const selectors = {
     }
   }
 } as const;
-
-const actions = [
-  {
-    type: 'like',
-  },
-  {
-    type: 'share'
-  },
-  {
-    type: 'bookmark'
-  }
-] as const;
-
-function StickyTopSection(props: {
-  isViewable: boolean;
-  title: string;
-  shortSum: string;
-}): JSX.Element {
-  const { palette, font } = useThemeContext();
-  return props.isViewable ? (
-    <Container
-      id="sp-sticky-top-sect"
-      width="100%"
-      height="48px"
-      background={palette.backgroundComplimentColor}
-      customStyles={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center'
-      }}
-    >
-      {forwardVarText(
-        getSafeFontKey(getSafeFontKey(font.google.family)),
-        props.title,
-        'h4',
-        {
-          customStyles: {
-            color: 'black'
-          }
-        }
-      )}
-      {forwardVarText(
-        getSafeFontKey(getSafeFontKey(font.google.family)),
-        props.shortSum,
-        'p',
-        {
-          customStyles: {
-            color: 'black',
-            maxWidth: '50%',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap'
-          }
-        }
-      )}
-      <Container
-        customStyles={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          alignItems: 'center'
-        }}
-      >
-        {actions.map(action => (
-          <Hoverable from={{ color: palette.backgroundTertiaryColor }} to={{ color: palette.headingSecondaryColor, fontWeight: 'bold' }}>
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              action.type,
-              'span',
-              {
-                customStyles: {
-                  fontStyle: 'italic',
-                  marginLeft: '4px',
-                  marginRight: '4px'
-                }
-              }
-            )}
-          </Hoverable>
-        ))}
-      </Container>
-    </Container>
-  ) : (
-    <div id="zeroed" />
-  );
-}
-
-type PopToTopProps = {
-  isViewable: boolean;
-};
-
-function PopToTop({ isViewable }: PopToTopProps){
-  const { palette, font } = useThemeContext();
-  const [openChapterFold, setOpenChapterFold] = useState(false);
-  React.useEffect(() => { console.log(openChapterFold) }, [openChapterFold])
-  if (!isViewable) {
-    return <div id="zeroed" />
-  }
-  return (
-    <Hoverable className="poptop" from={{ boxShadow: 'none' }} to={{ boxShadow: '1px 2px 2px white'}}>
-      <Container background={palette.backgroundTertiaryColor} radius="rounded" padding="0.5rem">
-        <label>
-          {forwardVarText(
-            getSafeFontKey('Caveat'),
-            'table of contents',
-            'span',
-            {
-              onClick: () => setOpenChapterFold(prev => !prev),
-              customStyles: {
-                fontSize: 16,
-                cursor: 'pointer'
-              }
-            }
-          )}
-        </label>
-      </Container>
-    </Hoverable>
-  );
-}
 
 function StoryPage() {
   const { push: redirect, query } = useRouter();
@@ -218,17 +99,15 @@ function StoryPage() {
     () => reduceAndBool(data, data?.meta, parsedContent, parsedContent?.body),
     [data, parsedContent]
   );
-  function pollForSubheadings(content: string){
+  function pollForSubheadings(content: string) {
     // 1 split on linebreaks
     const splitContent = content.split('\n');
-    return splitContent.filter(line => (line.startsWith('####')));
+    return splitContent.filter((line) => line.startsWith('####'));
   }
 
   React.useEffect(() => {
     setSubheadings(pollForSubheadings(parsedContent?.body ?? ''));
-  }, [parsedContent])
-
-  React.useEffect(() => {console.log(subheadings) }, [subheadings])
+  }, [parsedContent]);
 
   function renderPageHeading(
     t: string,
@@ -258,37 +137,59 @@ function StoryPage() {
             : {})
         }}
       >
-        {forwardVarText(getSafeFontKey('Caveat'), t, 'h1', {
-          customStyles: {
-            color: palette.headingSecondaryColor,
-            lineHeight: 1.15,
-            fontSize: '4rem'
-          }
-        })}
-        {forwardVarText(getSafeFontKey(font.google.family), s, 'h5', {
-          customStyles: {
-            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
-            lineHeight: 1.15,
-            fontSize: '1.15rem',
-            marginTop: '0.75rem',
-            width:
-              breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
-                ? '100%'
-                : '60%'
-          }
-        })}
-        {forwardVarText(getSafeFontKey(font.google.family), a, 'span', {
-          customStyles: {
-            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
-            lineHeight: 1.15,
-            fontSize: '1.15rem',
-            marginTop: '0.75rem',
-            width:
-              breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
-                ? '100%'
-                : '90%'
-          }
-        })}
+        <Font
+          family={getSafeFontKey('Caveat')}
+          impl="h1"
+          {...{
+            customStyles: {
+              color: palette.headingSecondaryColor,
+              lineHeight: 1.15,
+              fontSize: '4rem'
+            }
+          }}
+        >
+          {t}
+        </Font>
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="h5"
+          {...{
+            customStyles: {
+              color: findNestedParagraphPaletteTheme(
+                palette.paragraphTextColor
+              ),
+              lineHeight: 1.15,
+              fontSize: '1.15rem',
+              marginTop: '0.75rem',
+              width:
+                breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                  ? '100%'
+                  : '60%'
+            }
+          }}
+        >
+          {s}
+        </Font>
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="span"
+          {...{
+            customStyles: {
+              color: findNestedParagraphPaletteTheme(
+                palette.paragraphTextColor
+              ),
+              lineHeight: 1.15,
+              fontSize: '1.15rem',
+              marginTop: '0.75rem',
+              width:
+                breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
+                  ? '100%'
+                  : '90%'
+            }
+          }}
+        >
+          {a}
+        </Font>
         <Container
           width="100%"
           customStyles={{
@@ -299,17 +200,23 @@ function StoryPage() {
             marginTop: '22px'
           }}
         >
-          {genres.map((g) =>
-            forwardVarText(getSafeFontKey('Caveat'), g, 'span', {
-              customStyles: {
-                padding: '4px 8px',
-                marginRight: '8px',
-                borderRadius: '4px',
-                border: '1px solid ' + palette.backgroundComplimentColor,
-                color: palette.backgroundComplimentColor
-              }
-            })
-          )}
+          {genres.map((g) => (
+            <Font
+              family={getSafeFontKey('Caveat')}
+              impl="span"
+              {...{
+                customStyles: {
+                  padding: '4px 8px',
+                  marginRight: '8px',
+                  borderRadius: '4px',
+                  border: '1px solid ' + palette.backgroundComplimentColor,
+                  color: palette.backgroundComplimentColor
+                }
+              }}
+            >
+              {g}
+            </Font>
+          ))}
         </Container>
       </Container>
     );
@@ -361,7 +268,18 @@ function StoryPage() {
           }}
           customComponentMap={MARKDOWN_COMPONENT_MAPPING_FN(font, palette)}
         />
-        <PopToTop isViewable={!isHeadingInView} />
+        <TableOfContents
+          isViewable={!isHeadingInView}
+          chapters={
+            subheadings
+              ? subheadings.map((sh) => ({
+                  a: false,
+                  k: sh.toLowerCase().replace(/\s/g, '-'),
+                  s: sh
+                }))
+              : []
+          }
+        />
       </Container>
     </Container>
   ) : (

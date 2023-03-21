@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
 import {
-  forwardVarText,
   getSafeFontKey,
   findNestedParagraphPaletteTheme,
   parseBoldOrItalicVisualJson,
@@ -10,10 +9,13 @@ import {
   purgeMarkdownFromJson
 } from '../utils';
 import { useAboutPageText } from '../store';
+import { Font } from '../components';
 
 export default function About() {
   const { font, palette } = useThemeContext();
-  const { main: { title, subtitle, body } } = useAboutPageText();
+  const {
+    main: { title, subtitle, body }
+  } = useAboutPageText();
   return (
     <Container
       padding="10px"
@@ -30,45 +32,53 @@ export default function About() {
         overflow: 'hidden'
       }}
     >
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        title,
-        'h1',
-        {
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="h1"
+        {...{
           customStyles: {
             color: palette.backgroundTertiaryColor
           },
           id: 'cg-about-title-heading'
-        }
-      )}
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        subtitle,
-        'p',
-        {
+        }}
+      >
+        {title}
+      </Font>
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="p"
+        {...{
           customStyles: {
             color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
           },
           id: 'cg-about-title-paragraph'
-        }
-      )}
-      <hr style={{width: '100%'}} color={palette.headingPrimaryColor} />
-      {
-        body.map((p, index) => forwardVarText(
-          getSafeFontKey(font.google.family),
-          purgeMarkdownFromJson(p),
-          parseVisualJsonString(p),
-          {
+        }}
+      >
+        {subtitle}
+      </Font>
+      <hr style={{ width: '100%' }} color={palette.headingPrimaryColor} />
+      {body.map((p, index) => (
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl={parseVisualJsonString(p)}
+          {...{
             customStyles: {
-              color: parseVisualJsonString(p) === 'p' ? 'white' : palette.backgroundTertiaryColor,
+              color:
+                parseVisualJsonString(p) === 'p'
+                  ? 'white'
+                  : palette.backgroundTertiaryColor,
               fontSize: 14,
               lineHeight: 1.5,
-              ...(parseVisualJsonString(p) === 'p' ? parseBoldOrItalicVisualJson(p) :  {})
+              ...(parseVisualJsonString(p) === 'p'
+                ? parseBoldOrItalicVisualJson(p)
+                : {})
             },
             id: `cg-about-body-block-${index}`
-          }
-        ))
-      }
+          }}
+        >
+          {purgeMarkdownFromJson(p)}
+        </Font>
+      ))}
     </Container>
   );
 }

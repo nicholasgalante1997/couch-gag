@@ -3,8 +3,9 @@ import React from 'react';
 import * as CSS from 'csstype';
 import { useThemeContext } from '../../contexts';
 import { useNavbarData } from '../../store';
-import { forwardVarText, getSafeFontKey } from '../../utils';
+import { getSafeFontKey } from '../../utils';
 import { Hoverable } from '../animated/hoverable';
+import { Font } from '../font';
 
 type TitleProps = {
   mobile?: boolean;
@@ -38,12 +39,18 @@ export function Title(props: TitleProps) {
       from={{ color: palette.headingPrimaryColor, fontSize: '1.15rem' }}
       to={{ color: palette.backgroundTertiaryColor, fontSize: '1.25rem' }}
     >
-      {forwardVarText(getSafeFontKey('Caveat'), mainTitle, 'h3', {
-        onClick: mobile ? onClickMobile : onClickBrowser,
-        customStyles: {
-          ...titleStyles
-        }
-      })}
+      <Font
+        family={getSafeFontKey('Caveat')}
+        impl="h3"
+        {...{
+          onClick: mobile ? onClickMobile : onClickBrowser,
+          customStyles: {
+            ...titleStyles
+          }
+        }}
+      >
+        {mainTitle}
+      </Font>
     </Hoverable>
   );
 }

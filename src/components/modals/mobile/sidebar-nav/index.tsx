@@ -4,7 +4,8 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import { useThemeContext } from '../../../../contexts';
 import { useModalText, useNavbarData } from '../../../../store';
-import { forwardVarText, getSafeFontKey } from '../../../../utils';
+import { getSafeFontKey } from '../../../../utils';
+import { Font } from '../../../font';
 
 type MobileSidebarNavModalProps = {
   isOpen: boolean;
@@ -39,16 +40,17 @@ export function MobileSidebarNavModal(props: MobileSidebarNavModalProps) {
         className="mobile-sidebar-content"
         onRequestClose={() => props.setIsClosed()}
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          sidebar.title,
-          'h1',
-          {
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="h1"
+          {...{
             customStyles: {
               color: palette.backgroundComplimentColor
             }
-          }
-        )}
+          }}
+        >
+          {sidebar.title}
+        </Font>
         <hr className="mobile-modal-sidebar-x-rule" />
         <Container className="mobile-modal-link-container" padding="6px">
           {links.map((linkData) => {
@@ -59,11 +61,9 @@ export function MobileSidebarNavModal(props: MobileSidebarNavModalProps) {
                 height="70px"
                 onClick={() => redirect(linkData.localHref)}
               >
-                {forwardVarText(
-                  getSafeFontKey(font.google.family),
-                  linkData.plainText,
-                  'b'
-                )}
+                <Font family={getSafeFontKey(font.google.family)} impl="b">
+                  {linkData.plainText}
+                </Font>
               </Container>
             );
           })}

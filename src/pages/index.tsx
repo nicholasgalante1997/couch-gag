@@ -6,9 +6,10 @@ import { Button, Container } from '@nickgdev/hellerui';
 import { OneCol } from '../components/widgets/OneCol.widget';
 import { useBpContext, useThemeContext } from '../contexts';
 import { useHomePageText } from '../store';
-import { forwardVarText, getSafeFontKey } from '../utils';
+import { getSafeFontKey } from '../utils';
 import { WonderBall } from '../components/animated/bouncing-ball/styles';
 import { WonderBallSize } from '../components/animated/bouncing-ball/types';
+import { Font } from '../components';
 
 function Home() {
   const { font, palette, darkMode } = useThemeContext();
@@ -26,13 +27,19 @@ function Home() {
   function renderTitle() {
     return (
       <>
-        {forwardVarText(getSafeFontKey('Caveat'), text.heroWidget.the, 'h1', {
-          customStyles: {
-            color: darkMode ? '#fff' : '#000',
-            margin: '0px',
-            fontSize: '4rem'
-          }
-        })}
+        <Font
+          family={getSafeFontKey('Caveat')}
+          impl="h1"
+          {...{
+            customStyles: {
+              color: darkMode ? '#fff' : '#000',
+              margin: '0px',
+              fontSize: '4rem'
+            }
+          }}
+        >
+          {text.heroWidget.the}
+        </Font>
         <Container
           margin="0"
           customStyles={{
@@ -45,22 +52,25 @@ function Home() {
             position: 'relative'
           }}
         >
-          {forwardVarText(
-            getSafeFontKey('Caveat'),
-            text.heroWidget.title,
-            'h1',
-            {
+          <Font
+            family={getSafeFontKey('Caveat')}
+            impl="h1"
+            {...{
               customStyles: {
                 color: darkMode ? '#fff' : '#000',
                 margin: '0px',
                 marginBottom: '12px',
                 fontSize: '5rem'
               }
-            }
-          )}
+            }}
+          >
+            {text.heroWidget.title}
+          </Font>
           <WonderBall
             size={WonderBallSize.SMALL}
-            color={darkMode ? palette.headingSecondaryColor! : 'rgb(242, 7, 117)'}
+            color={
+              darkMode ? palette.headingSecondaryColor! : 'rgb(242, 7, 117)'
+            }
             repeat={1}
             style={{ marginLeft: '0.75rem', marginTop: '1.5rem' }}
           />
@@ -75,17 +85,18 @@ function Home() {
         width={mobile ? '90%' : '68%'}
         customStyles={{ borderTop: '1px solid white' }}
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          text.heroWidget.supportingNotion_1,
-          'p',
-          {
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="p"
+          {...{
             customStyles: {
               color: palette.backgroundComplimentColor,
               fontSize: '16px'
             }
-          }
-        )}
+          }}
+        >
+          {text.heroWidget.supportingNotion_1}
+        </Font>
         <Button
           onClick={handleOriginStoryClick}
           size={'md'}
@@ -94,11 +105,9 @@ function Home() {
           backgroundColor={palette.backgroundComplimentColor}
           ghost
         >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            text.heroWidget.actionButtonText,
-            'span'
-          )}
+          <Font family={getSafeFontKey(font.google.family)} impl="span">
+            {text.heroWidget.actionButtonText}
+          </Font>
         </Button>
       </Container>
     );

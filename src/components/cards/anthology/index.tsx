@@ -1,23 +1,78 @@
+import React from 'react';
 import type { AnthologyTileProps } from './types';
 
 import { Container } from '@nickgdev/hellerui';
 
+import { Font } from '../../../components';
 import { useBpContext, useThemeContext } from '../../../contexts';
 import {
-  forwardVarText,
   getSafeFontKey,
   findNestedParagraphPaletteTheme
 } from '../../../utils';
 
 import css from './index.module.css';
-import { useState } from 'react';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
   const { font, palette } = useThemeContext();
   const { breakpointKeyName } = useBpContext();
-  const [activeHover, setActiveHover] = useState<boolean>(false);
+  const [activeHover, setActiveHover] = React.useState<boolean>(false);
 
   const { cardKey, desc, title, navigationFn } = props;
+
+  const titleFontRestProps = React.useMemo(
+    () => ({
+      customStyles: {
+        color: activeHover
+          ? palette.headingPrimaryColor
+          : palette.backgroundTertiaryColor,
+        maxWidth: '70%',
+        ...(activeHover
+          ? {
+              paddingLeft: '4px',
+              transition: 'padding-left 0.4s',
+              fontSize: '18px'
+            }
+          : {})
+      }
+    }),
+    [activeHover]
+  );
+
+  const paragraphFontRestProps = React.useMemo(
+    () => ({
+      className: css['trunc'],
+      customStyles: {
+        color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
+        marginTop: '8px',
+        maxWidth: '80%',
+        ...(activeHover
+          ? {
+              paddingLeft: '4px',
+              fontSize: '16px',
+              transition: 'padding-left 0.4s, font-size 0.4s'
+            }
+          : {
+              fontSize: '14px'
+            })
+      }
+    }),
+    [activeHover, palette]
+  );
+
+  const genreFontRestProps = React.useMemo(
+    () => ({
+      customStyles: {
+        fontSize: activeHover ? '16px' : '14px',
+        marginLeft: '0.25rem',
+        marginRight: '0.25rem',
+        display: 'inline-block',
+        color: '#7e667a',
+        textDecoration: activeHover ? 'underline' : 'none'
+      }
+    }),
+    [activeHover]
+  );
+
   return (
     <Container
       onMouseEnter={() => setActiveHover(true)}
@@ -44,36 +99,20 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       }}
     >
       <Container padding="0px" width="100%">
-        {forwardVarText(getSafeFontKey(font.google.family), title, 'h4', {
-          customStyles: {
-            color: activeHover ? palette.headingPrimaryColor : palette.backgroundTertiaryColor,
-            maxWidth: '70%',
-            ...(activeHover
-              ? {
-                  paddingLeft: '4px',
-                  transition: 'padding-left 0.4s',
-                  fontSize: '18px'
-                }
-              : {})
-          }
-        })}
-        {forwardVarText(getSafeFontKey(font.google.family), desc, 'p', {
-          className: css['trunc'],
-          customStyles: {
-            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
-            marginTop: '8px',
-            maxWidth: '80%',
-            ...(activeHover
-              ? {
-                  paddingLeft: '4px',
-                  fontSize: '16px',
-                  transition: 'padding-left 0.4s, font-size 0.4s'
-                }
-              : {
-                  fontSize: '14px'
-                })
-          }
-        })}
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="h4"
+          {...titleFontRestProps}
+        >
+          {title}
+        </Font>
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="p"
+          {...paragraphFontRestProps}
+        >
+          {desc}
+        </Font>
       </Container>
       <Container
         padding="0px"
@@ -96,23 +135,11 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
           }}
         >
           {props.genres &&
-            props.genres.map((stGen) =>
-              forwardVarText(
-                getSafeFontKey(font.google.family),
-                stGen,
-                'span',
-                {
-                  customStyles: {
-                    fontSize: activeHover ? '16px' : '14px',
-                    marginLeft: '0.25rem',
-                    marginRight: '0.25rem',
-                    display: 'inline-block',
-                    color: '#7e667a',
-                    textDecoration: activeHover ? 'underline' : 'none'
-                  }
-                }
-              )
-            )}
+            props.genres.map((stGen) => (
+              <Font family={getSafeFontKey(font.google.family)} impl="span">
+                {stGen}
+              </Font>
+            ))}
         </Container>
       </Container>
     </Container>

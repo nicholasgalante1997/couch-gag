@@ -6,13 +6,10 @@ import {
   Treatment
 } from '@nickgdev/couch-gag-common-lib';
 import { useThemeContext } from '../contexts';
-import {
-  findNestedParagraphPaletteTheme,
-  forwardVarText,
-  getSafeFontKey
-} from '../utils';
+import { findNestedParagraphPaletteTheme, getSafeFontKey } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { Font } from '../components';
 
 const nonsenseWords = [
   'view',
@@ -112,26 +109,28 @@ function ThemeSelectionPage() {
         flexWrap: 'nowrap'
       }}
     >
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        'Customize your theme',
-        'h1',
-        {
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="h1"
+        {...{
           customStyles: {
             color: palette.backgroundTertiaryColor
           }
-        }
-      )}
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        'Select from some pre-constructed themes below',
-        'p',
-        {
+        }}
+      >
+        Customize your theme
+      </Font>
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="p"
+        {...{
           customStyles: {
             color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
           }
-        }
-      )}
+        }}
+      >
+        Select from some pre-constructed themes below
+      </Font>
       <Container
         customStyles={{
           display: 'flex',
@@ -141,16 +140,17 @@ function ThemeSelectionPage() {
         }}
         width="100%"
       >
-        {forwardVarText(
-          getSafeFontKey(font.google.family),
-          `Current Theme: ${friendlyThemeName(treatmentId)}`,
-          'h2',
-          {
+        <Font
+          family={getSafeFontKey(font.google.family)}
+          impl="h2"
+          {...{
             customStyles: {
               color: palette.backgroundTertiaryColor
             }
-          }
-        )}
+          }}
+        >
+          {`Current Theme: ${friendlyThemeName(treatmentId)}`}
+        </Font>
       </Container>
       <Container
         customStyles={{
@@ -192,26 +192,28 @@ function ThemeSelectionPage() {
                 alignItems: 'center'
               }}
             >
-              {forwardVarText(
-                getSafeFontKey(futureTheme.font.google.family),
-                'New Theme: ' + friendlyThemeName(futureTheme.treatmentId),
-                'h5',
-                {
+              <Font
+                family={getSafeFontKey(futureTheme.font.google.family)}
+                impl="h5"
+                {...{
                   customStyles: {
                     color: futureTheme.palette.headingPrimaryColor
                   }
-                }
-              )}
+                }}
+              >
+                {'New Theme: ' + friendlyThemeName(futureTheme.treatmentId)}
+              </Font>
               <Button
                 onClick={handleOnChange}
                 ghost
                 backgroundColor={futureTheme.palette.backgroundTertiaryColor}
               >
-                {forwardVarText(
-                  getSafeFontKey(futureTheme.font.google.family),
-                  'Set as new theme',
-                  'span'
-                )}
+                <Font
+                  family={getSafeFontKey(futureTheme.font.google.family)}
+                  impl="span"
+                >
+                  Set as new theme
+                </Font>
               </Button>
             </Container>
             {Object.values(futureTheme.palette.buttonColorOptions).map(
@@ -241,35 +243,6 @@ function ThemeSelectionPage() {
           />
         </Container>
       </Container>
-      {/* <select
-        onChange={handleOnChange}
-        className="t-select"
-        value={treatmentId}
-      >
-        {heller_couch_view_theme_treatment_pool.ViewThemeTreatments.map(
-          (t) => t.id
-        ).map((tId) => (
-          <option className="t-option" key={tId} value={tId}>
-            {forwardVarText(
-              getSafeFontKey(font.google.family),
-              tId
-                .split('-')
-                .filter((word) => !nonsenseWords.includes(word))
-                .map(
-                  (word) =>
-                    word.substring(0, 1).toUpperCase() + word.substring(1)
-                )
-                .join(' '),
-              'span',
-              {
-                customStyles: {
-                  color: palette.paragraphTextColor
-                }
-              }
-            )}
-          </option>
-        ))}
-      </select> */}
     </Container>
   );
 }

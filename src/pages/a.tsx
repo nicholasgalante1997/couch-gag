@@ -6,7 +6,6 @@ import { log } from '@nickgdev/couch-gag-common-lib';
 import { Container } from '@nickgdev/hellerui';
 
 import {
-  forwardVarText,
   getSafeFontKey,
   pageStyles,
   reduceAndBool,
@@ -24,6 +23,7 @@ import {
   EXCEPTION_DELIMITER
 } from '../exceptions';
 import { useAnthText } from '../store';
+import { Font } from '../components';
 
 function AnthologyPage() {
   const { push: redirect } = useRouter();
@@ -86,18 +86,23 @@ function AnthologyPage() {
             : '90%'
         }
       >
-        {forwardVarText(getSafeFontKey('Caveat'), anthText.seasonOne, 'h1', {
-          customStyles: {
-            fontSize: 40,
-            fontWeight: '200',
-            color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
-          }
-        })}
-        {forwardVarText(
-          getSafeFontKey('Caveat'),
-          anthText.seasonOneShort,
-          'p',
-          {
+        <Font
+          family={getSafeFontKey('Caveat')}
+          impl="h1"
+          {...{
+            customStyles: {
+              fontSize: 40,
+              fontWeight: '200',
+              color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
+            }
+          }}
+        >
+          {anthText.seasonOne}
+        </Font>
+        <Font
+          family={getSafeFontKey('Caveat')}
+          impl="p"
+          {...{
             customStyles: {
               fontSize: 20,
               fontWeight: 'bold',
@@ -107,13 +112,14 @@ function AnthologyPage() {
                   ? '100%'
                   : '70%'
             }
-          }
-        )}
-        {forwardVarText(
-          getSafeFontKey('Caveat'),
-          `- ${anthText.seasonOneAuthor}`,
-          'span',
-          {
+          }}
+        >
+          {anthText.seasonOneShort}
+        </Font>
+        <Font
+          family={getSafeFontKey('Caveat')}
+          impl="span"
+          {...{
             customStyles: {
               fontSize: 32,
               marginBottom: '1rem',
@@ -121,8 +127,10 @@ function AnthologyPage() {
               color: palette.backgroundComplimentColor,
               float: 'right'
             }
-          }
-        )}
+          }}
+        >
+          {`- ${anthText.seasonOneAuthor}`}
+        </Font>
         <hr
           color={
             typeof palette.paragraphTextColor === 'string'

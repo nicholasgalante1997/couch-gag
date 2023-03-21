@@ -28,18 +28,19 @@ config.autoAddCss = false;
 
 const appQueryClient = new QueryClient();
 
-const darkTheme = heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
-  (t) =>
-    t.id.toLowerCase().includes('oswald') &&
-    t.id.toLowerCase().includes('lasercat')
-);
+const darkTheme =
+  heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
+    (t) =>
+      t.id.toLowerCase().includes('oswald') &&
+      t.id.toLowerCase().includes('lasercat')
+  );
 
-const lightTheme = heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
-  (t) => (
-    t.id.toLowerCase().includes('oswald') &&
-    t.id.toLowerCase().includes('base_white')
-  )
-)
+const lightTheme =
+  heller_couch_view_theme_treatment_pool.ViewThemeTreatments.find(
+    (t) =>
+      t.id.toLowerCase().includes('oswald') &&
+      t.id.toLowerCase().includes('base_white')
+  );
 
 function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
   const [theme, setTheme] = useState<Treatment<Theme>>(defaultTheme);
@@ -49,13 +50,13 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
   const [modalOpen, setModalOpen] = useState(false);
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
   const themeModeStorageKey = 'x-couch-gag-theme-mode';
-  
-  useEffect(() => {
 
+  useEffect(() => {
     /**
      * Check if there's a cached theme
      */
-    const cachedTheme: string | null = window.localStorage.getItem(themeModeStorageKey);
+    const cachedTheme: string | null =
+      window.localStorage.getItem(themeModeStorageKey);
     if (!cachedTheme) {
       window.localStorage.setItem(themeModeStorageKey, themeMode);
     } else {
@@ -110,7 +111,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
     });
   }
 
-  function toggleThemeMode(mode: 'light' | 'dark'){
+  function toggleThemeMode(mode: 'light' | 'dark') {
     setThemeMode(mode);
   }
 
@@ -129,7 +130,7 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
           <TextContextProvider>
             <ThemeProvider
               value={{
-                darkMode: themeMode === "dark",
+                darkMode: themeMode === 'dark',
                 font,
                 palette,
                 treatmentId: theme.id,
@@ -140,18 +141,27 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
                 <Container
                   id="couch-gag-wrapping-gradient-layer"
                   padding="0px"
-                  gradient={themeMode === 'dark' ? {
-                    flow: 'to bottom right',
-                    from: palette.backgroundColor,
-                    to: new ColorScales(0, 100, [
-                      palette.backgroundColor,
-                      '#000000'
-                    ])
-                      .getColor(40)
-                      .toHexString()
-                  } : undefined}
+                  gradient={
+                    themeMode === 'dark'
+                      ? {
+                          flow: 'to bottom right',
+                          from: palette.backgroundColor,
+                          to: new ColorScales(0, 100, [
+                            palette.backgroundColor,
+                            '#000000'
+                          ])
+                            .getColor(40)
+                            .toHexString()
+                        }
+                      : undefined
+                  }
                 >
-                  <Nav themeMode={themeMode} toggleTheme={toggleThemeMode} modalOpen={modalOpen} setModal={setModalOpen} />
+                  <Nav
+                    themeMode={themeMode}
+                    toggleTheme={toggleThemeMode}
+                    modalOpen={modalOpen}
+                    setModal={setModalOpen}
+                  />
                   <Component {...pageProps} />
                 </Container>
               </BreakpointProvider>

@@ -1,11 +1,8 @@
 import React from 'react';
 import { Container } from '@nickgdev/hellerui';
 import { useThemeContext } from '../contexts';
-import {
-  forwardVarText,
-  getSafeFontKey,
-  findNestedParagraphPaletteTheme
-} from '../utils';
+import { getSafeFontKey, findNestedParagraphPaletteTheme } from '../utils';
+import { Font } from '../components';
 
 function RecruitmentPage() {
   const { font, palette } = useThemeContext();
@@ -25,26 +22,29 @@ function RecruitmentPage() {
         overflow: 'hidden'
       }}
     >
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        'Couch Gag is looking for writers, marketers, and developers.',
-        'h1',
-        {
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="h1"
+        {...{
           customStyles: {
             color: palette.backgroundTertiaryColor
           }
-        }
-      )}
-      {forwardVarText(
-        getSafeFontKey(font.google.family),
-        'We have appeals laid out below, as to why joining Couch Gag is what you were born to do.',
-        'p',
-        {
+        }}
+      >
+        Couch Gag is looking for writers, marketers, and developers.
+      </Font>
+      <Font
+        family={getSafeFontKey(font.google.family)}
+        impl="p"
+        {...{
           customStyles: {
             color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
           }
-        }
-      )}
+        }}
+      >
+        We have appeals laid out below, as to why joining Couch Gag is what you
+        were born to do.
+      </Font>
     </Container>
   );
 }

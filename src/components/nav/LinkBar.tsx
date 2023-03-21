@@ -2,8 +2,9 @@ import { Container } from '@nickgdev/hellerui';
 import { useRouter } from 'next/router';
 import { useThemeContext } from '../../contexts';
 import { useNavbarData } from '../../store';
-import { forwardVarText, getSafeFontKey } from '../../utils';
+import { getSafeFontKey } from '../../utils';
 import { Hoverable } from '../animated/hoverable';
+import { Font } from '../font';
 
 export function LinkBar() {
   const { push: redirect, pathname } = useRouter();
@@ -20,7 +21,7 @@ export function LinkBar() {
             color:
               pathname === l.localHref
                 ? palette.headingPrimaryColor
-                : Array.isArray(palette.paragraphTextColor) 
+                : Array.isArray(palette.paragraphTextColor)
                 ? palette.paragraphTextColor[0]
                 : palette.paragraphTextColor
           }}
@@ -28,11 +29,10 @@ export function LinkBar() {
             color: palette.backgroundTertiaryColor
           }}
         >
-          {forwardVarText(
-            getSafeFontKey(font.google.family),
-            l.plainText,
-            'b',
-            {
+          <Font
+            family={getSafeFontKey(font.google.family)}
+            impl="b"
+            {...{
               onClick: () => forwardNavEventDest(l.localHref),
               customStyles: {
                 marginLeft: '0.25rem',
@@ -41,8 +41,10 @@ export function LinkBar() {
               },
               key: l.plainText,
               className: 'nav-link'
-            }
-          )}
+            }}
+          >
+            {l.plainText}
+          </Font>
         </Hoverable>
       ))}
     </Container>
