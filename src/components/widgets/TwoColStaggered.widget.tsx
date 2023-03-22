@@ -1,5 +1,6 @@
 import { Container } from '@nickgdev/hellerui';
 import { ContainerProps } from '@nickgdev/hellerui/lib/components/Container/types';
+import { Properties } from 'csstype';
 import { useThemeContext } from '../../contexts';
 
 export type TwoColStaggeredProps = {
@@ -10,6 +11,9 @@ export type TwoColStaggeredProps = {
   rightSpan?: number;
   leftContainerProps?: ContainerProps;
   rightContainerProps?: ContainerProps;
+  className?: string;
+  id?: string;
+  styles?: Properties;
 };
 
 export function TwoColStaggered(props: TwoColStaggeredProps) {
@@ -27,7 +31,10 @@ export function TwoColStaggered(props: TwoColStaggeredProps) {
     rightContainerProps = {
       id: 'cg-staggered-right-widget-' + widgetKey,
       background: palette.headingPrimaryColor
-    }
+    },
+    className,
+    id,
+    styles = {}
   } = props;
   return (
     <Container
@@ -35,7 +42,9 @@ export function TwoColStaggered(props: TwoColStaggeredProps) {
       asGridParent
       padding="0px"
       height="280px"
-      customStyles={{ marginLeft: '1%' }}
+      customStyles={{ marginLeft: '1%', ...styles }}
+      className={className}
+      id={id}
     >
       <Container
         {...leftContainerProps}

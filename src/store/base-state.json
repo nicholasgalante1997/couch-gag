@@ -99,15 +99,12 @@
     },
     "about": {
       "main": {
-        "title": "A letter from the editor",
-        "subtitle": "Edition One, Colloquial Title: Flagship; 2/22/2022",
-        "body": [
-          "The world is absurd and hysterical. I think, at heart, this is an effort to try and reflect that.",
-          "The Couch Gag is an anthology of stories centered around an incomprehensible principle. We get to that in the first episode. Whereas you do not typically need to read an anthology in any prescribed order (lest it run the risk of not being a fucking anthology), but read the origin first. What we have following the origin, are several tales that follow persons of interest on their journeys to find fulfillment and meaning in a post-meaning existence. As writers, as human beings that believe in a distorted body-dysmorphic principle of truth, we try not to pull any punches. That being said, not every story will be for everyone. What's provided here are our tastes of the world as we see it. I, Editor in Christ of this Organization, have taken the artistic liberty to provide vignettes of the stories that accompany the first season. They are provided below to give you a loose composium of what to expect from us going forward. Which is more than you get from your partner or place of employment, mind you.",
-          "##### The Origin, and What Came Before It",
-          "This story follows five researchers as they traverse the frost",
-          "Those that try to be clever, fail inevitably in doing so. Those that are clever need never try."
-        ]
+        "title": "The Couch Gag",
+        "subtitle": "\"You can't say cocksucker, if we can't say cunt\", and other things you'll hear in a legal debrief in Philadelphia.",
+        "widget_one": {
+          "title": "The world is absurd and hysterical. I think, at heart, this is an effort to try and reflect that.",
+          "supportingNotion": ""
+        }
       }
     }
   }

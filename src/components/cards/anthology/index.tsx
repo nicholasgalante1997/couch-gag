@@ -11,6 +11,7 @@ import {
 } from '../../../utils';
 
 import css from './index.module.css';
+import { _lasercat_ } from '@nickgdev/couch-gag-common-lib';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
   const { font, palette, darkMode } = useThemeContext();
@@ -22,7 +23,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
   const titleFontRestProps = {
     customStyles: {
       color: activeHover
-        ? palette.headingPrimaryColor
+        ? darkMode ? _lasercat_.prp_light : palette.headingPrimaryColor
         : darkMode ? palette.backgroundTertiaryColor : palette.headingSecondaryColor,
       maxWidth: '70%',
       ...(activeHover
@@ -38,14 +39,14 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
   const paragraphFontRestProps = {
     className: css['trunc'],
     customStyles: {
-      color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
+      color: activeHover ? darkMode ? palette.backgroundTertiaryColor : "#fff" : findNestedParagraphPaletteTheme(palette.paragraphTextColor),
       marginTop: '8px',
       maxWidth: '80%',
       ...(activeHover
         ? {
             paddingLeft: '4px',
             fontSize: '16px',
-            transition: 'padding-left 0.4s, font-size 0.4s'
+            transition: 'padding-left 0.4s, font-size 0.4s',
           }
         : {
             fontSize: '14px'
@@ -59,7 +60,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       marginLeft: '0.25rem',
       marginRight: '0.25rem',
       display: 'inline-block',
-      color: '#7e667a',
+      color: activeHover ? darkMode ? "#fff" : "#000" : '#7e667a',
       textDecoration: activeHover ? 'underline' : 'none'
     }
   };
@@ -71,7 +72,6 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
       onClick={navigationFn}
       id={'card-parent-div-' + cardKey}
       className={css['story-card']}
-      padding="6px"
       width={breakpointKeyName === 'mobile' ? '100%' : '310px'}
       height="240px"
       customStyles={{
@@ -82,8 +82,11 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
         alignItems: 'flex-start',
         minHeight: '240px',
         maxHeight: '240px',
+        paddingTop: "1rem",
+        paddingBottom: "0.25rem",
         paddingLeft: '1.5rem',
         paddingRight: '1.5rem',
+        background: activeHover ? darkMode ? palette.backgroundComplimentColor : _lasercat_.prp_light : undefined,
         ...(breakpointKeyName === 'tablet' || breakpointKeyName === 'mobile'
           ? { borderBottom: '1px solid white' }
           : {})

@@ -152,6 +152,11 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
                 <Container
                   id="couch-gag-wrapping-gradient-layer"
                   padding="0px"
+                  customStyles={{
+                    overflowX: 'hidden',
+                    overflowY: 'scroll',
+                    scrollbarWidth: 'none'
+                  }}
                   gradient={
                     themeMode === 'dark'
                       ? {

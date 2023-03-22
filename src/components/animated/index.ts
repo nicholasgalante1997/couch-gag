@@ -3,3 +3,4 @@ export { default as SlideIn } from './slide-in';
 
 export * from './hoverable';
 export * from './spinner';
+export * from './font';
