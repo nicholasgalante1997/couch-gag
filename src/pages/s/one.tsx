@@ -30,10 +30,11 @@ export const selectors = {
 
 function StoryPage() {
   const { push: redirect, query } = useRouter();
-  const { palette, font } = useThemeContext();
+  const { palette, font, darkMode } = useThemeContext();
   const { breakpointKeyName } = useBpContext();
   const [initialHeadingBottom, setInitialHeadingBottom] = useState<number>();
   const [subheadings, setSubheadings] = useState<string[]>([]);
+  const [percentDone, setPercentDone] = useState<string>('0%');
 
   const [isHeadingInView, setHeadingInView] = React.useState<boolean>(
     isStoryHeadingInView()
@@ -65,9 +66,35 @@ function StoryPage() {
   }, []);
 
   React.useEffect(() => {
+    
+
+    function updatePercentDone(){
+      let docBody = document.body, htmlDocElement = document.documentElement;
+      let totalHeight = Math.max(
+        docBody.scrollHeight, 
+        docBody.offsetHeight, 
+        htmlDocElement.clientHeight, 
+        htmlDocElement.scrollHeight, 
+        htmlDocElement.offsetHeight
+      );
+
+      let currentHeight = Math.max(docBody.scrollTop, htmlDocElement.scrollTop) + window.screen.availHeight;
+      const newPercentDone = (currentHeight / totalHeight).toFixed(3);
+      const percentDonePurgedNonAlphaChars = percentDone.replace(/%/g, '');
+
+      if (newPercentDone !== percentDonePurgedNonAlphaChars) {
+        setPercentDone(`${newPercentDone}%`);
+      }
+    }
+
+    window.addEventListener('scroll', updatePercentDone)
+
+    return () => window.removeEventListener('scroll', updatePercentDone);
+  }, [])
+
+  React.useEffect(() => {
     if (!initialHeadingBottom) return;
-    const resizeEventWrapper = () =>
-      isStoryHeadingInView(isHeadingInView, setHeadingInView);
+    const resizeEventWrapper = () => isStoryHeadingInView(isHeadingInView, setHeadingInView);
     document.addEventListener('scroll', resizeEventWrapper);
     return () => document.removeEventListener('scroll', resizeEventWrapper);
   }, [initialHeadingBottom, isHeadingInView]);
@@ -130,7 +157,7 @@ function StoryPage() {
           flexWrap: 'nowrap',
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
-          borderBottom: '1px solid white',
+          borderBottom: darkMode ? '1px solid white' : '1px solid black',
           paddingBottom: '12px',
           ...(breakpointKeyName === 'mobile' || breakpointKeyName === 'tablet'
             ? { paddingLeft: '0.75rem' }
@@ -142,7 +169,7 @@ function StoryPage() {
           impl="h1"
           {...{
             customStyles: {
-              color: palette.headingSecondaryColor,
+              color: darkMode ? palette.backgroundTertiaryColor : palette.headingPrimaryColor,
               lineHeight: 1.15,
               fontSize: '4rem'
             }
@@ -231,7 +258,7 @@ function StoryPage() {
       <StickyTopSection
         title={data!.meta.title}
         isViewable={!isHeadingInView}
-        shortSum={data!.meta.subtitle ?? ''}
+        percentDone={percentDone}
       />
       <Container
         radius="none"

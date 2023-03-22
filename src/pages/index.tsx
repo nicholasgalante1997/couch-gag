@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { Button, Container } from '@nickgdev/hellerui';
+import { _lasercat_ } from '@nickgdev/couch-gag-common-lib';
 
 import { OneCol } from '../components/widgets/OneCol.widget';
 import { useBpContext, useThemeContext } from '../contexts';
@@ -109,7 +110,7 @@ function Home() {
         onClick={handleOriginStoryClick}
         size={'lg'}
         width={mobile ? '100%' : '400px'}
-        backgroundColor={palette.backgroundComplimentColor}
+        backgroundColor={darkMode ? palette.backgroundComplimentColor : _lasercat_.prp_light}
         ghost={buttonIsHover}
       >
         <Font family={getSafeFontKey(font.google.family)} impl="span">

@@ -27,7 +27,7 @@ import { Font } from '../components';
 
 function AnthologyPage() {
   const { push: redirect } = useRouter();
-  const { palette } = useThemeContext();
+  const { palette, darkMode } = useThemeContext();
   const { breakpointKeyName } = useBpContext();
   const { isLoading, isError, data, error } = useQueryAllMarkdownStories();
   const anthText = useAnthText();
@@ -93,7 +93,7 @@ function AnthologyPage() {
             customStyles: {
               fontSize: 40,
               fontWeight: '200',
-              color: findNestedParagraphPaletteTheme(palette.paragraphTextColor)
+              color: darkMode ? findNestedParagraphPaletteTheme(palette.paragraphTextColor) : palette.headingPrimaryColor
             }
           }}
         >

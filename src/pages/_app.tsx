@@ -65,8 +65,6 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
       }
     }
 
-    console.log({ lightTheme, darkTheme });
-
     /**
      * dispatch it to theme
      */
@@ -96,6 +94,19 @@ function App({ Component, pageProps }: AppProps<{ dehydratedState?: any }>) {
     window.localStorage.setItem(themeModeStorageKey, themeMode);
     setTheme(themeMode === 'light' ? lightTheme! : darkTheme!);
   }, [themeMode]);
+
+  useEffect(() => {
+    const id = 'adhoc-p-tag-overwrite';
+    const existingEl = document.querySelector(`#${id}`);
+    if (existingEl) {
+      existingEl.remove();
+    }
+    const genericPStyles = `p { color: ${themeMode === "dark" ? "white" : "black"}; font-family: ${theme.meta?.theme.font.google.family}; }`;
+    const styleTag = document.createElement('style');
+    styleTag.setAttribute('id', id);
+    styleTag.innerHTML = genericPStyles;
+    document.head.appendChild(styleTag);
+  }, [theme, themeMode])
 
   const { font, palette } = theme.meta!.theme!;
 

@@ -5,7 +5,7 @@ import { getSafeFontKey, findNestedParagraphPaletteTheme } from '../utils';
 import { Font } from '../components';
 
 function RecruitmentPage() {
-  const { font, palette } = useThemeContext();
+  const { font, palette, darkMode } = useThemeContext();
   return (
     <Container
       padding="10px"
@@ -27,7 +27,7 @@ function RecruitmentPage() {
         impl="h1"
         {...{
           customStyles: {
-            color: palette.backgroundTertiaryColor
+            color: darkMode ? palette.backgroundTertiaryColor : palette.headingPrimaryColor
           }
         }}
       >

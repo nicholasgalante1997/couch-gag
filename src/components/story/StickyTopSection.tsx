@@ -17,7 +17,7 @@ const actions = [
 export function StickyTopSection(props: {
   isViewable: boolean;
   title: string;
-  shortSum: string;
+  percentDone: string;
 }): JSX.Element {
   const { palette, font, darkMode } = useThemeContext();
   return props.isViewable ? (
@@ -25,7 +25,7 @@ export function StickyTopSection(props: {
       id="sp-sticky-top-sect"
       width="100%"
       height="48px"
-      background={palette.backgroundComplimentColor}
+      background={darkMode ? palette.backgroundComplimentColor : palette.headingPrimaryColor}
       customStyles={{
         display: 'flex',
         flexDirection: 'row',
@@ -38,7 +38,7 @@ export function StickyTopSection(props: {
         impl="h4"
         {...{
           customStyles: {
-            color: 'black'
+            color: darkMode ? '#000' : '#fff'
           }
         }}
       >
@@ -57,7 +57,7 @@ export function StickyTopSection(props: {
           }
         }}
       >
-        {props.shortSum}
+        {props.percentDone}
       </Font>
       <Container
         customStyles={{
@@ -83,7 +83,7 @@ export function StickyTopSection(props: {
                 }
               }}
             >
-              {props.shortSum}
+              {action.type}
             </Font>
           </Hoverable>
         ))}

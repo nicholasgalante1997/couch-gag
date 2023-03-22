@@ -13,65 +13,56 @@ import {
 import css from './index.module.css';
 
 export const AnthologyTile = (props: AnthologyTileProps) => {
-  const { font, palette } = useThemeContext();
+  const { font, palette, darkMode } = useThemeContext();
   const { breakpointKeyName } = useBpContext();
   const [activeHover, setActiveHover] = React.useState<boolean>(false);
 
   const { cardKey, desc, title, navigationFn } = props;
 
-  const titleFontRestProps = React.useMemo(
-    () => ({
-      customStyles: {
-        color: activeHover
-          ? palette.headingPrimaryColor
-          : palette.backgroundTertiaryColor,
-        maxWidth: '70%',
-        ...(activeHover
-          ? {
-              paddingLeft: '4px',
-              transition: 'padding-left 0.4s',
-              fontSize: '18px'
-            }
-          : {})
-      }
-    }),
-    [activeHover]
-  );
+  const titleFontRestProps = {
+    customStyles: {
+      color: activeHover
+        ? palette.headingPrimaryColor
+        : darkMode ? palette.backgroundTertiaryColor : palette.headingSecondaryColor,
+      maxWidth: '70%',
+      ...(activeHover
+        ? {
+            paddingLeft: '4px',
+            transition: 'padding-left 0.4s',
+            fontSize: '18px'
+          }
+        : {})
+    }
+  };
 
-  const paragraphFontRestProps = React.useMemo(
-    () => ({
-      className: css['trunc'],
-      customStyles: {
-        color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
-        marginTop: '8px',
-        maxWidth: '80%',
-        ...(activeHover
-          ? {
-              paddingLeft: '4px',
-              fontSize: '16px',
-              transition: 'padding-left 0.4s, font-size 0.4s'
-            }
-          : {
-              fontSize: '14px'
-            })
-      }
-    }),
-    [activeHover, palette]
-  );
+  const paragraphFontRestProps = {
+    className: css['trunc'],
+    customStyles: {
+      color: findNestedParagraphPaletteTheme(palette.paragraphTextColor),
+      marginTop: '8px',
+      maxWidth: '80%',
+      ...(activeHover
+        ? {
+            paddingLeft: '4px',
+            fontSize: '16px',
+            transition: 'padding-left 0.4s, font-size 0.4s'
+          }
+        : {
+            fontSize: '14px'
+          })
+    }
+  };
 
-  const genreFontRestProps = React.useMemo(
-    () => ({
-      customStyles: {
-        fontSize: activeHover ? '16px' : '14px',
-        marginLeft: '0.25rem',
-        marginRight: '0.25rem',
-        display: 'inline-block',
-        color: '#7e667a',
-        textDecoration: activeHover ? 'underline' : 'none'
-      }
-    }),
-    [activeHover]
-  );
+  const genreFontRestProps = {
+    customStyles: {
+      fontSize: activeHover ? '16px' : '14px',
+      marginLeft: '0.25rem',
+      marginRight: '0.25rem',
+      display: 'inline-block',
+      color: '#7e667a',
+      textDecoration: activeHover ? 'underline' : 'none'
+    }
+  };
 
   return (
     <Container
@@ -136,7 +127,7 @@ export const AnthologyTile = (props: AnthologyTileProps) => {
         >
           {props.genres &&
             props.genres.map((stGen) => (
-              <Font family={getSafeFontKey(font.google.family)} impl="span">
+              <Font family={getSafeFontKey(font.google.family)} impl="span" {...genreFontRestProps}>
                 {stGen}
               </Font>
             ))}

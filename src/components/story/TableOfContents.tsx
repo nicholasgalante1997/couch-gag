@@ -2,13 +2,16 @@ import { Container } from '@nickgdev/hellerui';
 import React from 'react';
 import { useThemeContext } from '../../contexts';
 import { getSafeFontKey } from '../../utils';
-import { Hoverable } from '../animated';
 import { Font } from '../font';
 
 type TableOfContentsProps = {
   isViewable: boolean;
   chapters: { s: string; k: string; a: boolean }[];
 };
+
+function sanitizeMarkdownHeading(s: string) {
+  return s.replace(/#/g, '');
+}
 
 export function TableOfContents({
   isViewable,
@@ -19,15 +22,15 @@ export function TableOfContents({
     return <div id="zeroed" />;
   }
   return (
-    <Hoverable
-      className="poptop"
-      from={{ boxShadow: 'none' }}
-      to={{ boxShadow: '1px 2px 2px white' }}
-    >
       <Container
+        className="table-of-contents-fixed"
         background={palette.backgroundColor}
         radius="rounded"
         padding="0.5rem"
+        customStyles={{
+          maxWidth: '200px',
+          width: '200px'
+        }}
       >
         <Font
           family={getSafeFontKey(font.google.family)}
@@ -40,22 +43,24 @@ export function TableOfContents({
         >
           Table Of Contents
         </Font>
-        {chapters.map((ch) => (
+        {chapters.map((ch, index) => (
           <Container>
             <a href="#">
               <Font
                 family={getSafeFontKey(font.google.family)}
                 impl="span"
                 {...{
-                  key: ch.k
+                  key: ch.k,
+                  customStyles: {
+                    fontSize: '12px'
+                  }
                 }}
               >
-                {ch.s}
+                {index + 1}. {sanitizeMarkdownHeading(ch.s)}
               </Font>
             </a>
           </Container>
         ))}
       </Container>
-    </Hoverable>
   );
 }
