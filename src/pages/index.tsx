@@ -59,7 +59,7 @@ function Home() {
             impl="h1"
             {...{
               customStyles: {
-                // color: darkMode ? '#fff' : '#000',
+                color: darkMode ? '#fff' : '#000',
                 margin: '0px',
                 marginBottom: '12px',
                 fontSize: '5rem'

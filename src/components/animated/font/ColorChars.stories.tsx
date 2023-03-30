@@ -1,6 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ColorChars } from './ColorChars';
-import { FontProps } from '../../font';
 
 export default {
   title: 'components/animated/text/color wheel',
